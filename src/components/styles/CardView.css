@@ -1,0 +1,11 @@
+.card-view {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border-radius: 3px;
+  border-left: 1px solid black;
+  min-width: 380px;
+  max-width: 380px;
+  padding: 0px;
+  margin: 0 10px 0 10px;
+}

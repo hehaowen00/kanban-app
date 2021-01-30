@@ -1,0 +1,37 @@
+.navbar {
+  background-color: white;
+  border: 0.063rem solid black;
+  border-radius: 0.188rem;
+
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  max-height: 1.25rem;
+
+  margin: 0.625rem;
+  padding: 5px;
+}
+
+.navbar > div { 
+  flex-direction: row;
+  margin: 0;
+  max-height: 1.25rem;
+  width: 33.33%;
+}
+
+.navbar > div > * + * {
+  margin-left: 5px;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+

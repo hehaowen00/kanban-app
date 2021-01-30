@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-height: calc(100% - 4.063rem);
+}
+
+.content {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  max-height: 100%;
+}
+
+.lists {
+  display: flex;
+  flex: 1 1 auto;
+  margin-left: 0.625rem;
+  overflow-x: auto;
+  padding: 0 0 0.625rem 0;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+
+  max-height: 10px;
+  min-height: 10px;
+}
+
+.row-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.hover-link {
+  margin-left: 0;
+  width: 0 auto;
+}
+
+.hover-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

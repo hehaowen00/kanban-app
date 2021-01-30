@@ -1,0 +1,26 @@
+.card {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 3px;
+
+  font-size: 0.9rem;
+
+  margin: 5px 0px;
+  padding: 5px 10px;
+
+  white-space: break-spaces;
+  word-break: break-all;
+}
+
+.card-title {
+  font-weight: 600;
+
+  white-space: break-spaces;
+  word-break: break-all;
+}
+
+.card-description {
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: break-spaces;
+}
