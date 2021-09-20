@@ -95,7 +95,6 @@ function reorder(list: List[], startIdx: number, endIdx: number): List[] {
   return lists;
 }
 
-
 type Props = {
   board: Board;
 };

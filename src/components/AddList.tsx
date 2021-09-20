@@ -38,7 +38,7 @@ function KanbanAddList({ }: Props): ReactElement {
     <div className="list-col">
       <div className="list add-list">
         {!toggle && (
-          <div className="list-header noselect" onClick={handleClick}>
+          <div className="list-header flat noselect" onClick={handleClick}>
             {"Add List"}
           </div>
         )}
