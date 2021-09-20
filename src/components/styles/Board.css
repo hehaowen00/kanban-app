@@ -14,7 +14,6 @@
 }
 
 .content {
-  background-color: white;
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -22,13 +21,16 @@
 }
 
 .lists {
+  background: transparent;
   display: flex;
   flex: 1 1 auto;
   margin-left: 0.625rem;
+  margin-right: 0.625rem;
   overflow-x: auto;
-  padding: 0 0 0.625rem 0;
+  padding: 0px !important;
   white-space: nowrap;
   vertical-align: top;
+  padding-right: 0.625rem;
 }
 
 .footer {
