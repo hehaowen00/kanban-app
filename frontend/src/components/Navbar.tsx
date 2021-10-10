@@ -11,7 +11,6 @@ function Navbar({ name } : Props): ReactElement {
       </div>
       <div className="right">
         <a href='#'><span className='semi'>{"Dashboard"}</span></a>
-        <a href='#'><span className='semi'>{"My Account"}</span></a>
       </div>
     </div>
   );
