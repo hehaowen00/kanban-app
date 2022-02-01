@@ -31,6 +31,7 @@
   white-space: nowrap;
   vertical-align: top;
   padding-right: 0.625rem;
+  overflow-y: hidden;
 }
 
 .footer {

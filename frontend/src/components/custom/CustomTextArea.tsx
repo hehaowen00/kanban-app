@@ -33,10 +33,16 @@ const CustomTextArea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
   };
 
   const handleUpdate = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    if (onChange === undefined) {
+      return;
+    }
+
     event.preventDefault();
 
+    const value = event.target.value;
+
     if (value.length > count || onChange === undefined) {
-      return;
+      event.target.value = value.substring(0, count);
     }
 
     onChange(event);
@@ -47,6 +53,11 @@ const CustomTextArea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
       ref={ref}
       {...props}
       maxLength={count}
+      onKeyDown={e => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+        }
+      }}
       onChange={handleUpdate}
       onPaste={handlePaste}
     />

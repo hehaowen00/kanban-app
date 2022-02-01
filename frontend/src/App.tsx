@@ -7,10 +7,8 @@ import "./App.css";
 import { Board } from "./types/Kanban";
 import { v4 as uuidV4 } from "uuid";
 
-import { initialState } from "./redux/reducers/BoardReducer";
-
 function App() {
-  return <KanbanBoard board={initialState} />;
+  return <KanbanBoard />;
 }
 
 export default App;

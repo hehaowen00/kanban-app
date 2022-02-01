@@ -1,20 +1,14 @@
-import { RenameBoard }from "./actions/Board";
-import { AddList, DeleteList, MoveList, RenameList }from "./actions/List";
-import { AddCard } from './actions/Card';
-
-// export type Action = RenameBoard | AddList | DeleteList | MoveList | RenameList | AddCard;
-export type Action = any;
-
 export type Board = {
   id: string;
   name: string;
+  cards: Record<string, Card>,
   lists: List[];
 };
 
 export type List = {
   id: string;
   name: string;
-  cards: Card[];
+  cards: string[];
 };
 
 export type Card = {
