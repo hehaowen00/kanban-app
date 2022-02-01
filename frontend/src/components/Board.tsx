@@ -1,5 +1,6 @@
 import React, { Fragment, ReactElement, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { connect } from "react-redux";
 
 import { Board, List } from "../types/Kanban";
 import KanbanList from "./List";
@@ -9,9 +10,8 @@ import Navbar from "./Navbar";
 
 import "./styles/Board.css";
 
-function KanbanBoard({ board }: Props): ReactElement {
-  const [lists, setLists] = useState(board.lists);
-  const { name } = board;
+function KanbanBoard({ board, moveList, moveCard }: Props): ReactElement {
+  const lists = board.lists;
 
   const handleDragEvent = (event: DropResult) => {
     const { source, destination } = event;
@@ -22,7 +22,6 @@ function KanbanBoard({ board }: Props): ReactElement {
 
     const srcIndex = source.index;
     const destIndex = destination.index;
-
     const srcId = source.droppableId;
     const destId = destination.droppableId;
 
@@ -32,25 +31,11 @@ function KanbanBoard({ board }: Props): ReactElement {
 
     switch (event.type) {
       case "droppableLists": {
-        const reordered = reorder(lists, srcIndex, destIndex);
-        setLists(reordered);
+        moveList(srcIndex, destIndex);
         break;
       }
       case "droppableCards": {
-        const srcIdx = lists.findIndex((list) => list.id === srcId);
-        const destIdx = lists.findIndex((list) => list.id === destId);
-
-        const src = lists[srcIdx];
-        const dest = lists[destIdx];
-
-        const [removed] = src.cards.splice(srcIndex, 1);
-        dest.cards.splice(destIndex, 0, removed);
-
-        const reordered = lists;
-        lists[srcIdx] = src;
-        lists[destIdx] = dest;
-
-        setLists(reordered);
+        moveCard({ srcId, srcIndex, destId, destIndex });
         break;
       }
     }
@@ -78,7 +63,7 @@ function KanbanBoard({ board }: Props): ReactElement {
               )}
             </Droppable>
           </DragDropContext>
-          <KanbanCardView visible={true} />
+          <KanbanCardView />
         </div>
       </div>
       <div className="footer">
@@ -97,6 +82,22 @@ function reorder(list: List[], startIdx: number, endIdx: number): List[] {
 
 type Props = {
   board: Board;
+  moveList: any,
+  moveCard: any,
 };
 
-export default KanbanBoard;
+const mapStateToProps = (state: any, props: any) => {
+  return {
+    board: state.board,
+    ...props,
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    moveList: (src: number, dest: number) => dispatch({type: "MoveList", src, dest }),
+    moveCard: (payload: any) => dispatch({type: "MoveCard", ...payload }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(KanbanBoard);

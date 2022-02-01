@@ -26,10 +26,6 @@ body {
   user-select: none;
 }
 
-.link {
-  cursor: pointer;
-}
-
 .semi {
   font-weight: 550;
 }

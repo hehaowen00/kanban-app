@@ -5,12 +5,13 @@ function Navbar({ name } : Props): ReactElement {
   return (
     <div className="navbar">
       <div className="left">
-        <span className='semi'>{name}</span>
+        <input className="title-input" value={name} />
+        <button>Save</button>
       </div>
       <div className="center">
       </div>
       <div className="right">
-        <a href='#'><span className='semi'>{"Dashboard"}</span></a>
+        <button>Dashboard</button>
       </div>
     </div>
   );

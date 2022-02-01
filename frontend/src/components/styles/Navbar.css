@@ -14,15 +14,16 @@
   padding: 5px;
 }
 
-a, a:visited, a:hover, a:active {
-  color: inherit;
+.title-input {
+  width: 70%;
 }
 
 .navbar > div { 
   flex-direction: row;
   margin: 0;
   max-height: 1.25rem;
-  width: 33.33%;
+  width: calc(100% / 3);
+  max-width: calc(100% / 3);
 }
 
 .navbar > div > * + * {

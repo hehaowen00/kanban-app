@@ -8,10 +8,12 @@ import React, {
   useState,
 } from "react";
 import CustomTextArea from "./custom/CustomTextArea";
+import { connect } from "react-redux";
+import { AddList } from "../redux/actions/List";
 
 import "./styles/AddList.css";
 
-function KanbanAddList({ }: Props): ReactElement {
+function KanbanAddList({ addList }: Props): ReactElement {
   const [toggle, setToggle] = useState(false);
   const [content, setContent] = useState("");
 
@@ -34,6 +36,19 @@ function KanbanAddList({ }: Props): ReactElement {
     inputRef.current?.focus();
   });
 
+  const createList = () => {
+    if (content !== "") {
+      addList(content);
+      setContent("");
+      setToggle(false);
+    }
+  }
+
+  const cancelNewList = () => {
+    setContent("");
+    setToggle(false);
+  }
+
   return (
     <div className="list-col">
       <div className="list add-list">
@@ -54,8 +69,8 @@ function KanbanAddList({ }: Props): ReactElement {
               value={content}
             />
             <div className="btn noselect">
-              <span className="link">{"Add List"}</span>
-              <span className="link" style={{ marginLeft: "5px" }}>{"Cancel"}</span>
+              <button className="link" onClick={createList}>Add List</button>
+              <button className="link" onClick={cancelNewList}>Cancel</button>
             </div>
           </Fragment>
         )}
@@ -64,12 +79,23 @@ function KanbanAddList({ }: Props): ReactElement {
   );
 }
 
-type Props = {};
+type Props = {
+  addList: any
+};
 
 const Styles: any = {
   textarea: {
-    border: '1px solid black'
+    border: '1px solid black',
+    padding: "4px 4px 4px 8px",
   }
 }
 
-export default KanbanAddList;
+const mapStateToProps = null;
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    addList: (name: string) => dispatch(AddList(name)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(KanbanAddList);

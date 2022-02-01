@@ -8,7 +8,7 @@
   font-size: 14px;
   font-weight: 600;
 
-  padding: 5px 5px;
+  padding: 5px 0px 5px 5px;
   text-align: right;
 }
 
@@ -46,4 +46,8 @@
 
 .textarea-card:focus {
   outline: none;
+}
+
+.btn.noselect > * {
+  margin-left: 5px;
 }

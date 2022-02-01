@@ -3,13 +3,125 @@
   flex-direction: column;
   flex-grow: 1;
   border-radius: 5px;
-  min-width: 380px;
-  max-width: 380px;
-  padding: 5px;
+  min-width: 400px;
+  max-width: 400px;
+  padding: 8px 8px;
   margin-bottom: 0;
+  height: calc(100% - 10px) !important;
   margin-left: 5px;
   margin-right: 0.625rem;
   box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25),
    -5px -5px 10px 0 rgba(255, 255, 255, 0.3);
-  background: white;
+  text-align: center;
+  position: relative;
+  overflow-y: auto;
+}
+
+.card-view-body {
+  overflow-y: auto;
+  margin: 0;
+  margin-bottom: 10px;
+  max-height: 80%;
+  padding: 0px;
+  overflow-x: hidden;
+}
+
+.card-view > .card-title {
+  font-weight: 600;
+  width: 100%;
+  font-size: 13px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 2px;
+  border: 1px solid black;
+  resize: none;
+  padding: 2px 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.description {
+  width: 100%;
+  resize: none;
+  font-size: 13px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 2px;
+  border: 1px solid black;
+  resize: none;
+  padding: 2px 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.toolbar {
+  text-align: right;
+  font-size: 13px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  flex: 1;
+  flex-direction: row;
+  width: 100%;
+  max-width: 100%;
+}
+
+button {
+  font-size: 12px;
+}
+
+input {
+  font-size: 12px;
+}
+
+.card-view > .comments {
+  text-align: left;
+  font-size: 14px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  width: inherit;
+  flex: 1;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding: 0px;
+  overflow-y: auto;
+}
+
+.comment-input {
+  margin-top: 5px;
+  font-size: 12px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 2px 4px;
+  resize: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+  display: block;
+}
+
+.textarea-100 {
+  width: inherit;
+}
+
+.text-left {
+  text-align: left !important;
+}
+.mr-5 {
+  margin-right: 5px !important;
+}
+.ml-5 {
+  margin-left: 5px !important;
+}
+
+.comments {
+  display: block;
 }
