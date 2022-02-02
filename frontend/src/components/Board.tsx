@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement, useState } from "react";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { connect } from "react-redux";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 import { Board, List } from "../types/Kanban";
 import KanbanList from "./List";
@@ -10,7 +10,7 @@ import Navbar from "./Navbar";
 
 import "./styles/Board.css";
 
-function KanbanBoard({ board, moveList, moveCard }: Props): ReactElement {
+function KanbanBoard({ board, moveCard, moveList }: Props): ReactElement {
   const lists = board.lists;
 
   const handleDragEvent = (event: DropResult) => {
@@ -30,12 +30,12 @@ function KanbanBoard({ board, moveList, moveCard }: Props): ReactElement {
     }
 
     switch (event.type) {
-      case "droppableLists": {
-        moveList(srcIndex, destIndex);
+      case "droppableCards": {
+        moveCard(srcId, destId, srcIndex, destIndex);
         break;
       }
-      case "droppableCards": {
-        moveCard({ srcId, srcIndex, destId, destIndex });
+      case "droppableLists": {
+        moveList(srcIndex, destIndex);
         break;
       }
     }
@@ -63,7 +63,7 @@ function KanbanBoard({ board, moveList, moveCard }: Props): ReactElement {
               )}
             </Droppable>
           </DragDropContext>
-          <KanbanCardView />
+          <KanbanCardView visible={true} />
         </div>
       </div>
       <div className="footer">
@@ -72,32 +72,26 @@ function KanbanBoard({ board, moveList, moveCard }: Props): ReactElement {
   );
 }
 
-function reorder(list: List[], startIdx: number, endIdx: number): List[] {
-  const lists = Array.from(list);
-  const [removed] = lists.splice(startIdx, 1);
-
-  lists.splice(endIdx, 0, removed);
-  return lists;
-}
-
 type Props = {
   board: Board;
-  moveList: any,
   moveCard: any,
+  moveList: any,
 };
 
 const mapStateToProps = (state: any, props: any) => {
   return {
-    board: state.board,
+    board: state,
     ...props,
-  };
+  }
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    moveList: (src: number, dest: number) => dispatch({type: "MoveList", src, dest }),
-    moveCard: (payload: any) => dispatch({type: "MoveCard", ...payload }),
-  };
+    moveList: (srcIdx: any, destIdx: any) => dispatch({type: "MoveList", srcIdx, destIdx }),
+    moveCard: (srcId: string, destId: string, srcIdx: number, destIdx: number) => {
+      dispatch({type: "MoveCard", srcId, destId, srcIdx, destIdx });
+    }
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(KanbanBoard);

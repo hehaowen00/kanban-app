@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  font-size: 13px !important;
   border-radius: 5px;
   min-width: 400px;
   max-width: 400px;
@@ -74,7 +75,7 @@ input {
 
 .card-view > .comments {
   text-align: left;
-  font-size: 14px;
+  font-size: 13px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   width: inherit;
   flex: 1;
@@ -88,7 +89,7 @@ input {
 
 .comment-input {
   margin-top: 5px;
-  font-size: 12px;
+  font-size: 13px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   width: 100%;
   margin-bottom: 5px;
