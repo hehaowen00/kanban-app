@@ -6,6 +6,7 @@ import "./App.css";
 
 import { Board } from "./types/Kanban";
 import { v4 as uuidV4 } from "uuid";
+import Example from "./types/example";
 
 function App() {
   return <KanbanBoard />;

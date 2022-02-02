@@ -7,13 +7,12 @@ import React, {
   useRef,
   useState,
 } from "react";
-import CustomTextArea from "./custom/CustomTextArea";
 import { connect } from "react-redux";
-import { AddList } from "../redux/actions/List";
+import CustomTextArea from "./custom/CustomTextArea";
 
 import "./styles/AddList.css";
 
-function KanbanAddList({ addList }: Props): ReactElement {
+function KanbanAddList({ addNewList }: Props): ReactElement {
   const [toggle, setToggle] = useState(false);
   const [content, setContent] = useState("");
 
@@ -38,7 +37,7 @@ function KanbanAddList({ addList }: Props): ReactElement {
 
   const createList = () => {
     if (content !== "") {
-      addList(content);
+      addNewList(content);
       setContent("");
       setToggle(false);
     }
@@ -80,7 +79,7 @@ function KanbanAddList({ addList }: Props): ReactElement {
 }
 
 type Props = {
-  addList: any
+  addNewList: any
 };
 
 const Styles: any = {
@@ -88,14 +87,12 @@ const Styles: any = {
     border: '1px solid black',
     padding: "4px 4px 4px 8px",
   }
-}
-
-const mapStateToProps = null;
+};
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    addList: (name: string) => dispatch(AddList(name)),
+    addNewList: (name: string) => dispatch({ type: "NewList", name }), 
   };
-};
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(KanbanAddList);
+export default connect(null, mapDispatchToProps)(KanbanAddList);

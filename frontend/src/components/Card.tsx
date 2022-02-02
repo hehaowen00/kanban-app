@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 
 import "./styles/Card.css"
 
-function KanbanCard({ index, card, showCard }: Props): ReactElement {
+function KanbanCard({ index, card }: Props): ReactElement {
   const { id, title, description } = card;
 
   const displayCard = () => {
-    showCard(id);
+    // showCard(id);
   };
 
   return (
@@ -38,19 +38,6 @@ type Props = {
   key: string;
   index: number;
   card: Card;
-  showCard: any,
 };
 
-const mapStateToProps = (state: any, props: any) => {
-  return {
-    ...props
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    showCard: (cardId: string) => dispatch({type: "ShowCard", cardId }),
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(KanbanCard);
+export default KanbanCard;

@@ -9,18 +9,10 @@ import { Card } from "../types/Kanban";
 const MAX_TITLE_LENGTH = 512;
 const MAX_DESCRIPTION_LENGTH = 1024;
 
-function KanbanCardView({ card, listId, visible, cancelCard, newCard }: Props): ReactElement {
-  var cardId: string | null = null;
-
+function KanbanCardView({ visible }: Props): ReactElement {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [comments, setComments] = useState([{user: "testing", text: "comment text"}]);
-
-  if (cardId !== null) {
-    setTitle(card.title);
-    setDescription(card.description);
-    cardId = card.id; 
-  }
+  const [comments, setComments] = useState([{user: "testing", text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}]);
 
   const onTitleChange = (event: any) => {
     if (event.target.value.length > MAX_TITLE_LENGTH) {
@@ -41,8 +33,6 @@ function KanbanCardView({ card, listId, visible, cancelCard, newCard }: Props): 
     setDescription(event.target.value);
   };
 
-  console.log(comments);
-
   const onDescriptionPaste = (event: any) => {
     const append = event.clipboardData.getData("text");
     setDescription(description + append);
@@ -62,8 +52,6 @@ function KanbanCardView({ card, listId, visible, cancelCard, newCard }: Props): 
       dueDate: "",
       labels: [],
     });
-
-    newCard(cardId, listId, contents);
   };
 
   return (
@@ -141,17 +129,23 @@ function KanbanCardView({ card, listId, visible, cancelCard, newCard }: Props): 
       </div>
       <div className="comments">
         <span>Comments</span>
-        {comments.map((comment: any) => 
-          <div className="comment">
-          <div>{comment.user}</div>
-          <div className="ml-5">{comment.text}</div>
+        <p></p>
+        {comments.map((comment: any, index: number) => 
+          <div key={index} className="comment">
+            <div style={{border: "1px solid black", padding: "4px"}}>User: {comment.user}</div>
+            <CustomTextArea
+              className="comment-input"
+              placeholder=""
+              count={512}
+              value={comment.text}
+            />
           </div>
         )}
       </div>
       <div className="textarea-100">
         <CustomTextArea
           className="comment-input"
-          placeholder="Comment"
+          placeholder="New Comment"
           count={512}
           value=""
         />
@@ -161,45 +155,16 @@ function KanbanCardView({ card, listId, visible, cancelCard, newCard }: Props): 
         <button className="ml-5">Cancel</button>
       </div>
       <div className="toolbar" style={{marginTop: "5px"}}>
-        <button className="ml-5" onClick={saveChanges}>Save Card</button>
-        <button className="ml-5" onClick={cancelCard}>Cancel</button>
+        <button className="ml-5" >Save Card</button>
+        <button className="ml-5" >Delete Card</button>
+        <button className="ml-5" >Cancel</button>
       </div>
     </div>
   );
 }
 
 type Props = {
-  listId: string,
   visible: boolean,
-  cancelCard: any,
-  newCard: any,
-  card: Card,
 };
 
-const mapStateToProps = (state: any, props: any) => {
-  const { cardId, listId, visible } = state.card;
-
-  let card = null;
-
-  if (cardId !== null) {
-    card = state.board.cards[cardId];
-  }
-
-  return {
-    listId,
-    card,
-    visible,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    newCard: async (cardId: string, listId: string, contents: any)  => {
-      await dispatch({type: "AddCard", cardId, listId, contents });
-      await dispatch({type: "CancelCard" });
-    },
-    cancelCard: () => dispatch({type: "CancelCard"})
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(KanbanCardView);
+export default KanbanCardView;

@@ -7,11 +7,11 @@ import KanbanCard from "./Card";
 
 import "./styles/List.css";
 
-function KanbanList({ index, list, cards, addCard }: Props): ReactElement {
-  const { id, name } = list;
+function KanbanList({ index, list, newCard }: Props): ReactElement {
+  const { id, name, cards } = list;
 
   const handleAddItem = () => {
-    addCard(id);
+    newCard(id);
   };
 
   return (
@@ -31,7 +31,7 @@ function KanbanList({ index, list, cards, addCard }: Props): ReactElement {
               {(provided) => (
                 <div className="list-body" ref={provided.innerRef}>
                   {cards.map((card: Card, index: number) => (
-                    <KanbanCard key={id} card={card} index={index} />
+                    <KanbanCard key={card.id} card={card} index={index} />
                   ))}
                   {provided.placeholder}
                 </div>
@@ -50,24 +50,20 @@ function KanbanList({ index, list, cards, addCard }: Props): ReactElement {
 type Props = {
   key: string;
   index: number;
-  list: List;
-  addCard: any,
-  cards: Card[],
+  newCard: any,
+  list: any,
 };
 
 const mapStateToProps = (state: any, props: any) => {
-  const { list } = props;
-  let cards = list.cards.map((el: any) => state.board.cards[el]);
   return {
-    cards,
-    ...props,
-  }
+    list: state.lists[props.index]
+  };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    addCard: (listId: string) => dispatch({type: "NewCard", payload: listId}),
-  }
-};
+    newCard: (listId: string) => dispatch({type: "NewCard", listId }),
+  };
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(KanbanList);
