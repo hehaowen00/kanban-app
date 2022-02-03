@@ -36,27 +36,42 @@ function reducer(state: Board = ExampleBoard, action: Action) {
       let lists = [...state.lists, { id: uuidV4(), name, cards: [] }];
       return { ...state, lists };
     }
-    case "MoveList": {
-      const { srcIdx, destIdx } = action;
-      let lists = reorder(state.lists, srcIdx, destIdx);
-      return { ...state, lists };
-    }
     case "MoveCard": {
       const { srcId, srcIdx, destId, destIdx } = action; 
       let lists = [...state.lists];
-      let srcListIdx = state.lists.findIndex((list: List) => list.id === srcId);
+      let srcListIdx = lists.findIndex((list: List) => list.id === srcId);
 
-      if (srcListIdx !== -1 && srcId === destId) {
+      if (srcListIdx === -1) {
+        return state;
+      }
+
+      if (srcId === destId) {
         let cards = reorder(lists[srcListIdx].cards, srcIdx, destIdx); 
         lists[srcListIdx].cards = cards;
 
         return { ...state, lists };
       }
 
-      let destListIdx = state.lists.findIndex((list: List) => list.id === destId);
-      let card = lists[srcListIdx].cards.splice(srcIdx, 1);
-      lists[destListIdx].cards = lists[destListIdx].cards.concat(card);
+      let destListIdx = lists.findIndex((list: List) => list.id === destId);
+      
+      if (destListIdx === -1) {
+        return state;
+      }
 
+      let card = lists[srcListIdx].cards.splice(srcIdx, 1);
+      let destCards = insert(lists[destListIdx].cards, destIdx, card[0]);
+
+      const modifiedSrcList = { ...lists[srcListIdx] };
+      const modifiedDestList = { ...lists[destListIdx], cards: destCards };
+
+      lists[srcListIdx] = modifiedSrcList;
+      lists[destListIdx] = modifiedDestList;
+
+      return { ...state, lists };
+    }
+    case "MoveList": {
+      const { srcIdx, destIdx } = action;
+      let lists = reorder(state.lists, srcIdx, destIdx);
       return { ...state, lists };
     }
     default: {
@@ -66,11 +81,15 @@ function reducer(state: Board = ExampleBoard, action: Action) {
 }
     
 function reorder(list: any[], startIdx: number, endIdx: number): any[] {
-  const lists = Array.from(list);
-  const [removed] = lists.splice(startIdx, 1);
+  const arr = Array.from(list);
+  const [removed] = arr.splice(startIdx, 1);
 
-  lists.splice(endIdx, 0, removed);
-  return lists;
+  arr.splice(endIdx, 0, removed);
+  return arr;
+}
+
+function insert(arr: any[], idx: number, element: any): any[] {
+  return [...arr.slice(0, idx), element, ...arr.slice(idx)];
 }
 
 export default createStore(reducer as any, composeWithDevTools());
