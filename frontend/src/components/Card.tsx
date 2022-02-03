@@ -1,7 +1,6 @@
 import { ReactElement } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
-import { Card } from "../types/Kanban";
 import { connect } from "react-redux";
 
 import "./styles/Card.css"

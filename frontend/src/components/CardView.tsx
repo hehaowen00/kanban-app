@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import CustomTextArea from "./custom/CustomTextArea";
 import { connect } from "react-redux";
 

@@ -1,8 +1,7 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { connect } from "react-redux";
 
-import { Card, List } from "../types/Kanban";
 import KanbanCard from "./Card";
 
 import "./styles/List.css";
