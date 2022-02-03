@@ -56,7 +56,7 @@ type Props = {
 
 const mapStateToProps = (state: any, props: any) => {
   return {
-    list: state.lists[props.index]
+    list: Object.assign({}, state.lists[props.index]),
   };
 };
 
