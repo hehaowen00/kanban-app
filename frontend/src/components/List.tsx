@@ -30,7 +30,7 @@ function KanbanList({ index, list, newCard }: Props): ReactElement {
             <Droppable droppableId={id} type="droppableCards">
               {(provided) => (
                 <div className="list-body" ref={provided.innerRef}>
-                  {cards.map((card: Card, index: number) => (
+                  {cards.map((card: CardRef, index: number) => (
                     <KanbanCard key={card.id} card={card} index={index} />
                   ))}
                   {provided.placeholder}
@@ -47,16 +47,32 @@ function KanbanList({ index, list, newCard }: Props): ReactElement {
   );
 }
 
+type CardRef = {
+  id: string,
+  title: string,
+};
+
+type ListRef = {
+  id: string,
+  name: string,
+  cards: CardRef[]
+};
+
 type Props = {
   key: string;
   index: number;
+  list: ListRef,
   newCard: any,
-  list: any,
 };
 
 const mapStateToProps = (state: any, props: any) => {
+  const { id, name, cardIds } = state.lists[props.index];
+  const cards = cardIds.map((id: string) => {
+    const { title } = state.cards[id];
+    return { id, title };
+  });
   return {
-    list: Object.assign({}, state.lists[props.index]),
+    list: { id, name, cards },
   };
 };
 

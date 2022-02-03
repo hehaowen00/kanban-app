@@ -1,17 +1,17 @@
 export type Board = {
   id: string;
   name: string;
+  cards: Record<string, Card>,
   lists: List[];
 };
 
 export type List = {
   id: string;
   name: string;
-  cards: Card[];
+  cardIds: string[];
 };
 
 export type Card = {
-  id: string;
   title: string;
   description: string;
   checklists: ChecklistItem[];

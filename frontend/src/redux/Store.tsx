@@ -16,24 +16,26 @@ function reducer(state: Board = ExampleBoard, action: Action) {
       const { listId } = action;
 
       let lists = [...state.lists];
+      let cards = { ...state.cards };
       let list = lists.find((list: any) => list.id === listId);
 
       if (list !== undefined) {
-        list.cards[list.cards.length] = {
-          id: uuidV4(),
+        let cardId = uuidV4();
+        cards[cardId] = {
           title: "Title",
           description: "",
           attachments: [] as any[],
           comments: [] as any[],
           checklists: [] as any[],
         };
+        list.cardIds = [...list.cardIds, cardId];
       }
 
-      return { ...state, lists };
+      return { ...state, cards, lists };
     }
     case "NewList": {
       const { name } = action;
-      let lists = [...state.lists, { id: uuidV4(), name, cards: [] }];
+      let lists = [...state.lists, { id: uuidV4(), name, cardIds: [] }];
       return { ...state, lists };
     }
     case "MoveCard": {
@@ -46,8 +48,8 @@ function reducer(state: Board = ExampleBoard, action: Action) {
       }
 
       if (srcId === destId) {
-        let cards = reorder(lists[srcListIdx].cards, srcIdx, destIdx); 
-        lists[srcListIdx].cards = cards;
+        let cards = reorder(lists[srcListIdx].cardIds, srcIdx, destIdx); 
+        lists[srcListIdx].cardIds = cards;
 
         return { ...state, lists };
       }
@@ -58,11 +60,11 @@ function reducer(state: Board = ExampleBoard, action: Action) {
         return state;
       }
 
-      let card = lists[srcListIdx].cards.splice(srcIdx, 1);
-      let destCards = insert(lists[destListIdx].cards, destIdx, card[0]);
+      let card = lists[srcListIdx].cardIds.splice(srcIdx, 1);
+      let destCards = insert(lists[destListIdx].cardIds, destIdx, card[0]);
 
       const modifiedSrcList = { ...lists[srcListIdx] };
-      const modifiedDestList = { ...lists[destListIdx], cards: destCards };
+      const modifiedDestList = { ...lists[destListIdx], cardIds: destCards };
 
       lists[srcListIdx] = modifiedSrcList;
       lists[destListIdx] = modifiedDestList;

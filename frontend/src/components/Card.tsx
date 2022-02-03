@@ -37,7 +37,7 @@ function KanbanCard({ index, card }: Props): ReactElement {
 type Props = {
   key: string;
   index: number;
-  card: Card;
+  card: any;
 };
 
 export default KanbanCard;
