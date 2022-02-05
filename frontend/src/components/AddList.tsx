@@ -1,14 +1,15 @@
-import React, {
+import {
   ReactElement,
   ChangeEvent,
   ClipboardEvent,
   Fragment,
+  KeyboardEvent,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { connect } from "react-redux";
-import CustomTextArea from "./custom/CustomTextArea";
+import TextareaAutosize from "react-autosize-textarea";
+import { connect, useDispatch, useSelector } from "react-redux";
 
 import "./styles/AddList.css";
 
@@ -48,6 +49,13 @@ function KanbanAddList({ addNewList }: Props): ReactElement {
     setToggle(false);
   }
 
+  const submitList = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      createList();
+    }
+  };
+
   return (
     <div className="list-col">
       <div className="list add-list">
@@ -58,14 +66,15 @@ function KanbanAddList({ addNewList }: Props): ReactElement {
         )}
         {toggle && (
           <Fragment>
-            <CustomTextArea
+            <TextareaAutosize
               ref={inputRef}
-              count={255}
               className="list-header textarea-card border-sized noselect"
+              maxLength={255}
+              placeholder="Title"
+
               onChange={handleUpdate}
+              onKeyPress={submitList}
               onPaste={handlePaste}
-              style={Styles.textarea}
-              value={content}
             />
             <div className="btn noselect">
               <button className="link" onClick={createList}>Add List</button>

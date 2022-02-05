@@ -1,16 +1,17 @@
 import { ReactElement } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import KanbanCard from "./Card";
 
 import "./styles/List.css";
 
-function KanbanList({ index, list, newCard }: Props): ReactElement {
-  const { id, name, cards } = list;
+function KanbanList({ index, list }: Props): ReactElement {
+  const { id, name, cardIds } = list;
+  const dispatch = useDispatch();
 
   const handleAddItem = () => {
-    newCard(id);
+    dispatch({ type: "PromptNewCard", listId: id }); 
   };
 
   return (
@@ -29,8 +30,8 @@ function KanbanList({ index, list, newCard }: Props): ReactElement {
             <Droppable droppableId={id} type="droppableCards">
               {(provided) => (
                 <div className="list-body" ref={provided.innerRef}>
-                  {cards.map((card: CardRef, index: number) => (
-                    <KanbanCard key={card.id} card={card} index={index} />
+                  {cardIds.map((id: string, index: number) => (
+                    <KanbanCard key={id} index={index} id={id} />
                   ))}
                   {provided.placeholder}
                 </div>
@@ -46,39 +47,10 @@ function KanbanList({ index, list, newCard }: Props): ReactElement {
   );
 }
 
-type CardRef = {
-  id: string,
-  title: string,
-};
-
-type ListRef = {
-  id: string,
-  name: string,
-  cards: CardRef[]
-};
-
 type Props = {
   key: string;
   index: number;
-  list: ListRef,
-  newCard: any,
+  list: any,
 };
 
-const mapStateToProps = (state: any, props: any) => {
-  const { id, name, cardIds } = state.lists[props.index];
-  const cards = cardIds.map((id: string) => {
-    const { title } = state.cards[id];
-    return { id, title };
-  });
-  return {
-    list: { id, name, cards },
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    newCard: (listId: string) => dispatch({type: "NewCard", listId }),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(KanbanList);
+export default KanbanList;

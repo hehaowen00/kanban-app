@@ -1,17 +1,26 @@
 import { Fragment, ReactElement } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 import { Board, List } from "../types/Kanban";
 import KanbanList from "./List";
 import KanbanAddList from "./AddList";
-import KanbanCardView from "./CardView";
+import CardPanel from "./CardView";
 import Navbar from "./Navbar";
 
 import "./styles/Board.css";
 
-function KanbanBoard({ board, moveCard, moveList }: Props): ReactElement {
+function KanbanBoard(): ReactElement {
+  const board = useSelector((state: any)  => state.board);
+  const cardView = useSelector((state: any) => state.cardView);
+  const dispatch = useDispatch();
+
   const lists = board.lists;
+  const { visible } = cardView;
+
+  const focusLost = () => {
+    dispatch({ type: "CloseCardView" });
+  };
 
   const handleDragEvent = (event: DropResult) => {
     const { source, destination } = event;
@@ -20,25 +29,21 @@ function KanbanBoard({ board, moveCard, moveList }: Props): ReactElement {
       return;
     }
 
-    const srcIndex = source.index;
-    const destIndex = destination.index;
+    const srcIdx = source.index;
+    const destIdx = destination.index;
     const srcId = source.droppableId;
     const destId = destination.droppableId;
 
-    if (srcIndex === destIndex && srcId === destId) {
+    if (srcIdx === destIdx && srcId === destId) {
       return;
     }
 
-    switch (event.type) {
-      case "droppableCards": {
-        moveCard(srcId, destId, srcIndex, destIndex);
-        break;
-      }
-      case "droppableLists": {
-        moveList(srcIndex, destIndex);
-        break;
-      }
-    }
+    const lookup = {
+      "droppableCards": () => dispatch({ type: "MoveCard", srcId, destId, srcIdx, destIdx }),
+      "droppableLists": () => dispatch({ type: "MoveList", srcIdx, destIdx }),
+    } as any;
+
+    lookup[event.type]();
   };
 
   return (
@@ -53,7 +58,12 @@ function KanbanBoard({ board, moveCard, moveList }: Props): ReactElement {
               direction="horizontal"
             >
               {(provided) => (
-                <div className="lists" ref={provided.innerRef}>
+                <div
+                  className="lists"
+                  ref={provided.innerRef}
+                  style={{opacity: visible ? 0.4 : 1.0}}
+                  onClickCapture={visible ? focusLost : undefined}
+                >
                   {lists.map((list: List, index: number) => (
                     <KanbanList key={list.id} index={index} list={list} />
                   ))}
@@ -63,7 +73,7 @@ function KanbanBoard({ board, moveCard, moveList }: Props): ReactElement {
               )}
             </Droppable>
           </DragDropContext>
-          <KanbanCardView visible={true} />
+          { visible && <CardPanel /> }
         </div>
       </div>
       <div className="footer">
@@ -72,26 +82,4 @@ function KanbanBoard({ board, moveCard, moveList }: Props): ReactElement {
   );
 }
 
-type Props = {
-  board: Board;
-  moveCard: any,
-  moveList: any,
-};
-
-const mapStateToProps = (state: any, props: any) => {
-  return {
-    board: state,
-    ...props,
-  }
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    moveList: (srcIdx: any, destIdx: any) => dispatch({type: "MoveList", srcIdx, destIdx }),
-    moveCard: (srcId: string, destId: string, srcIdx: number, destIdx: number) => {
-      dispatch({type: "MoveCard", srcId, destId, srcIdx, destIdx });
-    }
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(KanbanBoard);
+export default KanbanBoard;

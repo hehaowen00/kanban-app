@@ -5,6 +5,12 @@ export type RenameBoard = {
   name: string,
 };
 
+export type UpdateCard = {
+  type: "UpdateCard",
+  cardId: string,
+  patch: Partial<Card>,
+};
+
 export type MoveCard = {
   type: "MoveCard",
   srcId: string,
@@ -22,7 +28,7 @@ export type MoveList = {
 export type NewCard = {
   type: "NewCard",
   listId: string,
-  name: string,
+  card: Card,
 };
 
 export type NewList = {
@@ -30,12 +36,6 @@ export type NewList = {
   name: string,
 };
 
-export type UpdateCard = {
-  type: "UpdateCard",
-  listId: string,
-  card: Card,
-};
-
-type Action = RenameBoard | NewCard | NewList | MoveCard | MoveList;
+type Action = RenameBoard | NewCard | UpdateCard | NewList | MoveCard | MoveList;
 
 export default Action;

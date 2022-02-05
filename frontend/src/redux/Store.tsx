@@ -1,19 +1,92 @@
 import { v4 as uuidV4 } from "uuid";
-import { createStore } from "redux";
+import { createStore, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import { Board, List } from "../types/Kanban";
+import { Board, CardViewState, List } from "../types/Kanban";
 import ExampleBoard from "../types/example";
 import Action from "./Actions";
 
-function reducer(state: Board = ExampleBoard, action: Action) {
+const EmptyCard = {
+  title: "",
+  description: "",
+  attachments: [] as any[],
+  comments: [] as any[],
+  checklists: [] as any[],
+};
+
+const DefaultCardViewState = {
+  currentListId: null,
+  currentCardId: null,
+  inputs: {
+    comment: "",
+  },
+  isNewCard: false,
+  tempCard: {...EmptyCard},
+  visible: false,
+};
+
+function CardViewReducer(state: CardViewState = DefaultCardViewState, action: any) {
+  switch (action.type) {
+    case "CloseCardView": {
+      return {
+        currentListId: null,
+        currentCardId: null,
+        isNewCard: false,
+        visible: false,
+        inputs: {
+          "comment": "",
+        },
+        tempCard: EmptyCard,
+      }
+    }
+    case "PromptNewCard": {
+      const { listId } = action;
+      return {
+        ...state,
+        currentListId: listId,
+        isNewCard: true,
+        visible: true,
+      }
+    }
+    case "ShowExistingCard": {
+      const { cardId, cardObject } = action;
+      return {
+        ...state,
+        currentCardId: cardId,
+        tempCard: cardObject,
+        visible: true,
+      };
+    }
+    case "UpdateInput": {
+      const { field, value } = action;
+
+      let inputs = { ...state.inputs };
+      inputs[field] = value;
+
+      return { ...state, inputs, };
+    }
+    case "UpdateCardState": {
+      const { patch } = action;
+      let tempCard = {
+        ...state.tempCard,
+        ...patch,
+      };
+
+      return { ...state, tempCard };
+    }
+    default:
+      return state;
+  }
+}
+
+function BoardReducer(state: Board = ExampleBoard, action: Action) {
   switch (action.type) {
     case "RenameBoard": {
       const { name } = action;
       return { ...state, name };
     }
     case "NewCard": {
-      const { listId } = action;
+      const { listId, card } = action;
 
       let lists = [...state.lists];
       let cards = { ...state.cards };
@@ -22,16 +95,22 @@ function reducer(state: Board = ExampleBoard, action: Action) {
       if (list !== undefined) {
         let cardId = uuidV4();
         cards[cardId] = {
-          title: "Title",
-          description: "",
-          attachments: [] as any[],
-          comments: [] as any[],
-          checklists: [] as any[],
+          ...card,
         };
         list.cardIds = [...list.cardIds, cardId];
       }
 
       return { ...state, cards, lists };
+    }
+    case "UpdateCard": {
+      const { cardId, patch } = action;
+
+      let cards = { ...state.cards };
+      cards[cardId] = { ...cards[cardId], ...patch };
+
+      let stateM = { ...state, cards: { ...cards} };
+
+      return stateM;
     }
     case "NewList": {
       const { name } = action;
@@ -93,5 +172,10 @@ function reorder(list: any[], startIdx: number, endIdx: number): any[] {
 function insert(arr: any[], idx: number, element: any): any[] {
   return [...arr.slice(0, idx), element, ...arr.slice(idx)];
 }
+
+const reducer = combineReducers({
+  board: BoardReducer,
+  cardView: CardViewReducer,
+});
 
 export default createStore(reducer as any, composeWithDevTools());

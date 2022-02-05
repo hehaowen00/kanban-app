@@ -1,11 +1,16 @@
 .card-view {
+  font-family: 'Roboto';
+  font-size: 0.9rem;
+
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  font-size: 13px !important;
   border-radius: 5px;
+
+  width: 20%;
   min-width: 400px;
-  max-width: 400px;
+  max-width: 450px;
+
   padding: 8px 8px;
   margin-bottom: 0;
   height: calc(100% - 10px) !important;
@@ -18,111 +23,136 @@
   overflow-y: auto;
 }
 
-.card-view-body {
-  overflow-y: auto;
-  margin: 0;
+.card-view > * {
   margin-bottom: 10px;
-  max-height: 80%;
-  padding: 0px;
-  overflow-x: hidden;
 }
 
-.card-view > .card-title {
+.card-view > .textarea {
+  border-radius: 2px;
+  border: 1px solid black;
+  display: block;
+
+  font-family: 'Roboto';
+  font-size: 0.9rem;
   font-weight: 600;
-  width: 100%;
-  font-size: 13px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  border-radius: 2px;
-  border: 1px solid black;
+
+  padding: 4px 4px;
   resize: none;
-  padding: 2px 4px;
+  width: 100%;
+
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-}
-
-.description {
-  width: 100%;
-  resize: none;
-  font-size: 13px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  border-radius: 2px;
-  border: 1px solid black;
-  resize: none;
-  padding: 2px 4px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.toolbar {
-  text-align: right;
-  font-size: 13px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  flex: 1;
-  flex-direction: row;
-  width: 100%;
-  max-width: 100%;
-}
-
-button {
-  font-size: 12px;
-}
-
-input {
-  font-size: 12px;
 }
 
 .card-view > .comments {
+  font-family: 'Roboto';
+  font-size: 0.9rem;
+
   text-align: left;
-  font-size: 13px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  width: inherit;
   flex: 1;
   flex-direction: column;
   flex-grow: 1;
-  margin-top: 8px;
-  margin-bottom: 8px;
   padding: 0px;
   overflow-y: auto;
 }
 
-.comment-input {
+.comment-view {
   margin-top: 5px;
-  font-size: 13px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.comment-view > * + * {
+  margin-top: 8px;
+}
+
+.comment > .header {
+  border: 1px solid black;
+  padding: 4px;
+  font-size: 0.85rem;
+}
+
+.comment > .body {
+  font-family: 'Roboto';
+  font-size: 0.85rem;
+
+  max-width: 100%;
+  display: flex;
+  padding: 4px;
+  border: 1px solid black;
+
+  word-break: break-word;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+
+  border-top: none;
+  border-radius: 0px 0px 3px 3px;
+  border-bottom: 1px solid black;
+}
+
+.comment-input {
+  font-family: 'Roboto';
+  font-size: 0.85rem;
+
+  margin-top: 10px;
   width: 100%;
-  margin-bottom: 5px;
   padding: 2px 4px;
   resize: none;
+
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-.right {
-  float: right;
-}
-
-.left {
-  float: left;
-  display: block;
+.comments > .toolbar {
+  margin-top: 8px;
 }
 
 .textarea-100 {
   width: inherit;
 }
 
-.text-left {
-  text-align: left !important;
-}
-.mr-5 {
-  margin-right: 5px !important;
-}
-.ml-5 {
-  margin-left: 5px !important;
-}
-
 .comments {
   display: block;
 }
+
+.card-view > .toolbar {
+  font-family: 'Roboto';
+  font-size: 0.9rem;
+  text-align: center;
+
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+
+  max-width: 100%;
+  width: 100%;
+}
+
+.card-view > .toolbar > * {
+  background: none;
+  border-radius: 0px;
+  border: 1px solid black;
+
+  font-size: 0.80rem;
+  font-family: "Roboto";
+
+  padding: 2px 4px;
+  width: 25%;
+}
+
+.card-view > .toolbar > * + * {
+  border-left: none;
+}
+
+.card-view > .toolbar > *:hover {
+  font-weight: 600;
+}
+
+.card-view > .toolbar > .first {
+  border-radius: 3px 0px 0px 3px;
+}
+
+.card-view > .toolbar > .last {
+  border-radius: 0px 3px 3px 0px;
+}
+

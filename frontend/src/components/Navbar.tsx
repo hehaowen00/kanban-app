@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import "./styles/Navbar.css"
 
 function Navbar({ name } : Props): ReactElement {

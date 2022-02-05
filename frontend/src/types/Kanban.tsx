@@ -1,3 +1,12 @@
+export type CardViewState = {
+  currentListId: string | null,
+  currentCardId: string | null,
+  inputs: any,
+  isNewCard: boolean,
+  visible: boolean,
+  tempCard: Card,
+};
+
 export type Board = {
   id: string;
   name: string;
@@ -9,6 +18,15 @@ export type List = {
   id: string;
   name: string;
   cardIds: string[];
+};
+
+
+type PartialCard = {
+  title?: string;
+  description?: string;
+  checklists?: ChecklistItem[];
+  attachments?: Attachment[];
+  comments?: Comment[];
 };
 
 export type Card = {

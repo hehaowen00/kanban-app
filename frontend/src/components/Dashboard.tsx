@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useState } from "react";
+import { Fragment, ReactElement } from "react";
 
 import "./styles/Dashboard.css";
 

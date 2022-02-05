@@ -15,6 +15,9 @@
 }
 
 .title-input {
+  font-family: "Roboto";
+  font-size: 0.9rem;
+  font-weight: 600;
   width: 70%;
 }
 

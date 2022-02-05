@@ -1,57 +1,47 @@
-import { ReactElement, useState } from "react";
-import CustomTextArea from "./custom/CustomTextArea";
-import { connect } from "react-redux";
+import { ReactElement, KeyboardEvent, useEffect, useState, Key } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./styles/CardView.css";
 import "./styles/Elements.css";
-import { Card } from "../types/Kanban";
+import TextareaAutosize from "react-autosize-textarea";
 
-const MAX_TITLE_LENGTH = 512;
-const MAX_DESCRIPTION_LENGTH = 1024;
+const MAX_TITLE_LENGTH = 1024;
+const MAX_DESCRIPTION_LENGTH = 2048;
+const MAX_COMMENT_LENGTH = 1024;
 
-function KanbanCardView({ visible }: Props): ReactElement {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [comments, setComments] = useState([{user: "testing", text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}]);
+function CardPanel() {
+  const dispatch = useDispatch();
 
-  const onTitleChange = (event: any) => {
-    if (event.target.value.length > MAX_TITLE_LENGTH) {
-      return;
+  const cardView = useSelector((state: any) => { return { ...state.cardView } });
+  const { inputs, currentCardId, currentListId, isNewCard, visible } = cardView;
+
+  const { title, description } = useSelector((state: any) => {
+    return state.board.cards[currentCardId];
+  });
+
+  const [title_, setTitle_] = useState(title);
+  const [desc_, setDesc_] = useState(description);
+
+  const titleChange = (event: any) => {
+    let cleaned = event.target.value.replace(/[\r\n]+/g, "");
+    setTitle_(cleaned);
+  };
+
+  const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
     }
-    setTitle(event.target.value);
   };
 
-  const onTitlePaste = (event: any) => {
-    const append = event.clipboardData.getData("text");
-    setTitle(title + append);
+  const descChange = (event: any) => {
+    let cleaned = event.target.value.replace(/[\r\n]+/g, "");
+    setDesc_(cleaned);
   };
 
-  const onDescriptionChange = (event: any) => {
-    if (event.target.value.length > MAX_DESCRIPTION_LENGTH || event.target.value.length > description.length) {
-      return;
+  const descKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
     }
-    setDescription(event.target.value);
-  };
-
-  const onDescriptionPaste = (event: any) => {
-    const append = event.clipboardData.getData("text");
-    setDescription(description + append);
-  };
-
-  const addComment = () => {
-    setComments([...comments, {user: "testing", text: "comment text"}]);
-  };
-
-  const saveChanges = () => {
-    const contents = Object.assign({}, {
-      title,
-      description,
-      attachments: [],
-      checklists: [],
-      comments: [],
-      dueDate: "",
-      labels: [],
-    });
   };
 
   return (
@@ -59,112 +49,31 @@ function KanbanCardView({ visible }: Props): ReactElement {
       className="list card-view"
       style={{ display: visible ? "block" : "none" }}
     >
-      <CustomTextArea 
-        className="card-title"
+      <TextareaAutosize
+        className="textarea"
+        maxLength={MAX_TITLE_LENGTH}
+        onChange={titleChange}
+        onKeyPress={titleKeyPress}
         placeholder="Title"
-        count={MAX_TITLE_LENGTH}
-        onChange={onTitleChange}
-        onPaste={onTitlePaste}
-        value={title}
+        value={title_}
       />
-      <br/>
-      <p></p>
-      <div className="card-view-body">
-        <CustomTextArea
-          className="description"
-          placeholder="Description"
-          count={MAX_DESCRIPTION_LENGTH}
-          onChange={onDescriptionChange}
-          onPaste={onDescriptionPaste}
-          value={description}
-        />
-      </div>
-      <div className="toolbar text-left mr-5">
-        <button className="mr-5">Add Attachment</button>
-        <button className="mr-5">Add Checklist</button>
-        <button className="mr-5">Add Due Date</button>
-        <button className="mr-5">Add Label</button>
-      </div>
-      <div className="comments" style={{border: "1px solid black",}}>
-      Labels: 
-      </div>
-      <div className="comments" style={{border: "1px solid black"}}>
-        <div style={{display: "flex", flex: 1, flexDirection: "column" }}>
-          <input type="file" />
-          <div style={{display: "flex", flex: 1, flexDirection: "row-reverse" }}>
-          <button>Cancel</button>
-          <button>Add Attachment</button>
-          </div>
-        </div>
-      </div>
-      <div className="comments" style={{border: "1px solid black"}}>
-        <div style={{display: "flex", flex: 1, flexDirection: "column" }}>
-          <CustomTextArea
-            className="comment-input"
-            placeholder="New Checklist"
-            count={32}
-            value=""
-            style={{marginTop: "0"}}
-          />
-          <div style={{display: "flex", flex: 1, flexDirection: "row-reverse" }}>
-          <button>Cancel</button>
-          <button>Add Checklist</button>
-          </div>
-        </div>
-      </div>
-      <div className="comments" style={{border: "1px solid black",}}>
-          <CustomTextArea
-            className="comment-input"
-            placeholder="New Checklist"
-            count={32}
-            value="Checklist"
-            style={{marginTop: "0"}}
-          />
-        <div><input type="checkbox" /> Label</div>
-        <div><input type="checkbox" /> Label</div>
-        <div><input type="checkbox" /> Label</div>
-        <div><input type="checkbox" /> Label</div>
-        <div><input type="checkbox" /> Label</div>
-        <input type="text" /><button>Add Item</button>
-      </div>
-      <div className="comments">
-        <span>Comments</span>
-        <p></p>
-        {comments.map((comment: any, index: number) => 
-          <div key={index} className="comment">
-            <div style={{border: "1px solid black", padding: "4px"}}>User: {comment.user}</div>
-            <CustomTextArea
-              className="comment-input"
-              placeholder=""
-              count={512}
-              value={comment.text}
-            />
-          </div>
-        )}
-      </div>
-      <div className="textarea-100">
-        <CustomTextArea
-          className="comment-input"
-          placeholder="New Comment"
-          count={512}
-          value=""
-        />
-      </div>
+      <TextareaAutosize
+        className="textarea"
+        maxLength={MAX_TITLE_LENGTH}
+        onChange={descChange}
+        onKeyPress={descKeyPress}
+        placeholder="Description"
+        rows={4}
+        value={desc_}
+      />
       <div className="toolbar">
-        <button className="ml-5" onClick={addComment}>Add Comment</button>
-        <button className="ml-5">Cancel</button>
-      </div>
-      <div className="toolbar" style={{marginTop: "5px"}}>
-        <button className="ml-5" >Save Card</button>
-        <button className="ml-5" >Delete Card</button>
-        <button className="ml-5" >Cancel</button>
+        <button className="first">Attachment</button>
+        <button>Checklist</button>
+        <button>Due Date</button>
+        <button className="last">Label</button>
       </div>
     </div>
   );
 }
 
-type Props = {
-  visible: boolean,
-};
-
-export default KanbanCardView;
+export default CardPanel;

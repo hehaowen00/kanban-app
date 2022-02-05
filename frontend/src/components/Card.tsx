@@ -1,15 +1,17 @@
 import { ReactElement } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./styles/Card.css"
 
-function KanbanCard({ index, card }: Props): ReactElement {
-  const { id, title, description } = card;
+function KanbanCard({ index, id }: Props): ReactElement {
+  const cardObject = useSelector((state: any) => { return { ...state.board.cards[id] }});
+  const { title, description } = cardObject;
+  const dispatch = useDispatch();
 
-  const displayCard = () => {
-    // showCard(id);
+  const handleClick = () => {
+    dispatch({ type: "ShowExistingCard", cardId: id });
   };
 
   return (
@@ -19,7 +21,7 @@ function KanbanCard({ index, card }: Props): ReactElement {
           className="card noselect"
           key={id}
           ref={provided.innerRef}
-          onClick={displayCard}
+          onClick={handleClick}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
@@ -36,7 +38,7 @@ function KanbanCard({ index, card }: Props): ReactElement {
 type Props = {
   key: string;
   index: number;
-  card: any;
+  id: any;
 };
 
 export default KanbanCard;
