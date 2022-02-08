@@ -9,70 +9,41 @@ import Action from "./Actions";
 const EmptyCard = {
   title: "",
   description: "",
-  attachments: [] as any[],
-  comments: [] as any[],
-  checklists: [] as any[],
+  attachments: [],
+  checklists: [],
+  comments: [],
 };
 
 const DefaultCardViewState = {
-  currentListId: null,
-  currentCardId: null,
-  inputs: {
-    comment: "",
-  },
-  isNewCard: false,
-  tempCard: {...EmptyCard},
-  visible: false,
+  cardId: null,
+  listId: null,
+  visible: null,
 };
 
 function CardViewReducer(state: CardViewState = DefaultCardViewState, action: any) {
   switch (action.type) {
     case "CloseCardView": {
       return {
-        currentListId: null,
-        currentCardId: null,
-        isNewCard: false,
-        visible: false,
-        inputs: {
-          "comment": "",
-        },
-        tempCard: EmptyCard,
+        cardId: null,
+        listId: null,
+        visible: null,
       }
     }
-    case "PromptNewCard": {
+    case "NewCardPrompt": {
       const { listId } = action;
       return {
-        ...state,
-        currentListId: listId,
-        isNewCard: true,
-        visible: true,
+        cardId: null,
+        listId,
+        visible: "NewCard",
       }
     }
     case "ShowExistingCard": {
-      const { cardId, cardObject } = action;
+      const { cardId } = action;
       return {
-        ...state,
-        currentCardId: cardId,
-        tempCard: cardObject,
-        visible: true,
+        cardId,
+        listId: null,
+        visible: "ShowCard",
       };
-    }
-    case "UpdateInput": {
-      const { field, value } = action;
-
-      let inputs = { ...state.inputs };
-      inputs[field] = value;
-
-      return { ...state, inputs, };
-    }
-    case "UpdateCardState": {
-      const { patch } = action;
-      let tempCard = {
-        ...state.tempCard,
-        ...patch,
-      };
-
-      return { ...state, tempCard };
     }
     default:
       return state;
@@ -95,6 +66,7 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
       if (list !== undefined) {
         let cardId = uuidV4();
         cards[cardId] = {
+          ...EmptyCard,
           ...card,
         };
         list.cardIds = [...list.cardIds, cardId];
@@ -120,7 +92,8 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
     case "MoveCard": {
       const { srcId, srcIdx, destId, destIdx } = action; 
       let lists = [...state.lists];
-      let srcListIdx = lists.findIndex((list: List) => list.id === srcId);
+
+      const srcListIdx = lists.findIndex((list: List) => list.id === srcId);
 
       if (srcListIdx === -1) {
         return state;
@@ -133,14 +106,13 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
         return { ...state, lists };
       }
 
-      let destListIdx = lists.findIndex((list: List) => list.id === destId);
-      
+      const destListIdx = lists.findIndex((list: List) => list.id === destId);
       if (destListIdx === -1) {
         return state;
       }
 
-      let card = lists[srcListIdx].cardIds.splice(srcIdx, 1);
-      let destCards = insert(lists[destListIdx].cardIds, destIdx, card[0]);
+      const card = lists[srcListIdx].cardIds.splice(srcIdx, 1);
+      const destCards = insert(lists[destListIdx].cardIds, destIdx, card[0]);
 
       const modifiedSrcList = { ...lists[srcListIdx] };
       const modifiedDestList = { ...lists[destListIdx], cardIds: destCards };
@@ -154,6 +126,84 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
       const { srcIdx, destIdx } = action;
       let lists = reorder(state.lists, srcIdx, destIdx);
       return { ...state, lists };
+    }
+    case "AddChecklist": {
+      const { cardId, title } = action;
+
+      let checklists = { ...state.checklists };
+      const id = uuidV4();
+      checklists[id] = {
+        title,
+        items: [],
+      };
+
+      let cards = { ...state.cards };
+      let existing = [...cards[cardId].checklists, id];
+      cards[cardId].checklists = existing;
+
+      return { ...state, cards, checklists, };
+    }
+    case "DeleteChecklist": {
+      const { cardId, checklistId } = action;
+      let cards = { ...state.cards };
+      let checklistsArr = [...cards[cardId].checklists];
+      let idx = checklistsArr.findIndex((id: string) => id === checklistId);
+      if (idx !== -1) {
+        checklistsArr.splice(idx, 1);
+        cards[cardId].checklists = checklistsArr;
+
+        let checklists = { ...state.checklists };
+        delete checklists[checklistId];
+
+        return { ...state, ...cards, checklists };
+      }
+      return state;
+    }
+    case "MoveChecklist": {
+      const { cardId, srcIdx, destIdx } = action;
+
+      let card = { ...state.cards[cardId] };
+      let checklists = reorder(card.checklists, srcIdx, destIdx);
+      card.checklists = checklists;
+
+      let cards = { ...state.cards };
+      cards[cardId] = card;
+
+      return { ...state, cards, };
+    }
+    case "UpdateChecklist": {
+      const { checklistId, patch } = action;
+      let checklist = { ...state.checklists[checklistId], ...patch};
+
+      let checklists = { ...state.checklists };
+      checklists[checklistId] = checklist;
+
+      return { ...state, checklists, };
+    }
+    case "AddChecklistItem": {
+      const { checklistId, item } = action;
+      let newItem = {
+        status: false,
+        description: item,
+      };
+      let checklists = { ...state.checklists };
+      let checklist = checklists[checklistId];
+
+      checklist.items.push(newItem);
+      checklists[checklistId] = checklist;
+
+      return { ...state, checklists };
+    }
+    case "UpdateChecklistItem": {
+      const { checklistId, index, patch } = action;
+
+      let checklists = { ...state.checklists };
+      let checklist = checklists[checklistId];
+      let items = [ ...checklist.items ];
+      items[index] = { ...items[index], ...patch };
+      checklists[checklistId].items = items;
+
+      return { ...state, checklists };
     }
     default: {
       return state;
@@ -171,11 +221,11 @@ function reorder(list: any[], startIdx: number, endIdx: number): any[] {
 
 function insert(arr: any[], idx: number, element: any): any[] {
   return [...arr.slice(0, idx), element, ...arr.slice(idx)];
-}
+} 
 
 const reducer = combineReducers({
   board: BoardReducer,
-  cardView: CardViewReducer,
+  panel: CardViewReducer,
 });
 
 export default createStore(reducer as any, composeWithDevTools());

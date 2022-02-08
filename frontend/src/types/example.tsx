@@ -2,15 +2,23 @@ import { v4 as uuidV4 } from "uuid";
 
 function newExampleBoard()  {
   let cardId = uuidV4();
+  let checklistId = uuidV4();
 
   let cards: any = {};
   cards[cardId] = {
-    id: uuidV4(),
     title: "Hello, World!",
     description: "",
     attachments: [] as any[],
+    checklists: [checklistId],
     comments: [] as any[],
-    checklists: [] as any[],
+  };
+
+  let checklists: any = {};
+  checklists[checklistId] = {
+    title: "Checklist 1",
+    items: [
+      { status: false, description: "Item 1", },
+    ]
   };
 
   return {
@@ -24,6 +32,9 @@ function newExampleBoard()  {
         cardIds: [cardId]
       }
     ],
+    attachments: {
+    },
+    checklists,
   };
 }
 

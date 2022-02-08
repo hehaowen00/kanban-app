@@ -5,8 +5,8 @@
   max-width: 21.25rem;
 }
 
-.list-col + .list-col {
-  margin-left: 10px;
+.list-col {
+  margin-right: 10px;
 }
 
 .list {
@@ -16,7 +16,7 @@
   background: white;
   border-radius: 5px;
 
-  padding: 8px 5px 3px 5px;
+  padding: 8px 5px 5px 5px;
   white-space: nowrap;
   max-height: 98%;
 
@@ -90,9 +90,20 @@
   border-radius: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
-  padding: 0px 5px;
+  padding: 0;
 
   display: flex;
   flex-direction: column;
   flex-shrink: 1;
+}
+
+.list-input {
+  border: none;
+  font-family: "Roboto";
+  border-radius: 0px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0px;
+  resize: none;
+  border-bottom: 1px solid black;
 }

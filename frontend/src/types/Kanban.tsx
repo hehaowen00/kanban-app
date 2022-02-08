@@ -1,10 +1,7 @@
 export type CardViewState = {
-  currentListId: string | null,
-  currentCardId: string | null,
-  inputs: any,
-  isNewCard: boolean,
-  visible: boolean,
-  tempCard: Card,
+  cardId: string | null,
+  listId: string | null,
+  visible: "NewCard" | "ShowCard" | null,
 };
 
 export type Board = {
@@ -12,6 +9,8 @@ export type Board = {
   name: string;
   cards: Record<string, Card>,
   lists: List[];
+  attachments: Record<string, Attachment>,
+  checklists: Record<string, Checklist>,
 };
 
 export type List = {
@@ -24,23 +23,27 @@ export type List = {
 type PartialCard = {
   title?: string;
   description?: string;
-  checklists?: ChecklistItem[];
-  attachments?: Attachment[];
   comments?: Comment[];
+  attachments?: string[];
+  checklists?: string[];
 };
 
 export type Card = {
   title: string;
   description: string;
-  checklists: ChecklistItem[];
-  attachments: Attachment[];
   comments: Comment[];
+  attachments: string[];
+  checklists: string[];
+};
+
+export type Checklist = {
+  title: string,
+  items: ChecklistItem[],
 };
 
 export type ChecklistItem = {
-  id: number;
-  description: string;
   status: boolean;
+  description: string;
 };
 
 export type Comment = {

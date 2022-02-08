@@ -1,17 +1,22 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import "./styles/Navbar.css"
 
 function Navbar({ name } : Props): ReactElement {
+  const [name_, setName_] = useState(name);
+
+  const onChange = () => {
+  }
+
   return (
     <div className="navbar">
       <div className="left">
-        <input className="title-input" value={name} />
-        <button>Save</button>
+        <input className="title-input" value={name_} />
+        <button className="default">Save</button>
       </div>
       <div className="center">
       </div>
       <div className="right">
-        <button>Dashboard</button>
+        <button className="default">Dashboard</button>
       </div>
     </div>
   );

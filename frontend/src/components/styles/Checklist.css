@@ -1,0 +1,135 @@
+.checklists > * {
+  margin-bottom: 10px;
+}
+
+.checklist {
+  background: white;
+  border-radius: 5px;
+  padding: 2px 8px 4px 8px;
+}
+
+.checklist-items {
+  display: block;
+  position: relative;
+  margin-top: 10px;
+}
+
+.checklist-items > .item {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.menu-mr-b {
+  margin-bottom: 0;
+}
+
+.item {
+  border: 1px solid black;
+  padding: 2px 4px 2px 1px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-desc > .default {
+  padding: 2px 4px;
+}
+
+.checked {
+  text-decoration: line-through;
+  text-decoration-thickness: 0.1rem !important;
+  text-decoration-color: black !important;
+}
+
+.item-row {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.item-row > .check {
+  margin-top: 2px;
+  min-width: 20px;
+}
+
+.item-row > .item-desc {
+  display: block;
+  flex-grow: 100;
+  margin-left: 5px;
+}
+
+.item > .menu {
+  margin-top: 2px;
+}
+
+.new-item {
+  margin-bottom: 0 !important;
+}
+
+.new-item-menu > * {
+  margin-left: 5px;
+}
+
+.header > .first {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4px;
+}
+
+.right-sec {
+  display: block;
+  width: 100%;
+  text-align: right;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.right-sec > * {
+  margin-left: 5px;
+}
+
+.full {
+  width: 100%;
+}
+
+.handle {
+  border: 1px solid white;
+  border-radius: 2px;
+
+  display: block;
+  padding: 4px 8px 4.5px 8px;
+
+  white-space: pre-wrap;
+  word-wrap: break-word;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  border: 1px solid black;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.div-btn {
+  cursor: pointer;
+}
+
+.pad-reduced {
+  padding: 5px 8px !important;
+}
+
+.padding {
+  padding: 4px 8px !important;
+}
+
+.no-border {
+  border: none;
+}
+
+.no-margin-left {
+  margin-left: 0px !important;
+}

@@ -17,6 +17,12 @@ function KanbanAddList({ addNewList }: Props): ReactElement {
   const [toggle, setToggle] = useState(false);
   const [content, setContent] = useState("");
 
+  let inputRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  });
+
   const handleClick = () => {
     setToggle(!toggle);
   };
@@ -29,12 +35,6 @@ function KanbanAddList({ addNewList }: Props): ReactElement {
   const handleUpdate = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(event.target.value);
   };
-
-  let inputRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  });
 
   const createList = () => {
     if (content !== "") {
@@ -56,12 +56,20 @@ function KanbanAddList({ addNewList }: Props): ReactElement {
     }
   };
 
+  let classes = ["list", "add-list"];
+
+  if (toggle) {
+    classes.push("active");
+  }
+
+  let v = classes.join(" ");
+
   return (
     <div className="list-col">
-      <div className="list add-list">
+      <div className={v} onClick={toggle ? undefined : handleClick }>
         {!toggle && (
-          <div className="list-header flat noselect" onClick={handleClick}>
-            {"Add List"}
+          <div className="list-header flat noselect" >
+              {"Add List"}
           </div>
         )}
         {toggle && (
@@ -77,8 +85,8 @@ function KanbanAddList({ addNewList }: Props): ReactElement {
               onPaste={handlePaste}
             />
             <div className="btn noselect">
-              <button className="link" onClick={createList}>Add List</button>
-              <button className="link" onClick={cancelNewList}>Cancel</button>
+              <button className="default" onClick={createList}>Add List</button>
+              <button className="default" onClick={cancelNewList}>Cancel</button>
             </div>
           </Fragment>
         )}

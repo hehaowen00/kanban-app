@@ -2,30 +2,30 @@ import { ReactElement } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 import { Card } from "../types/Kanban";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 import "./styles/Card.css"
-import CustomTextArea from "./custom/CustomTextArea";
+import TextareaAutosize from "react-autosize-textarea/lib";
 
 function AddCard({  }: Props): ReactElement {
+  const dispatch = useDispatch();
 
-  const displayCard = () => {
-    // showCard(id);
+  const addCard = () => {
   };
 
   return (
-        <div
-          className="card noselect"
-        >
-          <div className="card-title">
-          <CustomTextArea
-          className=""
-          placeholder="New Card"
-          count={512}
-          value={""}
-          />
-          </div>
-        </div>
+    <div
+      className="card noselect"
+    >
+      <div className="card-title">
+      <TextareaAutosize
+      className=""
+      placeholder="New Card"
+      maxLength={512}
+      value={""}
+      />
+      </div>
+    </div>
   );
 }
 
