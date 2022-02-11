@@ -194,6 +194,20 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
 
       return { ...state, checklists };
     }
+    case "DeleteChecklistItem": {
+      const { checklistId, index } = action;
+      console.log(action);
+      let checklists = { ...state.checklists };
+      let checklist = checklists[checklistId];
+
+      let items = [ ...checklist.items ];
+      items.splice(index);
+
+      checklist.items = [...items];
+      checklists[checklistId] = { ...checklist };
+
+      return { ...state, checklists };
+    }
     case "UpdateChecklistItem": {
       const { checklistId, index, patch } = action;
 

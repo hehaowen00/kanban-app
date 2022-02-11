@@ -67,6 +67,12 @@ export type AddChecklistItem = {
   item: string,
 };
 
+export type DeleteChecklistItem = {
+  type: "DeleteChecklistItem",
+  checklistId: string,
+  index: number,
+};
+
 export type UpdateChecklistItem = {
   type: "UpdateChecklistItem",
   checklistId: string,
@@ -78,7 +84,7 @@ type BoardAction = RenameBoard;
 type ListAction = NewList | MoveList;
 type CardAction = MoveCard | NewCard | UpdateCard;
 type ChecklistAction = AddChecklist | DeleteChecklist | MoveChecklist | UpdateChecklist | AddChecklistItem;
-type ChecklistItemAction = UpdateChecklistItem;
+type ChecklistItemAction = DeleteChecklistItem | UpdateChecklistItem;
 type Action = BoardAction | ListAction | CardAction | ChecklistAction | ChecklistItemAction;
 
 export default Action;

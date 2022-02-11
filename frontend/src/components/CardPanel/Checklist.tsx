@@ -160,7 +160,7 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
         )}
       <div className="checklist-items">
         {items.map((item: any, index: number) => (
-          <ChecklistItem index={index} checklistId={id} item={item} />
+          <ChecklistItem key={index} index={index} checklistId={id} item={item} />
         ))}
         {isActive && (
           <div className="item new-item">

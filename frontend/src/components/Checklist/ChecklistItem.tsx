@@ -23,13 +23,16 @@ function ChecklistItem({checklistId, index, item}: any) {
   };
 
   const toggleStatus = () => {
-    console.log("toggle");
     dispatch({ type: "UpdateChecklistItem", checklistId, index, patch: { status: !status } });
+  };
+
+  const deleteItem = () => {
+    console.log("delete");
+    dispatch({ type: "DeleteChecklistItem", checklistId, index });
   };
 
   const onBlur = () => {
     saveDesc();
-    setVisible(false);
   };
 
   const onFocus = () => {
@@ -45,7 +48,6 @@ function ChecklistItem({checklistId, index, item}: any) {
     if (event.key === "Enter" && desc_.trim() !== "") {
       event.preventDefault();
       saveDesc();
-      inputRef.current?.blur();
     }
     if (event.key === "Escape") {
       setDesc_(description);
@@ -72,7 +74,6 @@ function ChecklistItem({checklistId, index, item}: any) {
             value={desc_}
             onChange={onChange}
             onFocus={onFocus}
-            onBlur={onBlur}
             onKeyDown={onKeyDown}
             spellCheck={false}
             style={{
@@ -83,7 +84,10 @@ function ChecklistItem({checklistId, index, item}: any) {
       </div>
       {visible && (
         <div className="menu">
-          <button className="default right">Delete Item</button>
+          <button
+            className="default right"
+            onClick={deleteItem}
+           >Delete Item</button>
         </div>
         )}
     </div>
