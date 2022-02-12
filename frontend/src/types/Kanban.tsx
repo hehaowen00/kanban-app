@@ -20,14 +20,6 @@ export type List = {
 };
 
 
-type PartialCard = {
-  title?: string;
-  description?: string;
-  comments?: Comment[];
-  attachments?: string[];
-  checklists?: string[];
-};
-
 export type Card = {
   title: string;
   description: string;
@@ -47,14 +39,12 @@ export type ChecklistItem = {
 };
 
 export type Comment = {
-  id: number;
-  author: number;
-  content: string;
-  date: Date;
+  userId: string;
+  timestamp: number;
+  text: string;
 };
 
 export type Attachment = {
-  id: number;
   author: string,
   filename: string;
   link: string;

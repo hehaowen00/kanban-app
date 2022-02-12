@@ -133,3 +133,7 @@
 .no-margin-left {
   margin-left: 0px !important;
 }
+
+.comment-view > * {
+  margin-bottom: 8px; 
+}

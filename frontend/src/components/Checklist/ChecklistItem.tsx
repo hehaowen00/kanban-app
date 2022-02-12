@@ -19,7 +19,6 @@ function ChecklistItem({checklistId, index, item}: any) {
       dispatch({ type: "UpdateChecklistItem", checklistId, index, patch: { description } });
     }
     setDesc_(description);
-    setVisible(false);
   };
 
   const toggleStatus = () => {
@@ -48,10 +47,14 @@ function ChecklistItem({checklistId, index, item}: any) {
     if (event.key === "Enter" && desc_.trim() !== "") {
       event.preventDefault();
       saveDesc();
+      inputRef.current?.blur();
+      setVisible(false);
     }
     if (event.key === "Escape") {
+      event.preventDefault();
       setDesc_(description);
       inputRef.current?.blur();
+      setVisible(false);
     }
   };
 

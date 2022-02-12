@@ -80,11 +80,21 @@ export type UpdateChecklistItem = {
   patch: Partial<ChecklistItem>,
 };
 
+export type AddComment = {
+  type: "AddComment",
+  userId: string,
+  cardId: string,
+  text: string,
+};
+
 type BoardAction = RenameBoard;
-type ListAction = NewList | MoveList;
+type ListAction =  MoveList | NewList;
 type CardAction = MoveCard | NewCard | UpdateCard;
-type ChecklistAction = AddChecklist | DeleteChecklist | MoveChecklist | UpdateChecklist | AddChecklistItem;
-type ChecklistItemAction = DeleteChecklistItem | UpdateChecklistItem;
-type Action = BoardAction | ListAction | CardAction | ChecklistAction | ChecklistItemAction;
+type CommentAction = AddComment;
+
+type ChecklistAction = AddChecklist | DeleteChecklist | MoveChecklist | UpdateChecklist;
+type ChecklistItemAction = AddChecklistItem | DeleteChecklistItem | UpdateChecklistItem;
+
+type Action = BoardAction | ListAction | CardAction | ChecklistAction | ChecklistItemAction | CommentAction;
 
 export default Action;

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
 import AddChecklist from "./CardPanel/AddChecklist";
-import AddAttachment from "./CardPanel/AddAttachment";
+import Comments from "./CardPanel/Comments";
 
 import Checklist from "./CardPanel/Checklist";
 
@@ -36,6 +36,7 @@ function CardPanel() {
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
   const titleBlur = () => {
+    setTitle_(title);
     setTitleFocused(false);
   };
 
@@ -135,6 +136,7 @@ function CardPanel() {
           className="default font-90 font-600"
           maxLength={MAX_TITLE_LENGTH}
           onChange={titleChange}
+          onBlur={titleBlur}
           onFocus={titleFocus}
           onKeyDown={titleKeyPress}
           placeholder="Title"
@@ -169,19 +171,6 @@ function CardPanel() {
         spellCheck={false}
         value={desc_}
       />
-      <div className="menu">
-        <button
-          className="default"
-        >
-          Add Attachment
-        </button>
-        <button className="default">
-          Add Label
-        </button>
-        <button className="default">
-          Due Date
-        </button>
-      </div>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable
         droppableId="checklists"
@@ -219,30 +208,7 @@ function CardPanel() {
         )}
         </Droppable>
       </DragDropContext>
-      <div className="comments">
-        <span style={{textAlign: "left"}}><b>Comments</b></span>
-        <div className="comment-view">
-          {comments.map((comment: any, index: number) => 
-            <div key={index} className="comment">
-              <div className="header">User: {comment.user}</div>
-              <div className="body">
-              {comment.text}
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="textarea-100">
-          <TextareaAutosize
-            className="default font-85 font-500"
-            placeholder="New Comment"
-            maxLength={512}
-          />
-        </div>
-        <div className="menu">
-          <button className="default ml-5">Add Comment</button>
-          <button className="default ml-5">Cancel</button>
-        </div>
-      </div>
+      <Comments cardId={cardId} comments={comments} />
     </div>
     </Fragment>
   );

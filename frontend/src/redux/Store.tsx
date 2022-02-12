@@ -219,6 +219,16 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
 
       return { ...state, checklists };
     }
+    case "AddComment": {
+      const { userId, cardId, text } = action;
+      let cards = { ...state.cards };
+      let comment_  = { userId, timestamp: Date.now(), text };
+
+      let comments = [ ...cards[cardId].comments, comment_ ];
+      cards[cardId].comments = comments;
+
+      return { ...state, cards };
+    }
     default: {
       return state;
     }
