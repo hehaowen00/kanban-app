@@ -3,7 +3,7 @@ import { createStore, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import { Board, CardViewState, List } from "../types/Kanban";
-import ExampleBoard from "../types/example";
+import ExampleBoard from "../types/Example";
 import Action from "./Actions";
 
 const EmptyCard = {
@@ -57,7 +57,7 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
       return { ...state, name };
     }
     case "NewCard": {
-      const { listId, card } = action;
+      const { listId, title } = action;
 
       let lists = [...state.lists];
       let cards = { ...state.cards };
@@ -67,7 +67,7 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
         let cardId = uuidV4();
         cards[cardId] = {
           ...EmptyCard,
-          ...card,
+          title,
         };
         list.cardIds = [...list.cardIds, cardId];
       }
@@ -75,14 +75,12 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
       return { ...state, cards, lists };
     }
     case "UpdateCard": {
-      const { cardId, patch } = action;
+      const { id, delta } = action;
 
       let cards = { ...state.cards };
-      cards[cardId] = { ...cards[cardId], ...patch };
+      cards[id] = { ...cards[id], ...delta };
 
-      let stateM = { ...state, cards: { ...cards} };
-
-      return stateM;
+      return { ...state, cards: { ...cards} };
     }
     case "NewList": {
       const { name } = action;
@@ -127,7 +125,19 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
       let lists = reorder(state.lists, srcIdx, destIdx);
       return { ...state, lists };
     }
-    case "AddChecklist": {
+    case "UpdateList": {
+      const { id, delta } = action;
+      let lists = [ ...state.lists ];
+      let idx = lists.findIndex((list) => list.id === id);
+
+      if (idx !== -1) {
+        lists[idx] = { ...lists[idx], ...delta };
+        return { ...state, lists };
+      }
+
+      return state;
+    }
+    case "NewChecklist": {
       const { cardId, title } = action;
 
       let checklists = { ...state.checklists };
@@ -172,15 +182,15 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
       return { ...state, cards, };
     }
     case "UpdateChecklist": {
-      const { checklistId, patch } = action;
-      let checklist = { ...state.checklists[checklistId], ...patch};
+      const { checklistId, delta } = action;
+      let checklist = { ...state.checklists[checklistId], ...delta};
 
       let checklists = { ...state.checklists };
       checklists[checklistId] = checklist;
 
       return { ...state, checklists, };
     }
-    case "AddChecklistItem": {
+    case "NewChecklistItem": {
       const { checklistId, item } = action;
       let newItem = {
         status: false,
@@ -196,7 +206,6 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
     }
     case "DeleteChecklistItem": {
       const { checklistId, index } = action;
-      console.log(action);
       let checklists = { ...state.checklists };
       let checklist = checklists[checklistId];
 
@@ -209,17 +218,18 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
       return { ...state, checklists };
     }
     case "UpdateChecklistItem": {
-      const { checklistId, index, patch } = action;
+      const { checklistId, index, delta } = action;
 
       let checklists = { ...state.checklists };
       let checklist = checklists[checklistId];
       let items = [ ...checklist.items ];
-      items[index] = { ...items[index], ...patch };
+
+      items[index] = { ...items[index], ...delta };
       checklists[checklistId].items = items;
 
       return { ...state, checklists };
     }
-    case "AddComment": {
+    case "NewComment": {
       const { userId, cardId, text } = action;
       let cards = { ...state.cards };
       let comment_  = { userId, timestamp: Date.now(), text };

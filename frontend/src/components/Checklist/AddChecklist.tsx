@@ -1,7 +1,8 @@
-import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
+import { NewChecklist } from "../../redux/Creators";
 
 const MAX_CHECKLIST_TITLE_LENGTH = 128;
 
@@ -17,7 +18,7 @@ function AddChecklist ({ cardId, close }: any) {
     }
   }, []);
 
-  const titleChange = (event: any) => {
+  const titleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     let { value } = event.target;
     if (value === "" || value.trim() !== "") {
       setTitle(value);
@@ -33,7 +34,7 @@ function AddChecklist ({ cardId, close }: any) {
 
   const addList = () => {
     if (title.trim() !== "") {
-      dispatch({ type: "AddChecklist", cardId, title });
+      dispatch(NewChecklist(cardId, title));
       setTitle("");
       close();
     }

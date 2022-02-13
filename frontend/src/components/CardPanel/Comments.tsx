@@ -1,6 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import TextareaAutosize from "react-autosize-textarea";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import { NewComment } from "../../redux/Creators";
 
 function Comments({ cardId, comments }: any) {
   const dispatch = useDispatch();
@@ -9,7 +10,8 @@ function Comments({ cardId, comments }: any) {
   const [comment, setComment] = useState("");
 
   const addComment = () => {
-    dispatch({ type: "AddComment", cardId, userId: "testing", text: comment.trim() });
+    let action = NewComment("testing", cardId, comment.trim());
+    dispatch(action);
   };
 
   const onBlur = () => {
@@ -22,7 +24,7 @@ function Comments({ cardId, comments }: any) {
     setVisible(true);
   };
 
-  const onChange = (event: any) => {
+  const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
   };
 
@@ -41,7 +43,7 @@ function Comments({ cardId, comments }: any) {
 
   return (
     <div className="comments">
-      <span className="font-90 font-600" style={{textAlign: "left"}}>
+      <span className="font-90 font-600 text-left">
         Comments
       </span>
       <div className="comment-view">

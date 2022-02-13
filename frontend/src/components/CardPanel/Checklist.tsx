@@ -1,29 +1,39 @@
-import { KeyboardEvent, useEffect, useRef, useState } from "react";
-import TextareaAutosize from "react-autosize-textarea";
-import { useDispatch, useSelector } from "react-redux";
+import { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { useDispatch, useSelector } from "react-redux";
 
 import ChecklistItem from "../Checklist/ChecklistItem";
+import TextareaAutosize from "react-autosize-textarea";
 import "../styles/Checklist.css";
 
-const MAX_CHECKLIST_TITLE_LENGTH = 128;
-const MAX_CHECKLIST_ITEM_LENGTH = 512;
+import {
+  MAX_CHECKLIST_TITLE_LENGTH,
+  MAX_CHECKLIST_ITEM_LENGTH,
+} from "../../types/Limits";
+import { NewChecklistItem, DeleteChecklist } from "../../redux/Creators";
 
 function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
   const dispatch = useDispatch();
-
   const titleRef = useRef<HTMLTextAreaElement>(null);
-  const [titleState, setTitleState] = useState("show");
 
   const { title, items } = useSelector((state: any) => {
     return state.board.checklists[id];
   });
 
-  const [title_, setTitle_] = useState(title);
-  const [item, setItem] = useState("");
+  const [state, setState] = useState({
+    titleInput: title,
+    itemInput: "",
+  });
+
+  const updateState = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setState({ ...state, [name]: value, });
+  };
+
+  const [isEditing, setEditing] = useState(false);
 
   useEffect(() => {
-    if (titleState === "editing") {
+    if (isEditing) {
       if (titleRef.current !== null) {
         titleRef.current.focus();
         let length: any = titleRef.current.value.length;
@@ -31,26 +41,19 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
         titleRef.current.selectionEnd = length;
       }
     }
-  }, [titleState]);
+  }, [isEditing]);
 
   const titleBlur = () => {
-    setTitleState("show");
+    setEditing(false);
   };
 
   const titleClick = () => {
-    setTitleState("editing");
+    setEditing(true);
     setActiveList(-1);
   };
 
-  const titleChange = (event: any) => {
-    let { value } = event.target;
-    if (value === "" || value.trim().length > 0) {
-      setTitle_(event.target.value);
-    }
-  };
-
-  const titleCancelBtn = () => {
-    setTitleState("show");
+  const titleCancel = () => {
+    setEditing(false);
   };
 
   const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -62,19 +65,22 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
   };
 
   const saveTitle = () => {
-    if (title_ !== "") {
-      dispatch({ type: "UpdateChecklist", checklistId: id, patch: { title: title_ }});
+    let value = state.titleInput;
+    if (value.length !== 0) {
+      dispatch({ type: "UpdateChecklist", checklistId: id, delta: { title: value }});
     } else {
-      setTitle_(title);
+      setState({ ...state, titleInput: title });
     }
-    setTitleState("show");
+    setEditing(true);
   };
 
   const deleteChecklist = () => {
-    dispatch({ type: "DeleteChecklist", cardId, checklistId: id });
+    let action = DeleteChecklist(cardId, id);
+    dispatch(action);
   };
 
   const itemRef = useRef<HTMLTextAreaElement>(null);
+
   useEffect(() => {
     if (isActive) {
       itemRef.current?.focus();
@@ -82,15 +88,13 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
   }, [isActive]);
 
   const addListItem = () => {
-    if (item.trim() !== "") {
-      dispatch({ type: "AddChecklistItem", checklistId: id, item: item.trim() });
-      setItem("");
+    let newItem = state.itemInput.trim();
+    if (newItem !== "") {
+      let action = NewChecklistItem(id, newItem);
+      dispatch(action);
+      setState({ ...state, itemInput: "", });
       setActiveList(-1);
     }
-  };
-
-  const itemUpdate = (event: any) => {
-    setItem(event.target.value);
   };
 
   const itemKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -108,37 +112,39 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
         ref={provided.innerRef}
         {...provided.draggableProps}
       >
-        {titleState === "show" && (
-          <div className="header">
+        <div className="header">
+        {!isEditing && (
+          <Fragment>
             <div
               className="first handle font-90 font-600 margin-0"
               onClick={titleClick}
               {...provided.dragHandleProps}
             >
-            {title_}
+            {state.titleInput}
             </div>
             <div className="right-sec">
                 <button
                   className="default"
                   onClick={deleteChecklist}
                 >
-                  Delete
+                  Delete 
                 </button>
             </div>
-          </div>
+          </Fragment>
         )}
-        {titleState === "editing" && (
-          <div className="header">
+        {isEditing && (
+          <Fragment>
             <TextareaAutosize
               ref={titleRef}
+              name="titleInput"
               className="first default font-90 font-600 margin-0"
               maxLength={MAX_CHECKLIST_TITLE_LENGTH}
               placeholder="Checklist"
-              value={title_}
+              value={state.titleInput}
               spellCheck={false}
 
               onBlur={titleBlur}
-              onChange={titleChange}
+              onChange={updateState}
               onFocus={titleClick}
               onKeyPress={titleKeyPress}
             />
@@ -151,13 +157,14 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
               </button>
               <button
                 className="default"
-                onClick={titleCancelBtn}
+                onClick={titleCancel}
               >
                 Cancel
               </button>
             </div>
-          </div>
+          </Fragment>
         )}
+      </div>
       <div className="checklist-items">
         {items.map((item: any, index: number) => (
           <ChecklistItem key={index} index={index} checklistId={id} item={item} />
@@ -168,12 +175,13 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
               <div className="item-desc">
                 <TextareaAutosize
                   ref={itemRef}
+                  name="itemInput"
                   className="default font-85"
                   maxLength={MAX_CHECKLIST_ITEM_LENGTH}
                   placeholder="New Item"
-                  value={item}
+                  value={state.itemInput}
 
-                  onChange={itemUpdate}
+                  onChange={updateState}
                   onKeyPress={itemKeyPress}
                 />
               </div>

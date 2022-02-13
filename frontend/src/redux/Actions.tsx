@@ -1,14 +1,31 @@
-import { Card, Checklist, ChecklistItem } from "../types/Kanban";
+import { Card, Checklist, ChecklistItem, List } from "../types/Kanban";
 
 export type RenameBoard = {
   type: "RenameBoard",
   name: string,
 };
 
+export type NewCard = {
+  type: "NewCard",
+  listId: string,
+  title: string,
+};
+
+export type NewList = {
+  type: "NewList",
+  name: string,
+};
+
 export type UpdateCard = {
   type: "UpdateCard",
-  cardId: string,
-  patch: Partial<Card>,
+  id: string,
+  delta: Partial<Card>,
+};
+
+export type UpdateList = {
+  type: "UpdateList",
+  id: string,
+  delta: Partial<List>,
 };
 
 export type MoveCard = {
@@ -25,19 +42,8 @@ export type MoveList = {
   destIdx: number,
 };
 
-export type NewCard = {
-  type: "NewCard",
-  listId: string,
-  card: Card,
-};
-
-export type NewList = {
-  type: "NewList",
-  name: string,
-};
-
-export type AddChecklist = {
-  type: "AddChecklist",
+export type NewChecklist = {
+  type: "NewChecklist",
   cardId: string,
   title: string,
 };
@@ -58,11 +64,11 @@ export type MoveChecklist = {
 export type UpdateChecklist = {
   type: "UpdateChecklist",
   checklistId: string,
-  patch: Partial<Checklist>,
+  delta: Partial<Checklist>,
 };
 
-export type AddChecklistItem = {
-  type: "AddChecklistItem",
+export type NewChecklistItem = {
+  type: "NewChecklistItem",
   checklistId: string,
   item: string,
 };
@@ -77,23 +83,23 @@ export type UpdateChecklistItem = {
   type: "UpdateChecklistItem",
   checklistId: string,
   index: number,
-  patch: Partial<ChecklistItem>,
+  delta: Partial<ChecklistItem>,
 };
 
-export type AddComment = {
-  type: "AddComment",
+export type NewComment = {
+  type: "NewComment",
   userId: string,
   cardId: string,
   text: string,
 };
 
 type BoardAction = RenameBoard;
-type ListAction =  MoveList | NewList;
+type ListAction =  MoveList | NewList | UpdateList;
 type CardAction = MoveCard | NewCard | UpdateCard;
-type CommentAction = AddComment;
+type CommentAction = NewComment;
 
-type ChecklistAction = AddChecklist | DeleteChecklist | MoveChecklist | UpdateChecklist;
-type ChecklistItemAction = AddChecklistItem | DeleteChecklistItem | UpdateChecklistItem;
+type ChecklistAction = NewChecklist | DeleteChecklist | MoveChecklist | UpdateChecklist;
+type ChecklistItemAction = NewChecklistItem | DeleteChecklistItem | UpdateChecklistItem;
 
 type Action = BoardAction | ListAction | CardAction | ChecklistAction | ChecklistItemAction | CommentAction;
 

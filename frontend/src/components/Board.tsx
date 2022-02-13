@@ -1,8 +1,8 @@
-import { Fragment, ReactElement, useState } from "react";
+import { Fragment, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
-import { Board, List } from "../types/Kanban";
+import { List } from "../types/Kanban";
 import KanbanList from "./List";
 import KanbanAddList from "./AddList";
 import CardPanel from "./CardPanel";
@@ -10,13 +10,15 @@ import NewCardPanel from "./NewCardPanel";
 import Navbar from "./Navbar";
 
 import "./styles/Board.css";
+import { MoveCard, MoveList } from "../redux/Creators";
 
 function KanbanBoard(): ReactElement {
-  const board = useSelector((state: any)  => state.board);
-  const cardView = useSelector((state: any) => state.panel);
   const dispatch = useDispatch();
 
+  const board = useSelector((state: any)  => state.board);
   const lists = board.lists;
+
+  const cardView = useSelector((state: any) => state.panel);
   const { visible } = cardView;
 
   const handleDragEnd = (event: DropResult) => {
@@ -36,8 +38,8 @@ function KanbanBoard(): ReactElement {
     }
 
     const lookup = {
-      "droppableCards": () => dispatch({ type: "MoveCard", srcId, destId, srcIdx, destIdx }),
-      "droppableLists": () => dispatch({ type: "MoveList", srcIdx, destIdx }),
+      "droppableCards": () => dispatch(MoveCard(srcId, destId, srcIdx, destIdx)),
+      "droppableLists": () => dispatch(MoveList(srcIdx, destIdx)),
     } as any;
 
     lookup[event.type]();

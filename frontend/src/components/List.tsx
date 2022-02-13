@@ -1,23 +1,21 @@
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, ReactElement, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea/lib";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
+import { UpdateList } from "../redux/Creators";
 
 import KanbanCard from "./Card";
 
 import "./styles/List.css";
 
 function KanbanList({ index, list }: Props): ReactElement {
-  const { id, name, cardIds } = list;
   const dispatch = useDispatch();
+  const ref = useRef<HTMLTextAreaElement>(null);
 
-  const handleAddItem = () => {
-    dispatch({ type: "NewCardPrompt", listId: id }); 
-  };
-
+  const { id, name, cardIds } = list;
   const [visible, setVisible] = useState(false);
 
-  const ref = useRef<HTMLTextAreaElement>(null);
+  let [listInput, setListInput] = useState(name);
 
   useEffect(() => {
     if (!visible) {
@@ -26,20 +24,50 @@ function KanbanList({ index, list }: Props): ReactElement {
 
     if (ref.current !== null) {
       ref.current.focus();
-      let length: any = ref.current.value.length;
+      let { length } = ref.current.value;
       ref.current.selectionStart = length;
       ref.current.selectionEnd = length;
     }
   }, [visible]);
 
-  const showInput = () => {
+  const handleAddItem = () => {
+    dispatch({ type: "NewCardPrompt", listId: id }); 
+  };
+
+  const updateList = (payload: any) => {
+    dispatch(UpdateList(id, payload));
+  };
+
+  const onBlur = () => {
+    setVisible(false);
+  }
+
+  const onClick = () => {
     setVisible(true);
   }
 
+  const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    let { value } = event.target;
+    setListInput(value);
+  };
 
-  const blur = () => {
-    setVisible(false);
-  }
+  const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      let trimmed = listInput.trim();
+      if (trimmed.length !== 0) {
+        updateList({ name: trimmed });
+      }
+      setVisible(false);
+    }
+  };
+
+  const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Escape") {
+      setListInput(name);
+      setVisible(false);
+    }
+  };
 
   return (
     <Draggable key={id} draggableId={id} index={index}>
@@ -55,7 +83,7 @@ function KanbanList({ index, list }: Props): ReactElement {
               {!visible &&
               <div
                 className="header-row"
-                onClick={showInput}
+                onClick={onClick}
               >
                 {name}
               </div>}
@@ -63,8 +91,11 @@ function KanbanList({ index, list }: Props): ReactElement {
               <TextareaAutosize 
                 ref={ref}
                 className="default font-85 font-600"
-                onBlur={blur}
-                value={name}
+                onBlur={onBlur}
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                onKeyPress={onKeyPress}
+                value={listInput}
               />}
             </div>
             <Droppable droppableId={id} type="droppableCards">

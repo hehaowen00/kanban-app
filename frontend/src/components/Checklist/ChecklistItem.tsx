@@ -1,61 +1,76 @@
-import { KeyboardEvent, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 import { useDispatch } from "react-redux";
 import "../styles/Checklist.css";
 
-const MAX_CHECKLIST_ITEM_LENGTH = 512;
+import { MAX_CHECKLIST_ITEM_LENGTH } from "../../types/Limits";
+import { DeleteChecklistItem, UpdateChecklistItem } from "../../redux/Creators";
 
 function ChecklistItem({checklistId, index, item}: any) {
   const dispatch = useDispatch();
-
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const { status, description } = item;
-  const [visible, setVisible] = useState(false);
-  const [desc_, setDesc_] = useState(description);
 
-  const saveDesc = () => {
-    let description = desc_;
-    if (description.trim() !== "") {
-      dispatch({ type: "UpdateChecklistItem", checklistId, index, patch: { description } });
-    }
-    setDesc_(description);
+  const { status, description } = item;
+  const [state, setState] = useState({
+    desc: description,
+    visible: false,
+  });
+
+  const deleteItem = () => {
+    let action = DeleteChecklistItem(checklistId, index);
+    dispatch(action);
   };
 
   const toggleStatus = () => {
-    dispatch({ type: "UpdateChecklistItem", checklistId, index, patch: { status: !status } });
+    let action = UpdateChecklistItem(checklistId, index, { status: !status });
+    dispatch(action);
   };
 
-  const deleteItem = () => {
-    console.log("delete");
-    dispatch({ type: "DeleteChecklistItem", checklistId, index });
+  const updateDescription = () => {
+    let description = state.desc.trim();
+    if (description.length !== 0) {
+      let action = UpdateChecklistItem(checklistId, index, { description });
+      dispatch(action);
+    }
   };
 
-  const onBlur = () => {
-    saveDesc();
+  const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = event.target;
+    setState({ ...state, desc: value, });
   };
 
   const onFocus = () => {
-    setVisible(true);
-  };
-
-  const onChange = (event: any) => {
-    const title = event.target.value;
-    setDesc_(title);
+    setState({ ...state, visible: true, });
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter" && desc_.trim() !== "") {
-      event.preventDefault();
-      saveDesc();
-      inputRef.current?.blur();
-      setVisible(false);
-    }
     if (event.key === "Escape") {
       event.preventDefault();
-      setDesc_(description);
       inputRef.current?.blur();
-      setVisible(false);
+      setState({ ...state, desc: description, visible: false, });
     }
+  };
+
+  const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      let desc = state.desc.trim();
+      if (desc.length !== 0) {
+        updateDescription();
+        inputRef.current?.blur();
+        setState({ ...state, visible: false, });
+      }
+    }
+  };
+
+  let classes = ["default", "font-85", "font-600"]
+
+  if (status && !state.visible) {
+    classes.push("checked");
+  }
+
+  const style = {
+    border: (state.visible ? "1px solid black" : "1px solid white")
   };
 
   return (
@@ -71,21 +86,22 @@ function ChecklistItem({checklistId, index, item}: any) {
         <div className="item-desc">
           <TextareaAutosize
             ref={inputRef}
-            className={"default font-85 font-600 " + (status ? "checked" : "")}
+            name="desc"
+            className={classes.join(" ")}
             maxLength={MAX_CHECKLIST_ITEM_LENGTH}
             placeholder="Item"
-            value={desc_}
+            spellCheck={state.visible}
+            style={style}
+            value={state.desc}
+
             onChange={onChange}
             onFocus={onFocus}
             onKeyDown={onKeyDown}
-            spellCheck={false}
-            style={{
-              border: (visible ? "1px solid black" : "1px solid white"),
-            }}
+            onKeyPress={onKeyPress}
           />
         </div>
       </div>
-      {visible && (
+      {state.visible && (
         <div className="menu">
           <button
             className="default right"

@@ -26,7 +26,26 @@ body {
   user-select: none;
 }
 
-.semi {
-  font-weight: 550;
+.font-85 {
+  font-size: 0.85rem;
 }
 
+.font-90 {
+  font-size: 0.90rem;
+}
+
+.font-95 {
+  font-size: 0.95rem;
+}
+
+.font-500 {
+  font-weight: 500;
+}
+
+.font-600 {
+  font-weight: 600;
+}
+
+.text-left {
+  text-align: left;
+}

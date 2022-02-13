@@ -99,13 +99,6 @@ type Props = {
   addNewList: any
 };
 
-const Styles: any = {
-  textarea: {
-    border: '1px solid black',
-    padding: "4px 4px 4px 8px",
-  }
-};
-
 const mapDispatchToProps = (dispatch: any) => {
   return {
     addNewList: (name: string) => dispatch({ type: "NewList", name }), 

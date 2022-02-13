@@ -1,18 +1,18 @@
-import { Fragment, KeyboardEvent, useRef, useState } from "react";
+import { ChangeEvent, Fragment, KeyboardEvent, useRef, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
-import AddChecklist from "./CardPanel/AddChecklist";
+import AddChecklist from "./Checklist/AddChecklist";
 import Comments from "./CardPanel/Comments";
 
 import Checklist from "./CardPanel/Checklist";
 
-import "./styles/CardView.css";
-import "./styles/Elements.css";
+import { MAX_DESCRIPTION_LENGTH, MAX_TITLE_LENGTH } from "../types/Limits";
+import { MoveChecklist, UpdateCard } from "../redux/Creators";
 
-const MAX_TITLE_LENGTH = 512;
-const MAX_DESCRIPTION_LENGTH = 1048;
+import "./styles/CardPanel.css";
+import "./styles/Elements.css";
 
 function CardPanel() {
   const dispatch = useDispatch();
@@ -20,13 +20,21 @@ function CardPanel() {
   const cardView = useSelector((state: any) => Object.assign({}, state.panel));
   const { cardId, visible } = cardView;
 
-  const { title, description, attachments, checklists, comments } = useSelector((state: any) => {
+  const { title, description, checklists, comments } = useSelector((state: any) => {
     return state.board.cards[cardId];
   });
 
-  const [title_, setTitle_] = useState(title);
-  const [desc_, setDesc_] = useState(description);
-  const [titleFocused, setTitleFocused] = useState(false);
+  const [state, setState] = useState({
+    title,
+    description,
+    focused: false,
+    selected: "",
+  });
+
+  const updateState = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    let { name, value } = event.target;
+    setState({ ...state, [name]: value });
+  };
 
   const [selected, setSelected] = useState("");
   const closeSelected = () => {
@@ -34,34 +42,32 @@ function CardPanel() {
   };
 
   const titleRef = useRef<HTMLTextAreaElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const titleBlur = () => {
-    setTitle_(title);
-    setTitleFocused(false);
-  };
-
-  const titleChange = (event: any) => {
-    let cleaned = event.target.value;
-    setTitle_(cleaned);
   };
 
   const titleFocus = () => {
     setActiveList(-1);
-    setTitleFocused(true);
+    setState({ ...state, focused: true });
   }
 
   const titleSave = () => {
-      if (title_.trim() !== "" && title_ !== title) {
-        dispatch({ type: "UpdateCard", cardId, patch: { title: title_.trim() } });
-      }
-      titleRef.current?.blur();
-      setTitleFocused(false);
+    let title_ = state.title.trim();
+    console.log(title_);
+
+    if (title_ !== "") {
+      let action = UpdateCard(cardId, { title: title_.trim() });
+      dispatch(action);
+    }
+
+    titleRef.current?.blur();
+    setState({ ...state, focused: false });
   };
   
   const titleCancel = () => {
-      setTitle_(title);
       titleRef.current?.blur();
-      setTitleFocused(false);
+      setState({ ...state, title, focused: false });
   };
 
   const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -69,23 +75,20 @@ function CardPanel() {
       event.preventDefault();
       titleSave();
     } 
+
     if (event.key === "Escape") {
       titleCancel();
     }
   };
 
-  const descBlur = () => {
-    if (desc_.trim() === "") {
-      setDesc_(description);
-    } else if (desc_ !== description) {
-      dispatch({ type: "UpdateCard", cardId, patch: { title: title_ } });
-    }
+  const updateDescription = () => {
+    let action = UpdateCard(cardId, { description: state.description });
+    dispatch(action);
   };
 
-  const descChange = (event: any) => {
-    const { value } = event.target;
-    if (value === "" || value.trim() !== "") {
-      setDesc_(value);
+  const descBlur = () => {
+    if (state.description !== description) {
+      updateDescription();
     }
   };
 
@@ -96,6 +99,8 @@ function CardPanel() {
   const descKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
+      updateDescription();
+      descriptionRef.current?.blur();
     }
   };
 
@@ -113,7 +118,8 @@ function CardPanel() {
       return;
     }
 
-     dispatch({ type: "MoveChecklist", cardId, srcIdx, destIdx })
+     let action = MoveChecklist(cardId, srcIdx, destIdx);
+     dispatch(action);
   };
 
   const close = () => {
@@ -132,18 +138,29 @@ function CardPanel() {
     >
       <div className="title">
         <TextareaAutosize
+          name="title"
           ref={titleRef}
           className="default font-90 font-600"
           maxLength={MAX_TITLE_LENGTH}
-          onChange={titleChange}
+          onChange={updateState}
           onBlur={titleBlur}
           onFocus={titleFocus}
           onKeyDown={titleKeyPress}
           placeholder="Title"
           spellCheck={false}
-          value={title_}
+          value={state.title}
         />
-        {titleFocused && (
+        {!state.focused && (
+          <div className="test">
+            <button
+              className="default"
+              onClick={titleSave}
+            >
+              Delete
+            </button>
+          </div>
+        )}
+        {state.focused && (
         <div className="test">
           <button
             className="default"
@@ -153,6 +170,7 @@ function CardPanel() {
           </button>
           <button
             className="default"
+            onClick={titleCancel}
           >
             Cancel
           </button>
@@ -160,16 +178,18 @@ function CardPanel() {
         )}
       </div>
       <TextareaAutosize
+        name="description"
+        ref={descriptionRef}
         className="default font-85"
         maxLength={MAX_DESCRIPTION_LENGTH}
         onBlur={descBlur}
-        onChange={descChange}
+        onChange={updateState}
         onFocus={descFocus}
         onKeyPress={descKeyPress}
         placeholder="Description"
         rows={4}
         spellCheck={false}
-        value={desc_}
+        value={state.description}
       />
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable

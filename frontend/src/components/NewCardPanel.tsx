@@ -1,11 +1,12 @@
-import { Fragment, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent,KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import "./styles/CardView.css";
-import "./styles/Elements.css";
 import TextareaAutosize from "react-autosize-textarea";
 
-const MAX_TITLE_LENGTH = 1024;
+import { MAX_TITLE_LENGTH } from "../types/Limits";
+import { NewCard } from "../redux/Creators";
+
+import "./styles/Elements.css";
 
 function NewCardPanel() {
   const dispatch = useDispatch();
@@ -19,21 +20,12 @@ function NewCardPanel() {
     titleRef.current?.focus();
   }, []);
 
-  const titleBlur = (event: any) => {
-    if (title.trim() === "") {
-      setTitle_(title);
-    }
-  }
-
-  const titleChange = (event: any) => {
-    let cleaned = event.target.value.replace(/[\r\n]+/g, "");
-    setTitle_(cleaned);
-  };
-
-  const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      titleRef.current?.blur();
+  const addCard = () => {
+    if (title !== "") {
+      let action = NewCard(listId, title);
+      dispatch(action);
+      setTitle_("");
+      close();
     }
   };
 
@@ -41,11 +33,21 @@ function NewCardPanel() {
     dispatch({ type: "CloseCardView" });
   };
 
-  const addCard = () => {
-    if (title !== "") {
-      dispatch({ type: "NewCard", listId, card: { title } });
-      setTitle_("");
-      close();
+  const titleBlur = () => {
+    if (title.trim() === "") {
+      setTitle_(title);
+    }
+  }
+
+  const titleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    let { value } = event.target;
+    setTitle_(value);
+  };
+
+  const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      titleRef.current?.blur();
     }
   };
 

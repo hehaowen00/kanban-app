@@ -6,9 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import "./styles/Card.css"
 
 function KanbanCard({ index, id }: Props): ReactElement {
-  const cardObject = useSelector((state: any) => { return { ...state.board.cards[id] }});
-  const { title, description } = cardObject;
   const dispatch = useDispatch();
+
+  const cardObject = useSelector((state: any) => {
+    return { ...state.board.cards[id] };
+  });
+
+  const { title, description } = cardObject;
 
   const handleClick = () => {
     dispatch({ type: "ShowExistingCard", cardId: id });

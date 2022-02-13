@@ -1,12 +1,8 @@
 import React from "react";
-import KanbanBoard from "./components/Board";
 import Dashboard from "./components/Dashboard";
+import KanbanBoard from "./components/Board";
 
 import "./App.css";
-
-import { Board } from "./types/Kanban";
-import { v4 as uuidV4 } from "uuid";
-import Example from "./types/example";
 
 function App() {
   return <KanbanBoard />;
