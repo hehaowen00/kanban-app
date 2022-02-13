@@ -7,6 +7,7 @@ import { MAX_TITLE_LENGTH } from "../types/Limits";
 import { NewCard } from "../redux/Creators";
 
 import "./styles/Elements.css";
+import Outside from "./Outside";
 
 function NewCardPanel() {
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ function NewCardPanel() {
 
   return (
     <div className="modal-view">
+      <Outside update={close}>
       <div className="modal-content">
         <TextareaAutosize
           ref={titleRef}
@@ -80,6 +82,7 @@ function NewCardPanel() {
           </button>
         </div>
       </div>
+      </Outside>
     </div>
   );
 }

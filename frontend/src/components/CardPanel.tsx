@@ -13,6 +13,7 @@ import { MoveChecklist, UpdateCard } from "../redux/Creators";
 
 import "./styles/CardPanel.css";
 import "./styles/Elements.css";
+import Outside from "./Outside";
 
 function CardPanel() {
   const dispatch = useDispatch();
@@ -130,106 +131,108 @@ function CardPanel() {
 
   return (
     <Fragment>
-    <div className="card-view-cover" onClick={close}>
+    <div className="card-view-cover">
     </div>
-    <div
-      className="list card-view"
-      style={{ display: visible ? "block" : "none" }}
-    >
-      <div className="title">
-        <TextareaAutosize
-          name="title"
-          ref={titleRef}
-          className="default font-90 font-600"
-          maxLength={MAX_TITLE_LENGTH}
-          onChange={updateState}
-          onBlur={titleBlur}
-          onFocus={titleFocus}
-          onKeyDown={titleKeyPress}
-          placeholder="Title"
-          spellCheck={false}
-          value={state.title}
-        />
-        {!state.focused && (
+    <Outside update={close}>
+      <div
+        className="list card-view"
+        style={{ display: visible ? "block" : "none" }}
+      >
+        <div className="title">
+          <TextareaAutosize
+            name="title"
+            ref={titleRef}
+            className="default font-90 font-600"
+            maxLength={MAX_TITLE_LENGTH}
+            onChange={updateState}
+            onBlur={titleBlur}
+            onFocus={titleFocus}
+            onKeyDown={titleKeyPress}
+            placeholder="Title"
+            spellCheck={false}
+            value={state.title}
+          />
+          {!state.focused && (
+            <div className="test">
+              <button
+                className="default"
+                onClick={titleSave}
+              >
+                Delete
+              </button>
+            </div>
+          )}
+          {state.focused && (
           <div className="test">
             <button
               className="default"
               onClick={titleSave}
             >
-              Delete
+              Save
+            </button>
+            <button
+              className="default"
+              onClick={titleCancel}
+            >
+              Cancel
             </button>
           </div>
-        )}
-        {state.focused && (
-        <div className="test">
-          <button
-            className="default"
-            onClick={titleSave}
-          >
-            Save
-          </button>
-          <button
-            className="default"
-            onClick={titleCancel}
-          >
-            Cancel
-          </button>
-        </div>
-        )}
-      </div>
-      <TextareaAutosize
-        name="description"
-        ref={descriptionRef}
-        className="default font-85"
-        maxLength={MAX_DESCRIPTION_LENGTH}
-        onBlur={descBlur}
-        onChange={updateState}
-        onFocus={descFocus}
-        onKeyPress={descKeyPress}
-        placeholder="Description"
-        rows={4}
-        spellCheck={false}
-        value={state.description}
-      />
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable
-        droppableId="checklists"
-        type="droppableChecklists"
-        direction="vertical"
-        >
-        {(provided: any) => (
-          <div
-            className="checklists"
-            ref={provided.innerRef}
-          >
-          {checklists.map((id: string, index: number) => (
-            <Checklist 
-              key={id}
-              index={index}
-              cardId={cardId}
-              id={id}
-              isActive={activeList === index}
-              setActiveList={setActiveList}
-            />
-          ))}
-          {provided.placeholder}
-          {selected === "checklist" && (
-            <AddChecklist cardId={cardId} close={closeSelected} />
           )}
-          {selected !== "checklist" && (
+        </div>
+        <TextareaAutosize
+          name="description"
+          ref={descriptionRef}
+          className="default font-85"
+          maxLength={MAX_DESCRIPTION_LENGTH}
+          onBlur={descBlur}
+          onChange={updateState}
+          onFocus={descFocus}
+          onKeyPress={descKeyPress}
+          placeholder="Description"
+          rows={4}
+          spellCheck={false}
+          value={state.description}
+        />
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable
+          droppableId="checklists"
+          type="droppableChecklists"
+          direction="vertical"
+          >
+          {(provided: any) => (
             <div
-              className="component div-btn pad-reduced text-center font-85 font-600"
-              onClick={() => setSelected("checklist")}
+              className="checklists"
+              ref={provided.innerRef}
             >
-              Add Checklist
-            </div>
+            {checklists.map((id: string, index: number) => (
+              <Checklist 
+                key={id}
+                index={index}
+                cardId={cardId}
+                id={id}
+                isActive={activeList === index}
+                setActiveList={setActiveList}
+              />
+            ))}
+            {provided.placeholder}
+            {selected === "checklist" && (
+              <AddChecklist cardId={cardId} close={closeSelected} />
+            )}
+            {selected !== "checklist" && (
+              <div
+                className="component div-btn pad-reduced text-center font-85 font-600"
+                onClick={() => setSelected("checklist")}
+              >
+                Add Checklist
+              </div>
+            )}
+          </div>
           )}
-        </div>
-        )}
-        </Droppable>
-      </DragDropContext>
-      <Comments cardId={cardId} comments={comments} />
-    </div>
+          </Droppable>
+        </DragDropContext>
+        <Comments cardId={cardId} comments={comments} />
+      </div>
+    </Outside>
     </Fragment>
   );
 }
