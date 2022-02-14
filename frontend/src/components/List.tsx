@@ -86,12 +86,12 @@ function List({ index, list }: Props): ReactElement {
             <div className="list-header" {...provided.dragHandleProps}>
               {!visible &&
               <div
-                className="header-row"
+                className="header-row font-85"
                 onClick={onClick}
               >
                 {name}
               </div>}
-              {visible &&
+            {visible && (
               <TextareaAutosize 
                 ref={ref}
                 className="default font-85 font-600"
@@ -100,7 +100,8 @@ function List({ index, list }: Props): ReactElement {
                 onKeyDown={onKeyDown}
                 onKeyPress={onKeyPress}
                 value={listInput}
-              />}
+              />
+            )}
             </div>
             <Droppable droppableId={id} type="droppableCards">
               {(provided) => (

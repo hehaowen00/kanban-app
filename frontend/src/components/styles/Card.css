@@ -2,8 +2,7 @@
   background-color: white;
   border-radius: 3px;
 
-  font-size: 0.9rem;
-
+  font-size: 0.85rem;
   margin-bottom: 5px;
   padding: 5px 10px;
 
@@ -14,8 +13,6 @@
 }
 
 .card-title {
-  font-weight: 600;
-
   white-space: break-spaces;
   word-break: break-all;
 }

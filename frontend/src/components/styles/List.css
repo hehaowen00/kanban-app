@@ -16,7 +16,7 @@
   background: white;
   border-radius: 3px;
 
-  padding: 8px 5px 0px 5px;
+  padding: 5px 5px 0px 5px;
   white-space: nowrap;
   max-height: 98%;
 
@@ -34,7 +34,7 @@
   flex-shrink: 0;
   font-size: 0.9rem;
   font-weight: 600;
-  padding: 0px 5px;
+  padding: 0px;
   white-space: break-spaces;
   word-break: break-all;
   word-wrap: break-word;
@@ -42,6 +42,8 @@
 
 .header-row {
   display: inline;
+  padding: 0px 8px;
+  border: 1px solid white;
 }
 
 .header-row:first-child {
@@ -76,7 +78,7 @@
 }
 
 .list-footer {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
 
   border-radius: 3px;
