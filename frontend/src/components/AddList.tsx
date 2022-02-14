@@ -20,11 +20,15 @@ function AddList(): ReactElement {
   const [toggle, setToggle] = useState(false);
   const [name, setName] = useState("");
 
+  let containerRef = useRef<any>(null);
   let inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    inputRef.current?.focus();
-  });
+    if (toggle) {
+      containerRef.current?.scrollIntoView();
+      inputRef.current?.focus();
+    }
+  }, [toggle]);
 
   const handleClick = () => {
     setToggle(!toggle);
@@ -39,7 +43,7 @@ function AddList(): ReactElement {
     setName(event.target.value);
   };
 
-  const createList = () => {
+  const addList = () => {
     if (name !== "") {
       dispatch(NewList(name));
       setName("");
@@ -55,7 +59,7 @@ function AddList(): ReactElement {
   const submitList = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      createList();
+      addList();
     }
   };
 
@@ -66,7 +70,10 @@ function AddList(): ReactElement {
   }
 
   return (
-    <div className="list-col">
+    <div
+      ref={containerRef}
+      className="list-col"
+    >
       <div
         className={classes.join(" ")}
         onClick={toggle ? undefined : handleClick }
@@ -80,7 +87,7 @@ function AddList(): ReactElement {
           <Fragment>
             <TextareaAutosize
               ref={inputRef}
-              className="list-header textarea-card border-sized noselect"
+              className="list-header default textarea-card font-90 noselect"
               maxLength={255}
               placeholder="Title"
 
@@ -89,7 +96,7 @@ function AddList(): ReactElement {
               onPaste={handlePaste}
             />
             <div className="btn noselect">
-              <button className="default" onClick={createList}>Add List</button>
+              <button className="default" onClick={addList}>Add List</button>
               <button className="default" onClick={cancelNewList}>Cancel</button>
             </div>
           </Fragment>

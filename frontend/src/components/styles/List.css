@@ -1,8 +1,8 @@
 .list-col {
   min-height: 100%;
-  min-width: 21.25rem;
+  min-width: 24rem;
   max-height: 100%;
-  max-width: 21.25rem;
+  max-width: 24rem;
 }
 
 .list-col {
@@ -14,9 +14,9 @@
    -5px -5px 10px 0 rgba(255, 255, 255, 0.3);
 
   background: white;
-  border-radius: 5px;
+  border-radius: 3px;
 
-  padding: 8px 5px 5px 5px;
+  padding: 8px 5px 0px 5px;
   white-space: nowrap;
   max-height: 98%;
 
@@ -27,10 +27,7 @@
 }
 
 .list-header {
-  /* background: transparent; */
-  /* box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.2), */
-  /*   -5px -5px 18px 0 rgba(255, 255, 255, 0.55); */
-  border-radius: 5px;
+  border-radius: 3px;
   margin-bottom: 5px;
   display: flex;
   flex-direction: column;
@@ -79,22 +76,31 @@
 }
 
 .list-footer {
-  /* background: transparent; */
-  /* box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.2), */
-  /*   -5px -5px 10px 0 rgba(255, 255, 255, 0.55); */
-  /* position: relative; */
-
   font-size: 0.9rem;
   font-weight: 600;
 
-  border-radius: 5px;
+  border-radius: 3px;
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
   padding: 0;
 
   display: flex;
   flex-direction: column;
   flex-shrink: 1;
+}
+
+.list-footer > button.add {
+  padding: 3px 0px !important;
+  border: none;
+  margin-bottom: 5px;
+}
+
+.list-footer > button.add:hover {
+  background: #ecf0f3 !important;
+}
+
+.add-list:not(.active):hover {
+  background: #ecf0f3;
 }
 
 .list-input {

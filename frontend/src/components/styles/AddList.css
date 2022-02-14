@@ -39,25 +39,6 @@
   box-shadow: none;
 }
 
-.textarea-card {
-  border: 1px solid black;
-  border-radius: 3px;
-
-  font-family: "Roboto";
-  font-size: 0.9rem;
-
-  padding: 2px 4px;
-  height: 100%;
-  width: 100%;
-
-  resize: none;
-  font-weight: 600 !important;
-}
-
-.textarea-card:focus {
-  outline: none;
-}
-
 .btn.noselect > * {
   margin-left: 5px;
 }

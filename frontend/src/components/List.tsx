@@ -23,7 +23,7 @@ function List({ index, list }: Props): ReactElement {
       return;
     }
 
-    if (ref.current !== null) {
+    if (ref.current) {
       ref.current.focus();
       let { length } = ref.current.value;
       ref.current.selectionStart = length;
@@ -115,8 +115,8 @@ function List({ index, list }: Props): ReactElement {
               )}
             </Droppable>
             <div className="list-footer noselect">
-              <button className="default" onClick={handleAddItem}>
-                Add Item
+              <button className="default add" onClick={handleAddItem}>
+                Add Card
               </button>
             </div>
           </div>
