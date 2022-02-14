@@ -30,9 +30,6 @@ function Card({ index, id }: Props): ReactElement {
           {...provided.dragHandleProps}
         >
           <div className="card-title">{title}</div>
-          {description !== "" && (
-            <div className="card-description">{description}</div>
-          )}
         </div>
       )}
     </Draggable>

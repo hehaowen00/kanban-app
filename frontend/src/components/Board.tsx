@@ -2,18 +2,17 @@ import { Fragment, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
-import AddCard from "./AddCard";
-import AddList from "./AddList";
+import { List } from "../types/Kanban";
+import KanbanList from "./List";
+import KanbanAddList from "./AddList";
 import CardPanel from "./CardPanel";
-import ListComponent from "./List";
+import AddCard from "./AddCard";
 import Navbar from "./Navbar";
 
 import "./styles/Board.css";
-
 import { MoveCard, MoveList } from "../redux/Creators";
-import { List } from "../types/Kanban";
 
-function Board(): ReactElement {
+function KanbanBoard(): ReactElement {
   const dispatch = useDispatch();
 
   const board = useSelector((state: any)  => state.board);
@@ -49,6 +48,7 @@ function Board(): ReactElement {
   return (
     <Fragment>
       { visible === "NewCard" && <AddCard /> }
+      { visible === "ShowCard" && <CardPanel /> }
       <Navbar name={board.name} />
       <div className="col">
         <div className="content">
@@ -66,19 +66,18 @@ function Board(): ReactElement {
                   ref={provided.innerRef}
                 >
                   {lists.map((list: List, index: number) => (
-                    <ListComponent key={list.id} index={index} list={list} />
+                    <KanbanList key={list.id} index={index} list={list} />
                   ))}
                   {provided.placeholder}
-                  <AddList />
+                  <KanbanAddList />
                 </div>
               )}
             </Droppable>
           </DragDropContext>
-          { visible === "ShowCard" && <CardPanel /> }
         </div>
       </div>
     </Fragment>
   );
 }
 
-export default Board;
+export default KanbanBoard;

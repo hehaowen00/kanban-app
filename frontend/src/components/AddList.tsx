@@ -25,7 +25,7 @@ function AddList(): ReactElement {
 
   useEffect(() => {
     if (toggle) {
-      containerRef.current?.scrollIntoView();
+      containerRef.current?.scrollIntoView({ behavior: "smooth" });
       inputRef.current?.focus();
     }
   }, [toggle]);

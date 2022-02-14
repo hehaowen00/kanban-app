@@ -69,25 +69,22 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  height: calc(100% - 10px);
 
-  width: 20%;
-  min-width: 400px;
-  max-width: 430px;
+  margin: 0 auto;
+  margin-top: 50px;
 
   padding: 8px 8px;
-  margin-bottom: 0;
-  margin-left: 5px;
-  margin-right: 0.625rem;
+  margin-bottom: 50px;
+  max-height: calc(100% - 100px);
   box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25),
    -5px -5px 10px 0 rgba(255, 255, 255, 0.3);
   text-align: left;
   position: relative;
   overflow-y: auto;
 
-  width: 430px !important;
-  min-width: 430px;
-  max-width: 430px !important;
+  width: 25%;
+  min-width: 500px;
+  max-width: 25% !important;
 }
 
 .card-view > * {
@@ -166,7 +163,7 @@
 .comments {
   display: block;
   text-align: left;
-  margin-bottom: none;
+  margin-bottom: 0 !important;
 }
 
 .comments > .menu {

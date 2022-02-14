@@ -53,8 +53,7 @@ function AddCard() {
 
   return (
     <div className="modal-view">
-      <Outside update={close}>
-      <div className="modal-content">
+      <Outside className="modal-content" update={close}>
         <TextareaAutosize
           ref={titleRef}
           rows={3}
@@ -80,7 +79,6 @@ function AddCard() {
             Cancel
           </button>
         </div>
-      </div>
       </Outside>
     </div>
   );
