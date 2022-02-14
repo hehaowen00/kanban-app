@@ -43,12 +43,12 @@ function Comments({ cardId, comments }: any) {
 
   return (
     <div className="comments">
-      <span className="font-90 font-600 text-left">
+      <div className="noselect font-90 font-600 text-left">
         Comments
-      </span>
+      </div>
       <div className="comment-view">
         {comments.map((comment: any, index: number) => 
-          <div key={index} className="comment">
+          <div key={index} className="outset comment">
             <div className="header"><b>User:</b> {comment.userId}</div>
             <div className="body">
             {comment.text}
@@ -58,9 +58,10 @@ function Comments({ cardId, comments }: any) {
       </div>
       <div className="textarea-100">
         <TextareaAutosize
-          className="default font-85 font-500"
+          className="outset default font-85 font-500"
           placeholder="New Comment"
           maxLength={512}
+          rows={visible ? 3 : undefined}
           value={comment}
 
           onBlur={onBlur}
@@ -71,13 +72,13 @@ function Comments({ cardId, comments }: any) {
       {visible && (
         <div className="menu">
           <button
-            className="default ml-5"
+            className="outset default ml-5"
             onClick={addClick}
           >
             Add Comment
           </button>
           <button
-            className="default ml-5"
+            className="outset default ml-5"
             onClick={cancel}
            >
              Cancel

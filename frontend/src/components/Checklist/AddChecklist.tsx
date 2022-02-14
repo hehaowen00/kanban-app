@@ -46,7 +46,7 @@ function AddChecklist ({ cardId, close }: any) {
   };
 
   return (
-    <div className="component checklists">
+    <div className="outset component checklists">
       <TextareaAutosize
         ref={ref}
         className="default font-85 font-600 margin-0"

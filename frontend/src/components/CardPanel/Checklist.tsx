@@ -171,8 +171,9 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
         ))}
         {isActive && (
           <div className="item new-item">
+
             <div className="item-row">
-              <div className="item-desc">
+              <div className="item-desc item-desc-add">
                 <TextareaAutosize
                   ref={itemRef}
                   name="itemInput"
@@ -180,6 +181,7 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
                   maxLength={MAX_CHECKLIST_ITEM_LENGTH}
                   placeholder="New Item"
                   value={state.itemInput}
+                  rows={isActive ? 3: undefined}
 
                   onChange={updateState}
                   onKeyPress={itemKeyPress}

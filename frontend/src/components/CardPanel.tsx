@@ -28,6 +28,7 @@ function CardPanel() {
     title,
     description,
     focused: false,
+    descFocused: false,
     selected: "",
   });
 
@@ -49,6 +50,7 @@ function CardPanel() {
   };
 
   const titleBlur = () => {
+    titleUpdate();
   };
 
   const titleFocus = () => {
@@ -63,7 +65,6 @@ function CardPanel() {
 
   const titleUpdate = () => {
     let title_ = state.title.trim();
-    console.log(title_);
 
     if (title_ !== "") {
       let action = UpdateCard(cardId, { title: title_.trim() });
@@ -99,10 +100,12 @@ function CardPanel() {
     if (state.description !== description) {
       updateDescription();
     }
+    setState({ ...state, descFocused: false });
   };
 
   const descFocus = () => {
     setActiveList(-1);
+    setState({ ...state, descFocused: true });
   };
 
   const descKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -145,7 +148,7 @@ function CardPanel() {
         <TextareaAutosize
           name="title"
           ref={titleRef}
-          className="default font-90 font-600"
+          className="outset default font-90 font-600"
           maxLength={MAX_TITLE_LENGTH}
           onChange={updateState}
           onBlur={titleBlur}
@@ -158,7 +161,7 @@ function CardPanel() {
         {!state.focused && (
           <div className="test">
             <button
-              className="default"
+              className="default outset"
               onClick={deleteCard}
             >
               Delete
@@ -185,14 +188,14 @@ function CardPanel() {
       <TextareaAutosize
         name="description"
         ref={descriptionRef}
-        className="default font-85"
+        className="outset default font-85"
         maxLength={MAX_DESCRIPTION_LENGTH}
         onBlur={descBlur}
         onChange={updateState}
         onFocus={descFocus}
         onKeyPress={descKeyPress}
         placeholder="Description"
-        rows={4}
+        rows={state.description === "" || state.descFocused ? 5 : undefined}
         spellCheck={false}
         value={state.description}
       />
@@ -207,6 +210,9 @@ function CardPanel() {
             className="checklists"
             ref={provided.innerRef}
           >
+          <div className="noselect font-90 font-600">
+            Checklists
+          </div>
           {checklists.map((id: string, index: number) => (
             <Checklist 
               key={id}
@@ -223,7 +229,7 @@ function CardPanel() {
           )}
           {selected !== "checklist" && (
             <div
-              className="component div-btn pad-reduced text-center font-85 font-600"
+              className="component outset div-btn pad-reduced text-center font-85 font-600"
               onClick={() => setSelected("checklist")}
             >
               Add Checklist
