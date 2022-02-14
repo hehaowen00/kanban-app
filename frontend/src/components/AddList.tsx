@@ -9,13 +9,16 @@ import {
   useState,
 } from "react";
 import TextareaAutosize from "react-autosize-textarea";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { NewList } from "../redux/Creators";
 
 import "./styles/AddList.css";
 
-function KanbanAddList({ addNewList }: Props): ReactElement {
+function AddList(): ReactElement {
+  const dispatch = useDispatch();
+
   const [toggle, setToggle] = useState(false);
-  const [content, setContent] = useState("");
+  const [name, setName] = useState("");
 
   let inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -29,23 +32,23 @@ function KanbanAddList({ addNewList }: Props): ReactElement {
 
   const handlePaste = (event: ClipboardEvent) => {
     const append = event.clipboardData.getData("text");
-    setContent(content + append);
+    setName(name + append);
   };
 
   const handleUpdate = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(event.target.value);
+    setName(event.target.value);
   };
 
   const createList = () => {
-    if (content !== "") {
-      addNewList(content);
-      setContent("");
+    if (name !== "") {
+      dispatch(NewList(name));
+      setName("");
       setToggle(false);
     }
   }
 
   const cancelNewList = () => {
-    setContent("");
+    setName("");
     setToggle(false);
   }
 
@@ -62,14 +65,15 @@ function KanbanAddList({ addNewList }: Props): ReactElement {
     classes.push("active");
   }
 
-  let v = classes.join(" ");
-
   return (
     <div className="list-col">
-      <div className={v} onClick={toggle ? undefined : handleClick }>
+      <div
+        className={classes.join(" ")}
+        onClick={toggle ? undefined : handleClick }
+      >
         {!toggle && (
-          <div className="list-header flat noselect" >
-              {"Add List"}
+          <div className="list-header flat noselect">
+            Add List
           </div>
         )}
         {toggle && (
@@ -95,14 +99,4 @@ function KanbanAddList({ addNewList }: Props): ReactElement {
   );
 }
 
-type Props = {
-  addNewList: any
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    addNewList: (name: string) => dispatch({ type: "NewList", name }), 
-  };
-}
-
-export default connect(null, mapDispatchToProps)(KanbanAddList);
+export default AddList;

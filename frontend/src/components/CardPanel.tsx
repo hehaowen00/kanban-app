@@ -12,7 +12,6 @@ import { MAX_DESCRIPTION_LENGTH, MAX_TITLE_LENGTH } from "../types/Limits";
 import { MoveChecklist, UpdateCard } from "../redux/Creators";
 
 import "./styles/CardPanel.css";
-import "./styles/Elements.css";
 import Outside from "./Outside";
 
 function CardPanel() {

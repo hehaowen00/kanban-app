@@ -2,13 +2,14 @@ import { ChangeEvent, KeyboardEvent, ReactElement, useEffect, useRef, useState }
 import TextareaAutosize from "react-autosize-textarea/lib";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
-import { UpdateList } from "../redux/Creators";
 
-import KanbanCard from "./Card";
+import Card from "./Card";
 
 import "./styles/List.css";
 
-function KanbanList({ index, list }: Props): ReactElement {
+import { UpdateList } from "../redux/Creators";
+
+function List({ index, list }: Props): ReactElement {
   const dispatch = useDispatch();
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -54,10 +55,12 @@ function KanbanList({ index, list }: Props): ReactElement {
   const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
+
       let trimmed = listInput.trim();
       if (trimmed.length !== 0) {
         updateList({ name: trimmed });
       }
+
       setVisible(false);
     }
   };
@@ -105,7 +108,7 @@ function KanbanList({ index, list }: Props): ReactElement {
                   ref={provided.innerRef}
                 >
                   {cardIds.map((id: string, index: number) => (
-                    <KanbanCard key={id} index={index} id={id} />
+                    <Card key={id} index={index} id={id} />
                   ))}
                   {provided.placeholder}
                 </div>
@@ -113,7 +116,7 @@ function KanbanList({ index, list }: Props): ReactElement {
             </Droppable>
             <div className="list-footer noselect">
               <button className="default" onClick={handleAddItem}>
-              {"Add Item"}
+                Add Item
               </button>
             </div>
           </div>
@@ -129,4 +132,4 @@ type Props = {
   list: any,
 };
 
-export default KanbanList;
+export default List;

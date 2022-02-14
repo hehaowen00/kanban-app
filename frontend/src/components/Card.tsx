@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./styles/Card.css"
 
-function KanbanCard({ index, id }: Props): ReactElement {
+function Card({ index, id }: Props): ReactElement {
   const dispatch = useDispatch();
 
   const cardObject = useSelector((state: any) => {
@@ -45,4 +45,4 @@ type Props = {
   id: any;
 };
 
-export default KanbanCard;
+export default Card;

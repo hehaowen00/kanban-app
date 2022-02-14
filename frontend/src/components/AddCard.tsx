@@ -6,10 +6,9 @@ import TextareaAutosize from "react-autosize-textarea";
 import { MAX_TITLE_LENGTH } from "../types/Limits";
 import { NewCard } from "../redux/Creators";
 
-import "./styles/Elements.css";
 import Outside from "./Outside";
 
-function NewCardPanel() {
+function AddCard() {
   const dispatch = useDispatch();
 
   const { listId } = useSelector((state: any) => state.panel);
@@ -87,4 +86,4 @@ function NewCardPanel() {
   );
 }
 
-export default NewCardPanel;
+export default AddCard;
