@@ -28,18 +28,18 @@ function AddList(): ReactElement {
       containerRef.current?.scrollIntoView({ behavior: "smooth" });
       inputRef.current?.focus();
     }
-  }, [toggle]);
+  });
 
-  const handleClick = () => {
+  const onClick = () => {
     setToggle(!toggle);
   };
 
-  const handlePaste = (event: ClipboardEvent) => {
+  const onPaste = (event: ClipboardEvent) => {
     const append = event.clipboardData.getData("text");
     setName(name + append);
   };
 
-  const handleUpdate = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const onUpdate = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setName(event.target.value);
   };
 
@@ -47,7 +47,6 @@ function AddList(): ReactElement {
     if (name !== "") {
       dispatch(NewList(name));
       setName("");
-      setToggle(false);
     }
   }
 
@@ -56,9 +55,16 @@ function AddList(): ReactElement {
     setToggle(false);
   }
 
-  const submitList = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
+  const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setToggle(false);
+    }
+  };
+
+  const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
       addList();
     }
   };
@@ -76,7 +82,7 @@ function AddList(): ReactElement {
     >
       <div
         className={classes.join(" ")}
-        onClick={toggle ? undefined : handleClick }
+        onClick={toggle ? undefined : onClick }
       >
         {!toggle && (
           <div className="list-header flat noselect">
@@ -90,10 +96,12 @@ function AddList(): ReactElement {
               className="list-header default textarea-card font-90 noselect"
               maxLength={255}
               placeholder="Title"
+              value={name}
 
-              onChange={handleUpdate}
-              onKeyPress={submitList}
-              onPaste={handlePaste}
+              onChange={onUpdate}
+              onKeyDown={onKeyDown}
+              onKeyPress={onKeyPress}
+              onPaste={onPaste}
             />
             <div className="btn noselect">
               <button className="default" onClick={addList}>Add List</button>

@@ -5,17 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./styles/Card.css"
 
-function Card({ index, id }: Props): ReactElement {
+function Card({ index, id, listId }: Props): ReactElement {
   const dispatch = useDispatch();
 
   const cardObject = useSelector((state: any) => {
     return { ...state.board.cards[id] };
   });
 
-  const { title, description } = cardObject;
+  const { title } = cardObject;
 
   const handleClick = () => {
-    dispatch({ type: "ShowExistingCard", cardId: id });
+    dispatch({ type: "ShowExistingCard", cardId: id, listId });
   };
 
   return (
@@ -40,6 +40,7 @@ type Props = {
   key: string;
   index: number;
   id: any;
+  listId: string,
 };
 
 export default Card;

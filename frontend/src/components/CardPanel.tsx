@@ -9,7 +9,7 @@ import Comments from "./CardPanel/Comments";
 import Checklist from "./CardPanel/Checklist";
 
 import { MAX_DESCRIPTION_LENGTH, MAX_TITLE_LENGTH } from "../types/Limits";
-import { MoveChecklist, UpdateCard } from "../redux/Creators";
+import { DeleteCard, MoveChecklist, UpdateCard } from "../redux/Creators";
 
 import "./styles/CardPanel.css";
 import Outside from "./Outside";
@@ -18,7 +18,7 @@ function CardPanel() {
   const dispatch = useDispatch();
 
   const cardView = useSelector((state: any) => Object.assign({}, state.panel));
-  const { cardId, visible } = cardView;
+  const { cardId, listId, visible } = cardView;
 
   const { title, description, checklists, comments } = useSelector((state: any) => {
     return state.board.cards[cardId];
@@ -44,6 +44,10 @@ function CardPanel() {
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
+  const close = () => {
+    dispatch({ type: "CloseCardView" });
+  };
+
   const titleBlur = () => {
   };
 
@@ -52,7 +56,12 @@ function CardPanel() {
     setState({ ...state, focused: true });
   }
 
-  const titleSave = () => {
+  const deleteCard = () => {
+    dispatch(DeleteCard(cardId, listId));
+    close();
+  };
+
+  const titleUpdate = () => {
     let title_ = state.title.trim();
     console.log(title_);
 
@@ -66,14 +75,14 @@ function CardPanel() {
   };
   
   const titleCancel = () => {
-      titleRef.current?.blur();
-      setState({ ...state, title, focused: false });
+    titleRef.current?.blur();
+    setState({ ...state, title, focused: false });
   };
 
   const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      titleSave();
+      titleUpdate();
     } 
 
     if (event.key === "Escape") {
@@ -122,10 +131,6 @@ function CardPanel() {
      dispatch(action);
   };
 
-  const close = () => {
-    dispatch({ type: "CloseCardView" });
-  };
-
   const [activeList, setActiveList] = useState(-1);
 
   return (
@@ -154,7 +159,7 @@ function CardPanel() {
           <div className="test">
             <button
               className="default"
-              onClick={titleSave}
+              onClick={deleteCard}
             >
               Delete
             </button>
@@ -164,7 +169,7 @@ function CardPanel() {
         <div className="test">
           <button
             className="default"
-            onClick={titleSave}
+            onClick={titleUpdate}
           >
             Save
           </button>

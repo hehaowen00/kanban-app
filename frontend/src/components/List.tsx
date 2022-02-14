@@ -16,6 +16,7 @@ function List({ index, list }: Props): ReactElement {
   const { id, name, cardIds } = list;
   const [visible, setVisible] = useState(false);
 
+  const listId = id;
   let [listInput, setListInput] = useState(name);
 
   useEffect(() => {
@@ -108,7 +109,7 @@ function List({ index, list }: Props): ReactElement {
                   ref={provided.innerRef}
                 >
                   {cardIds.map((id: string, index: number) => (
-                    <Card key={id} index={index} id={id} />
+                    <Card key={id} index={index} id={id} listId={listId} />
                   ))}
                   {provided.placeholder}
                 </div>

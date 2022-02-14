@@ -38,10 +38,10 @@ function CardViewReducer(state: CardViewState = DefaultCardViewState, action: an
       }
     }
     case "ShowExistingCard": {
-      const { cardId } = action;
+      const { cardId, listId, } = action;
       return {
         cardId,
-        listId: null,
+        listId,
         visible: "ShowCard",
       };
     }
@@ -81,6 +81,30 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
       cards[id] = { ...cards[id], ...delta };
 
       return { ...state, cards: { ...cards} };
+    }
+    case "DeleteCard": {
+      const { cardId, listId } = action;
+
+      let cards = { ...state.cards };
+      delete cards[cardId];
+
+      let lists = [ ...state.lists ];
+      let idx = lists.findIndex((list: List) => list.id === listId);
+
+      if (idx === -1) {
+        return state;
+      }
+
+      let list = lists[idx];
+      let res = list.cardIds.findIndex((id: string) => id === cardId);
+
+      if (res === -1) {
+        return state;
+      }
+
+      list.cardIds.splice(res,);
+
+      return { ...state, cards, lists };
     }
     case "NewList": {
       const { name } = action;
