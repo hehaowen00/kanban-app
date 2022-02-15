@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
 import { NewChecklist } from "../../redux/Creators";
+import Outside from "../Outside";
 
 const MAX_CHECKLIST_TITLE_LENGTH = 128;
 
@@ -46,32 +47,34 @@ function AddChecklist ({ cardId, close }: any) {
   };
 
   return (
-    <div className="outset component checklists">
-      <TextareaAutosize
-        ref={ref}
-        className="default font-85 font-600 margin-0"
-        maxLength={MAX_CHECKLIST_TITLE_LENGTH}
-        placeholder="New Checklist"
-        value={title}
+    <Outside update={cancelClick}>
+      <div className="shadowed component checklists">
+        <TextareaAutosize
+          ref={ref}
+          className="default font-85 font-600 margin-0"
+          maxLength={MAX_CHECKLIST_TITLE_LENGTH}
+          placeholder="New Checklist"
+          value={title}
 
-        onChange={titleChange}
-        onKeyPress={titleKeyPress}
-      />
-      <div className="menu menu-mr-b">
-        <button
-          className="default"
-          onClick={addList}
-         >
-           Add Checklist
-         </button>
-        <button
-          className="default"
-          onClick={cancelClick}
-        >
-          Cancel
-        </button>
+          onChange={titleChange}
+          onKeyPress={titleKeyPress}
+        />
+        <div className="menu menu-mr-b">
+          <button
+            className="default"
+            onClick={addList}
+           >
+             Add Checklist
+           </button>
+          <button
+            className="default"
+            onClick={cancelClick}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
-    </div>
+    </Outside>
   );
 }
 

@@ -17,8 +17,9 @@ import Outside from "./Outside";
 function CardPanel() {
   const dispatch = useDispatch();
 
-  const cardView = useSelector((state: any) => Object.assign({}, state.panel));
-  const { cardId, listId, visible } = cardView;
+  const { cardId, listId, visible } = useSelector((state: any) =>
+    Object.assign({}, state.panel)
+  );
 
   const { title, description, checklists, comments } = useSelector((state: any) => {
     return state.board.cards[cardId];
@@ -138,109 +139,112 @@ function CardPanel() {
 
   return (
     <Fragment>
-    <div className="card-view-cover" style={{ padding: "0 auto" }}>
-    <Outside
-      className="list card-view"
-      update={close}
-      style={{ display: visible ? "block" : "none" }}
-    >
-      <div className="title">
-        <TextareaAutosize
-          name="title"
-          ref={titleRef}
-          className="outset default font-90 font-600"
-          maxLength={MAX_TITLE_LENGTH}
-          onChange={updateState}
-          onBlur={titleBlur}
-          onFocus={titleFocus}
-          onKeyDown={titleKeyPress}
-          placeholder="Title"
-          spellCheck={false}
-          value={state.title}
-        />
-        {!state.focused && (
-          <div className="test">
-            <button
-              className="default outset"
-              onClick={deleteCard}
-            >
-              Delete
-            </button>
-          </div>
-        )}
+    <div className="card-view-cover">
+      <Outside
+        className="list card-view"
+        update={close}
+        style={{ display: visible ? "block" : "none" }}
+      >
+        <div className="title">
+          <TextareaAutosize
+            name="title"
+            ref={titleRef}
+            className="shadowed default font-90 font-600"
+            maxLength={MAX_TITLE_LENGTH}
+            onChange={updateState}
+            onBlur={titleBlur}
+            onFocus={titleFocus}
+            onKeyDown={titleKeyPress}
+            placeholder="Title"
+            spellCheck={false}
+            value={state.title}
+          />
         {state.focused && (
         <div className="test">
           <button
-            className="default"
+            className="shadowed default"
             onClick={titleUpdate}
           >
             Save
           </button>
           <button
-            className="default"
+            className="shadowed default"
             onClick={titleCancel}
           >
             Cancel
           </button>
         </div>
         )}
-      </div>
-      <TextareaAutosize
-        name="description"
-        ref={descriptionRef}
-        className="outset default font-85"
-        maxLength={MAX_DESCRIPTION_LENGTH}
-        onBlur={descBlur}
-        onChange={updateState}
-        onFocus={descFocus}
-        onKeyPress={descKeyPress}
-        placeholder="Description"
-        rows={state.description === "" || state.descFocused ? 5 : undefined}
-        spellCheck={false}
-        value={state.description}
-      />
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable
-        droppableId="checklists"
-        type="droppableChecklists"
-        direction="vertical"
-        >
-        {(provided: any) => (
-          <div
-            className="checklists"
-            ref={provided.innerRef}
-          >
-          <div className="noselect font-90 font-600">
-            Checklists
-          </div>
-          {checklists.map((id: string, index: number) => (
-            <Checklist 
-              key={id}
-              index={index}
-              cardId={cardId}
-              id={id}
-              isActive={activeList === index}
-              setActiveList={setActiveList}
-            />
-          ))}
-          {provided.placeholder}
-          {selected === "checklist" && (
-            <AddChecklist cardId={cardId} close={closeSelected} />
-          )}
-          {selected !== "checklist" && (
-            <div
-              className="component outset div-btn pad-reduced text-center font-85 font-600"
-              onClick={() => setSelected("checklist")}
-            >
-              Add Checklist
+          {!state.focused && (
+            <div className="test">
+              <button
+                className="default shadowed"
+                onClick={deleteCard}
+              >
+                Delete
+              </button>
             </div>
           )}
         </div>
-        )}
-        </Droppable>
-      </DragDropContext>
-      <Comments cardId={cardId} comments={comments} />
-    </Outside>
+        <TextareaAutosize
+          name="description"
+          ref={descriptionRef}
+          className="description shadowed default font-85"
+          maxLength={MAX_DESCRIPTION_LENGTH}
+          onBlur={descBlur}
+          onChange={updateState}
+          onFocus={descFocus}
+          onKeyPress={descKeyPress}
+          placeholder="Description"
+          rows={state.description === "" || state.descFocused ? 5 : 3}
+          spellCheck={false}
+          value={state.description}
+        />
+        <div className="menu-bar text-left">
+            <button className="default shadowed" onClick={() => setSelected("checklist")}>
+              Add Checklist
+            </button>
+            <button className="default shadowed">
+              Add Label
+            </button>
+            <button className="default shadowed">
+              Set Start Date
+            </button>
+            <button className="default shadowed">
+              Set End Date
+            </button>
+        </div>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable
+          droppableId="checklists"
+          type="droppableChecklists"
+          direction="vertical"
+          >
+          {(provided: any) => (
+            <div
+              className="checklists"
+              ref={provided.innerRef}
+            >
+            {checklists.map((id: string, index: number) => (
+              <Checklist 
+                key={id}
+                index={index}
+                cardId={cardId}
+                id={id}
+                isActive={activeList === index}
+                setActiveList={setActiveList}
+              />
+            ))}
+            {provided.placeholder}
+            {selected === "checklist" && (
+              <AddChecklist cardId={cardId} close={closeSelected} />
+            )}
+          </div>
+          )}
+          </Droppable>
+        </DragDropContext>
+        <Comments cardId={cardId} comments={comments} />
+      </Outside>
     </div>
     </Fragment>
   );

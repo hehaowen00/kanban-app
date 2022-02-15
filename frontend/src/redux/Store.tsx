@@ -9,6 +9,7 @@ import Action from "./Actions";
 const EmptyCard = {
   title: "",
   description: "",
+  dueDate: null,
   attachments: [],
   checklists: [],
   comments: [],

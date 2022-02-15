@@ -61,13 +61,15 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
       event.preventDefault();
       titleRef.current?.blur();
       saveTitle();
+      setEditing(false);
     }
   };
 
   const saveTitle = () => {
-    let value = state.titleInput;
+    let value = state.titleInput.trim();
     if (value.length !== 0) {
       dispatch({ type: "UpdateChecklist", checklistId: id, delta: { title: value }});
+      setState({ ...state, titleInput: value.trim() });
     } else {
       setState({ ...state, titleInput: title });
     }

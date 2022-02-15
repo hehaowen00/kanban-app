@@ -1,13 +1,22 @@
-import { useDispatch } from "react-redux";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
-import { ChangeEvent, useState } from "react";
+
+import { useDispatch } from "react-redux";
 import { NewComment } from "../../redux/Creators";
 
 function Comments({ cardId, comments }: any) {
   const dispatch = useDispatch();
 
+  const ref = useRef<any>(null);
+
   const [visible, setVisible] = useState(false);
   const [comment, setComment] = useState("");
+
+  useEffect(() => {
+    if (visible) {
+      ref.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  });
 
   const addComment = () => {
     let action = NewComment("testing", cardId, comment.trim());
@@ -48,7 +57,7 @@ function Comments({ cardId, comments }: any) {
       </div>
       <div className="comment-view">
         {comments.map((comment: any, index: number) => 
-          <div key={index} className="outset comment">
+          <div key={index} className="shadowed comment">
             <div className="header"><b>User:</b> {comment.userId}</div>
             <div className="body">
             {comment.text}
@@ -58,7 +67,7 @@ function Comments({ cardId, comments }: any) {
       </div>
       <div className="textarea-100">
         <TextareaAutosize
-          className="outset default font-85 font-500"
+          className="shadowed default font-85 font-500"
           placeholder="New Comment"
           maxLength={512}
           rows={visible ? 3 : undefined}
@@ -70,15 +79,15 @@ function Comments({ cardId, comments }: any) {
         />
       </div>
       {visible && (
-        <div className="menu">
+        <div ref={ref} className="menu">
           <button
-            className="outset default ml-5"
+            className="shadowed default ml-5"
             onClick={addClick}
           >
             Add Comment
           </button>
           <button
-            className="outset default ml-5"
+            className="shadowed default ml-5"
             onClick={cancel}
            >
              Cancel

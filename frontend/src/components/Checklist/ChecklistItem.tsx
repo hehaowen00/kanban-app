@@ -5,6 +5,7 @@ import "../styles/Checklist.css";
 
 import { MAX_CHECKLIST_ITEM_LENGTH } from "../../types/Limits";
 import { DeleteChecklistItem, UpdateChecklistItem } from "../../redux/Creators";
+import Outside from "../Outside";
 
 function ChecklistItem({checklistId, index, item}: any) {
   const dispatch = useDispatch();
@@ -74,7 +75,7 @@ function ChecklistItem({checklistId, index, item}: any) {
   };
 
   return (
-    <div className="item">
+    <Outside className="item" update={() => setState({ ...state, visible: false })}>
       <div className="item-row">
         <div className="check">
           <input
@@ -109,7 +110,7 @@ function ChecklistItem({checklistId, index, item}: any) {
            >Delete Item</button>
         </div>
         )}
-    </div>
+    </Outside>
   );
 }
 
