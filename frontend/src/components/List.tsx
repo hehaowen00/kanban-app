@@ -24,11 +24,12 @@ function List({ index, list }: Props): ReactElement {
       return;
     }
 
-    if (ref.current) {
-      ref.current.focus();
-      let { length } = ref.current.value;
-      ref.current.selectionStart = length;
-      ref.current.selectionEnd = length;
+    let current = ref.current;
+    if (current) {
+      current.focus();
+      let { length } = current.value;
+      current.selectionStart = length;
+      current.selectionEnd = length;
     }
   }, [visible]);
 
@@ -82,11 +83,14 @@ function List({ index, list }: Props): ReactElement {
           key={index}
           {...provided.draggableProps}
         >
-          <div className="list">
-            <div className="list-header" {...provided.dragHandleProps}>
+          <div className="list br-3 bg-white flex flex-1-1 flex-col shadow">
+            <div
+              className="list-header bg-none br-3 flex flex-col font-90 font-600"
+              {...provided.dragHandleProps}
+            >
               {!visible &&
               <div
-                className="header-row font-85"
+                className="title font-85"
                 onClick={onClick}
               >
                 {name}
@@ -116,8 +120,11 @@ function List({ index, list }: Props): ReactElement {
                 </div>
               )}
             </Droppable>
-            <div className="list-footer noselect">
-              <button className="default add" onClick={handleAddItem}>
+            <div className="list-footer br-3 flex flex-col font-80 font-600 noselect">
+              <button
+                className="default add-card-btn"
+                onClick={handleAddItem}
+              >
                 Add Card
               </button>
             </div>

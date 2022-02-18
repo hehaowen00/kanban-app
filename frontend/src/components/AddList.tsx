@@ -69,10 +69,10 @@ function AddList(): ReactElement {
     }
   };
 
-  let classes = ["list", "add-list"];
+  let classes = "list add-list bg-white font-90 font-600 shadow";
 
   if (toggle) {
-    classes.push("active");
+    classes = classes + " active";
   }
 
   return (
@@ -81,7 +81,7 @@ function AddList(): ReactElement {
       className="list-col"
     >
       <div
-        className={classes.join(" ")}
+        className={classes}
         onClick={toggle ? undefined : onClick }
       >
         {!toggle && (

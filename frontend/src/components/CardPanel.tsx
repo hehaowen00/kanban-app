@@ -141,7 +141,7 @@ function CardPanel() {
     <Fragment>
     <div className="card-view-cover">
       <Outside
-        className="list card-view"
+        className="list card-view bg-white"
         update={close}
         style={{ display: visible ? "block" : "none" }}
       >
@@ -149,7 +149,7 @@ function CardPanel() {
           <TextareaAutosize
             name="title"
             ref={titleRef}
-            className="shadowed default font-90 font-600"
+            className="shadow default font-90 font-600"
             maxLength={MAX_TITLE_LENGTH}
             onChange={updateState}
             onBlur={titleBlur}
@@ -162,13 +162,13 @@ function CardPanel() {
         {state.focused && (
         <div className="test">
           <button
-            className="shadowed default"
+            className="shadow default"
             onClick={titleUpdate}
           >
             Save
           </button>
           <button
-            className="shadowed default"
+            className="shadow default"
             onClick={titleCancel}
           >
             Cancel
@@ -178,7 +178,7 @@ function CardPanel() {
           {!state.focused && (
             <div className="test">
               <button
-                className="default shadowed"
+                className="default shadow"
                 onClick={deleteCard}
               >
                 Delete
@@ -189,7 +189,7 @@ function CardPanel() {
         <TextareaAutosize
           name="description"
           ref={descriptionRef}
-          className="description shadowed default font-85"
+          className="description shadow default font-85"
           maxLength={MAX_DESCRIPTION_LENGTH}
           onBlur={descBlur}
           onChange={updateState}
@@ -201,16 +201,16 @@ function CardPanel() {
           value={state.description}
         />
         <div className="menu-bar text-left">
-            <button className="default shadowed" onClick={() => setSelected("checklist")}>
+            <button className="default shadow" onClick={() => setSelected("checklist")}>
               Add Checklist
             </button>
-            <button className="default shadowed">
+            <button className="default shadow">
               Add Label
             </button>
-            <button className="default shadowed">
+            <button className="default shadow">
               Set Start Date
             </button>
-            <button className="default shadowed">
+            <button className="default shadow">
               Set End Date
             </button>
         </div>

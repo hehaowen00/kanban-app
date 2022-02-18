@@ -8,6 +8,8 @@ import { NewCard } from "../redux/Creators";
 
 import Outside from "./Outside";
 
+import "./styles/AddCard.css";
+
 function AddCard() {
   const dispatch = useDispatch();
 
@@ -65,9 +67,9 @@ function AddCard() {
           placeholder="New Card"
           value={title}
         />
-        <div className="list-footer footer">
+        <div className="list-footer inline spaced-right text-right">
           <button
-            className="default font-85 font-500"
+            className="default font-85"
             onClick={addCard}
           >
             Add Card

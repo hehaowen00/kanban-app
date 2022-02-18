@@ -7,13 +7,21 @@ body {
   max-height: 100%;
 }
 
-textarea {
+* {
   font-family: 'Roboto' !important;
 }
 
 *:focus {
   outline: 2px solid #0079bf;
-  border: 1px solid transparent !important;
+  border: 1px solid transparent;
+}
+
+textarea {
+  font-family: 'Roboto' !important;
+}
+
+textarea:focus {
+  outline: 1px solid #0079bf;
 }
 
 #root {
@@ -25,6 +33,41 @@ textarea {
 
   width: 100%;
   max-width: 100%;
+}
+
+button.default {
+  background: white;
+  border: 1px solid black;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-weight: 600;
+  padding: 2px 6px;
+}
+
+textarea.default {
+  border: 1px solid black;
+  border-radius: 2px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  padding: 4px 8px;
+  resize: none;
+  width: 100%;
+}
+
+.bg-white {
+  background: white;
+}
+
+.border-sized {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.br-3 {
+  border-radius: 3px;
 }
 
 .flex {
@@ -44,6 +87,10 @@ textarea {
 
 .flex-row {
   flex-direction: row;
+}
+
+.flat {
+  box-shadow: none;
 }
 
 .font-85 {
@@ -66,6 +113,14 @@ textarea {
   font-weight: 600;
 }
 
+.inline {
+  display: inline;
+}
+
+.no-outline {
+  outline: none;
+}
+
 .noselect {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -73,6 +128,19 @@ textarea {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.shadow {
+  box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25),
+   -5px -5px 10px 0 rgba(255, 255, 255, 0.3);
+}
+
+.spaced-left > * + * {
+  margin-right: 5px;
+}
+
+.spaced-right > * + * {
+  margin-left: 5px;
 }
 
 .text-left {

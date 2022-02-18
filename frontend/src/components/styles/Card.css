@@ -1,15 +1,9 @@
 .card {
-  background-color: white;
-  border-radius: 3px;
-
   font-size: 0.85rem;
   margin-bottom: 5px;
   padding: 5px 10px;
-
   white-space: break-spaces;
   word-break: break-all;
-  box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25),
-   -5px -5px 10px 0 rgba(255, 255, 255, 0.3);
 }
 
 .card-title {
@@ -18,8 +12,8 @@
 }
 
 .card-description {
+  white-space: break-spaces;
   word-break: break-all;
   word-wrap: break-word;
-  white-space: break-spaces;
 }
 

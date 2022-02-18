@@ -22,7 +22,7 @@ function Card({ index, id, listId }: Props): ReactElement {
     <Draggable draggableId={id} index={index}>
       {(provided) => (
         <div
-          className="card noselect"
+          className="card bg-white br-3 noselect shadow"
           key={id}
           ref={provided.innerRef}
           onClick={handleClick}

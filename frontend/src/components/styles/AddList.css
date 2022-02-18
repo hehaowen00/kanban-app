@@ -3,6 +3,15 @@
   padding: 8px 10px !important;
 }
 
+.add-list:focus {
+  outline: none;
+}
+
+.add-list:not(.active):hover {
+  background: #ecf0f3;
+  cursor: pointer;
+}
+
 .add-list:not(.active) > .list-header {
   margin-bottom: 0;
 }
@@ -19,24 +28,6 @@
 
   padding: 0px 0px 0px 5px;
   text-align: right;
-}
-
-.add-list:not(.active):hover {
-  cursor: pointer;
-}
-
-.add-list:focus {
-  outline: none;
-}
-
-.border-sized {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.flat {
-  box-shadow: none;
 }
 
 .btn.noselect > * {
