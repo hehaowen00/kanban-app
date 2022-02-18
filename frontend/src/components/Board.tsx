@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 import { List } from "../types/Kanban";
 import KanbanList from "./List";
-import KanbanAddList from "./AddList";
+import AddList from "./AddList";
 import CardPanel from "./CardPanel";
 import AddCard from "./AddCard";
 import Navbar from "./Navbar";
@@ -12,7 +12,7 @@ import Navbar from "./Navbar";
 import "./styles/Board.css";
 import { MoveCard, MoveList } from "../redux/Creators";
 
-function KanbanBoard(): ReactElement {
+function Board(): ReactElement {
   const dispatch = useDispatch();
 
   const board = useSelector((state: any)  => state.board);
@@ -50,8 +50,8 @@ function KanbanBoard(): ReactElement {
       { visible === "NewCard" && <AddCard /> }
       { visible === "ShowCard" && <CardPanel /> }
       <Navbar name={board.name} />
-      <div className="col">
-        <div className="content">
+      <div className="board flex flex-1 flex-col">
+        <div className="content flex flex-row">
           <DragDropContext
             onDragEnd={handleDragEnd}
           >
@@ -62,14 +62,14 @@ function KanbanBoard(): ReactElement {
             >
               {(provided) => (
                 <div
-                  className="lists"
+                  className="lists flex flex-1-1"
                   ref={provided.innerRef}
                 >
                   {lists.map((list: List, index: number) => (
                     <KanbanList key={list.id} index={index} list={list} />
                   ))}
                   {provided.placeholder}
-                  <KanbanAddList />
+                  <AddList />
                 </div>
               )}
             </Droppable>
@@ -80,4 +80,4 @@ function KanbanBoard(): ReactElement {
   );
 }
 
-export default KanbanBoard;
+export default Board;
