@@ -50,8 +50,19 @@ function CardPanel() {
     dispatch({ type: "CloseCardView" });
   };
 
+  const titleUpdate = () => {
+    let title_ = state.title.trim();
+
+    if (title_ !== "") {
+      let action = UpdateCard(cardId, { title: title_.trim() });
+      dispatch(action);
+    }
+  };
+
   const titleBlur = () => {
     titleUpdate();
+    titleRef.current?.blur();
+    setState({ ...state, focused: false });
   };
 
   const titleFocus = () => {
@@ -64,18 +75,6 @@ function CardPanel() {
     close();
   };
 
-  const titleUpdate = () => {
-    let title_ = state.title.trim();
-
-    if (title_ !== "") {
-      let action = UpdateCard(cardId, { title: title_.trim() });
-      dispatch(action);
-    }
-
-    titleRef.current?.blur();
-    setState({ ...state, focused: false });
-  };
-  
   const titleCancel = () => {
     titleRef.current?.blur();
     setState({ ...state, title, focused: false });
@@ -138,18 +137,17 @@ function CardPanel() {
   const [activeList, setActiveList] = useState(-1);
 
   return (
-    <Fragment>
     <div className="card-view-cover">
       <Outside
-        className="list card-view bg-white"
+        className="list card-view bg-white flex flex-1 flex-col font-90 text-left"
         update={close}
         style={{ display: visible ? "block" : "none" }}
       >
-        <div className="title">
+        <div className="block">
           <TextareaAutosize
             name="title"
             ref={titleRef}
-            className="shadow default font-90 font-600"
+            className="default font-90 font-600 shadow"
             maxLength={MAX_TITLE_LENGTH}
             onChange={updateState}
             onBlur={titleBlur}
@@ -159,29 +157,29 @@ function CardPanel() {
             spellCheck={false}
             value={state.title}
           />
-        {state.focused && (
-        <div className="test">
-          <button
-            className="shadow default"
-            onClick={titleUpdate}
-          >
-            Save
-          </button>
-          <button
-            className="shadow default"
-            onClick={titleCancel}
-          >
-            Cancel
-          </button>
-        </div>
-        )}
+          {state.focused && (
+            <div className="menu mt-5 spaced-right text-right">
+              <button
+                className="shadow default"
+                onClick={titleUpdate}
+              >
+                Save
+              </button>
+              <button
+                className="shadow default"
+                onClick={titleCancel}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
           {!state.focused && (
-            <div className="test">
+            <div className="menu mt-5 text-right">
               <button
                 className="default shadow"
                 onClick={deleteCard}
               >
-                Delete
+                Delete Card
               </button>
             </div>
           )}
@@ -200,17 +198,20 @@ function CardPanel() {
           spellCheck={false}
           value={state.description}
         />
-        <div className="menu-bar text-left">
-            <button className="default shadow" onClick={() => setSelected("checklist")}>
+        <div className="menu-bar spaced-right text-left">
+            <button
+              className="default shadow-5"
+              onClick={() => setSelected("checklist")}
+            >
               Add Checklist
             </button>
-            <button className="default shadow">
+            <button className="default shadow-5">
               Add Label
             </button>
-            <button className="default shadow">
+            <button className="default shadow-5">
               Set Start Date
             </button>
-            <button className="default shadow">
+            <button className="default shadow-5">
               Set End Date
             </button>
         </div>
@@ -246,7 +247,6 @@ function CardPanel() {
         <Comments cardId={cardId} comments={comments} />
       </Outside>
     </div>
-    </Fragment>
   );
 }
 

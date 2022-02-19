@@ -16,6 +16,10 @@ body {
   border: 1px solid transparent;
 }
 
+input[type=checkbox]:focus {
+  outline: none;
+}
+
 textarea {
   font-family: 'Roboto' !important;
 }
@@ -39,9 +43,24 @@ button.default {
   background: white;
   border: 1px solid black;
   border-radius: 3px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   font-weight: 600;
   padding: 2px 6px;
+}
+
+input[type=text].default {
+  border: 1px solid black;
+  border-radius: 3px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 1px 4px;
+}
+
+input[type=text].default:focus {
+  outline: 1px solid #0079bf;
 }
 
 textarea.default {
@@ -58,6 +77,10 @@ textarea.default {
 
 .bg-white {
   background: white;
+}
+
+.block {
+  display: block;
 }
 
 .border-sized {
@@ -117,6 +140,40 @@ textarea.default {
   display: inline;
 }
 
+.modal-view {
+  background-color: rgba(0,0,0,0.4);
+  height: 100%;
+  left: 0;
+  max-height: 100%;
+  margin-bottom: 10px;
+  overflow: auto;
+  padding-bottom: 10px;
+  padding-top: 50px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  border: 1px solid #888;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  margin: auto;
+  max-height: 90%;
+  padding: 10px;
+  width:430px;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mt-5 {
+  margin-top: 5px;
+}
+
 .no-outline {
   outline: none;
 }
@@ -130,11 +187,19 @@ textarea.default {
   user-select: none;
 }
 
+.relative {
+  position: relative;
+}
+
 .shadow {
   box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25),
    -5px -5px 10px 0 rgba(255, 255, 255, 0.3);
 }
 
+.shadow-5 {
+  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.25),
+   -5px -5px 5px 0 rgba(255, 255, 255, 0.3);
+}
 .spaced-left > * + * {
   margin-right: 5px;
 }

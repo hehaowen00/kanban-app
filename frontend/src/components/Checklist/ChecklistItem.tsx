@@ -75,8 +75,11 @@ function ChecklistItem({checklistId, index, item}: any) {
   };
 
   return (
-    <Outside className="item" update={() => setState({ ...state, visible: false })}>
-      <div className="item-row">
+    <Outside
+      className="item flex flex-col"
+      update={() => setState({ ...state, visible: false })}
+    >
+      <div className="item-row flex flex-row">
         <div className="check">
           <input
             type="checkbox"
@@ -84,7 +87,7 @@ function ChecklistItem({checklistId, index, item}: any) {
             defaultChecked={status}
           />
         </div>
-        <div className="item-desc">
+        <div className="item-desc block">
           <TextareaAutosize
             ref={inputRef}
             name="desc"
@@ -103,11 +106,13 @@ function ChecklistItem({checklistId, index, item}: any) {
         </div>
       </div>
       {state.visible && (
-        <div className="menu">
+        <div className="menu mt-5">
           <button
             className="default right"
             onClick={deleteItem}
-           >Delete Item</button>
+          >
+           Delete Item
+         </button>
         </div>
         )}
     </Outside>

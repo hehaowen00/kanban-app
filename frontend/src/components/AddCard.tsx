@@ -55,7 +55,7 @@ function AddCard() {
 
   return (
     <div className="modal-view">
-      <Outside className="modal-content" update={close}>
+      <Outside className="modal-content flex flex-1 flex-col" update={close}>
         <TextareaAutosize
           ref={titleRef}
           rows={3}
@@ -67,7 +67,7 @@ function AddCard() {
           placeholder="New Card"
           value={title}
         />
-        <div className="list-footer inline spaced-right text-right">
+        <div className="menu mt-5 noselect spaced-right text-right">
           <button
             className="default font-85"
             onClick={addCard}

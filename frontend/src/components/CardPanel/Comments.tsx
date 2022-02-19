@@ -52,12 +52,12 @@ function Comments({ cardId, comments }: any) {
 
   return (
     <div className="comments">
-      <div className="noselect font-90 font-600 text-left">
+      <div className="font-90 font-600 noselect text-left">
         Comments
       </div>
       <div className="comment-view">
         {comments.map((comment: any, index: number) => 
-          <div key={index} className="shadowed comment">
+          <div key={index} className="comment shadow">
             <div className="header"><b>User:</b> {comment.userId}</div>
             <div className="body">
             {comment.text}
@@ -67,7 +67,7 @@ function Comments({ cardId, comments }: any) {
       </div>
       <div className="textarea-100">
         <TextareaAutosize
-          className="shadowed default font-85 font-500"
+          className="default font-85 font-500 shadow"
           placeholder="New Comment"
           maxLength={512}
           rows={visible ? 3 : undefined}
@@ -81,13 +81,13 @@ function Comments({ cardId, comments }: any) {
       {visible && (
         <div ref={ref} className="menu">
           <button
-            className="shadowed default ml-5"
+            className="default ml-5 shadow"
             onClick={addClick}
           >
             Add Comment
           </button>
           <button
-            className="shadowed default ml-5"
+            className="default ml-5 shadow"
             onClick={cancel}
            >
              Cancel

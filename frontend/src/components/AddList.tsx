@@ -69,7 +69,7 @@ function AddList(): ReactElement {
     }
   };
 
-  let classes = "list add-list bg-white font-90 font-600 shadow";
+  let classes = "list add-list bg-white br-3 block font-90 font-600 shadow";
 
   if (toggle) {
     classes = classes + " active";
@@ -79,13 +79,14 @@ function AddList(): ReactElement {
     <div
       ref={containerRef}
       className="list-col"
+      onBlur={cancelNewList}
     >
       <div
         className={classes}
         onClick={toggle ? undefined : onClick }
       >
         {!toggle && (
-          <div className="list-header flat noselect">
+          <div className="list-header flat mb-0 noselect">
             Add List
           </div>
         )}
@@ -93,7 +94,7 @@ function AddList(): ReactElement {
           <Fragment>
             <TextareaAutosize
               ref={inputRef}
-              className="list-header default textarea-card font-90 noselect"
+              className="default textarea-card font-90 noselect"
               maxLength={255}
               placeholder="Title"
               value={name}
@@ -103,7 +104,7 @@ function AddList(): ReactElement {
               onKeyPress={onKeyPress}
               onPaste={onPaste}
             />
-            <div className="btn noselect">
+            <div className="menu mt-5 noselect spaced-right text-right">
               <button className="default" onClick={addList}>Add List</button>
               <button className="default" onClick={cancelNewList}>Cancel</button>
             </div>

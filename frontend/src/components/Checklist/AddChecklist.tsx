@@ -11,11 +11,13 @@ function AddChecklist ({ cardId, close }: any) {
   const dispatch = useDispatch(); 
   const [title, setTitle] = useState("");
 
-  const ref = useRef<HTMLTextAreaElement>(null);
+  const containerRef = useRef<any>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (ref.current !== null) {
-      ref.current?.focus();
+    if (inputRef.current !== null) {
+      inputRef.current?.focus();
+      containerRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
 
@@ -48,9 +50,9 @@ function AddChecklist ({ cardId, close }: any) {
 
   return (
     <Outside update={cancelClick}>
-      <div className="shadowed component checklists">
+      <div ref={containerRef} className="add-checklist br-3 shadow">
         <TextareaAutosize
-          ref={ref}
+          ref={inputRef}
           className="default font-85 font-600 margin-0"
           maxLength={MAX_CHECKLIST_TITLE_LENGTH}
           placeholder="New Checklist"
@@ -59,7 +61,7 @@ function AddChecklist ({ cardId, close }: any) {
           onChange={titleChange}
           onKeyPress={titleKeyPress}
         />
-        <div className="menu menu-mr-b">
+        <div className="menu mb-0 mt-5 spaced-right text-right">
           <button
             className="default"
             onClick={addList}

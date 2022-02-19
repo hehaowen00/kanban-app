@@ -110,7 +110,7 @@ function List({ index, list }: Props): ReactElement {
             <Droppable droppableId={id} type="droppableCards">
               {(provided) => (
                 <div
-                  className="list-body"
+                  className="list-body flex flex-1 flex-col relative"
                   ref={provided.innerRef}
                 >
                   {cardIds.map((id: string, index: number) => (

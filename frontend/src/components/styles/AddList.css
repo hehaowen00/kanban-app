@@ -1,5 +1,4 @@
 .add-list {
-  display: block;
   padding: 8px 10px !important;
 }
 
@@ -12,24 +11,6 @@
   cursor: pointer;
 }
 
-.add-list:not(.active) > .list-header {
-  margin-bottom: 0;
-}
-
 .active {
   padding-top: 4px;
-}
-
-.add-list > .btn {
-  color: black;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  padding: 0px 0px 0px 5px;
-  text-align: right;
-}
-
-.btn.noselect > * {
-  margin-left: 5px;
 }

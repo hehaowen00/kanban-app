@@ -81,11 +81,12 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
     dispatch(action);
   };
 
-  const itemRef = useRef<HTMLTextAreaElement>(null);
+  const itemRef = useRef<any>(null);
 
   useEffect(() => {
     if (isActive) {
       itemRef.current?.focus();
+      itemRef.current?.scrollIntoView();
     }
   }, [isActive]);
 
@@ -110,7 +111,7 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
     <Draggable draggableId={id} index={index}>
     {(provided: any) => (
       <div
-        className="component checklist"
+        className="checklist bg-white br-3 shadow-5"
         ref={provided.innerRef}
         {...provided.draggableProps}
       >
@@ -118,13 +119,13 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
         {!isEditing && (
           <Fragment>
             <div
-              className="first handle font-90 font-600 margin-0"
+              className="checklist-title handle font-90 font-600 margin-0"
               onClick={titleClick}
               {...provided.dragHandleProps}
             >
-            {state.titleInput}
+              {state.titleInput}
             </div>
-            <div className="right-sec">
+            <div className="menu mt-5 spaced-right text-right">
                 <button
                   className="default"
                   onClick={deleteChecklist}
@@ -139,7 +140,7 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
             <TextareaAutosize
               ref={titleRef}
               name="titleInput"
-              className="first default font-90 font-600 margin-0"
+              className="checklist-title default flex flex-col font-90 font-600 margin-0"
               maxLength={MAX_CHECKLIST_TITLE_LENGTH}
               placeholder="Checklist"
               value={state.titleInput}
@@ -150,7 +151,7 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
               onFocus={titleClick}
               onKeyPress={titleKeyPress}
             />
-            <div className="right-sec">
+            <div className="menu mt-5 spaced-right text-right">
               <button
                 className="default"
                 onClick={saveTitle}
@@ -167,30 +168,24 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
           </Fragment>
         )}
       </div>
-      <div className="checklist-items">
+      <div className="block mt-5 relative">
         {items.map((item: any, index: number) => (
           <ChecklistItem key={index} index={index} checklistId={id} item={item} />
         ))}
         {isActive && (
-          <div className="item new-item">
+          <div ref={itemRef} className="item new-item">
+            <TextareaAutosize
+              name="itemInput"
+              className="default font-85 font-600"
+              maxLength={MAX_CHECKLIST_ITEM_LENGTH}
+              placeholder="New Item"
+              value={state.itemInput}
+              rows={isActive ? 3: undefined}
 
-            <div className="item-row">
-              <div className="item-desc item-desc-add">
-                <TextareaAutosize
-                  ref={itemRef}
-                  name="itemInput"
-                  className="default font-85"
-                  maxLength={MAX_CHECKLIST_ITEM_LENGTH}
-                  placeholder="New Item"
-                  value={state.itemInput}
-                  rows={isActive ? 3: undefined}
-
-                  onChange={updateState}
-                  onKeyPress={itemKeyPress}
-                />
-              </div>
-            </div>
-            <div className="menu new-item-menu text-right">
+              onChange={updateState}
+              onKeyPress={itemKeyPress}
+            />
+            <div className="menu mt-5 spaced-right text-right">
               <button
                 className="default"
                 onClick={addListItem}
@@ -206,18 +201,16 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
             </div>
           </div>
         )}
-        {!isActive &&<div className="item new-item no-border">
-          <div className="item-row">
-            <div className="item-desc item-desc-menu no-margin-left">
-              <button
-                className="default"
-                onClick={() => setActiveList(index)}
-              >
-                Add Item
-              </button>
-            </div>
+        {!isActive && (
+          <div className="menu mt-5">
+            <button
+              className="default"
+              onClick={() => setActiveList(index)}
+            >
+              Add Item
+            </button>
           </div>
-        </div>}
+        )}
       </div>
     </div>
     )}
