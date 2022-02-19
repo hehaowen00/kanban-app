@@ -16,6 +16,7 @@ function List({ index, list }: Props): ReactElement {
   const { id, name, cardIds } = list;
   const [visible, setVisible] = useState(false);
 
+  const listId = id;
   let [listInput, setListInput] = useState(name);
 
   useEffect(() => {
@@ -23,11 +24,12 @@ function List({ index, list }: Props): ReactElement {
       return;
     }
 
-    if (ref.current !== null) {
-      ref.current.focus();
-      let { length } = ref.current.value;
-      ref.current.selectionStart = length;
-      ref.current.selectionEnd = length;
+    let current = ref.current;
+    if (current) {
+      current.focus();
+      let { length } = current.value;
+      current.selectionStart = length;
+      current.selectionEnd = length;
     }
   }, [visible]);
 
@@ -81,16 +83,19 @@ function List({ index, list }: Props): ReactElement {
           key={index}
           {...provided.draggableProps}
         >
-          <div className="list">
-            <div className="list-header" {...provided.dragHandleProps}>
+          <div className="list br-3 bg-white flex flex-1-1 flex-col shadow">
+            <div
+              className="list-header bg-none br-3 flex flex-col font-90 font-600"
+              {...provided.dragHandleProps}
+            >
               {!visible &&
               <div
-                className="header-row"
+                className="title font-85"
                 onClick={onClick}
               >
                 {name}
               </div>}
-              {visible &&
+            {visible && (
               <TextareaAutosize 
                 ref={ref}
                 className="default font-85 font-600"
@@ -99,24 +104,28 @@ function List({ index, list }: Props): ReactElement {
                 onKeyDown={onKeyDown}
                 onKeyPress={onKeyPress}
                 value={listInput}
-              />}
+              />
+            )}
             </div>
             <Droppable droppableId={id} type="droppableCards">
               {(provided) => (
                 <div
-                  className="list-body"
+                  className="list-body flex flex-1 flex-col relative"
                   ref={provided.innerRef}
                 >
                   {cardIds.map((id: string, index: number) => (
-                    <Card key={id} index={index} id={id} />
+                    <Card key={id} index={index} id={id} listId={listId} />
                   ))}
                   {provided.placeholder}
                 </div>
               )}
             </Droppable>
-            <div className="list-footer noselect">
-              <button className="default" onClick={handleAddItem}>
-                Add Item
+            <div className="list-footer br-3 flex flex-col font-80 font-600 noselect">
+              <button
+                className="default add-card-btn"
+                onClick={handleAddItem}
+              >
+                Add Card
               </button>
             </div>
           </div>

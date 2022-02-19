@@ -42,8 +42,8 @@ export function UpdateCard(id: string, delta: Partial<Card>) {
   return { type: "UpdateCard", id, delta };
 }
 
-export function DeleteCard(id: string) {
-  return { type: "DeleteCard", id };
+export function DeleteCard(cardId: string, listId: string) {
+  return { type: "DeleteCard", cardId, listId };
 }
 
 // Checklist

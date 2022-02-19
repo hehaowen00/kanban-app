@@ -5,27 +5,31 @@ export type RenameBoard = {
   name: string,
 };
 
-export type NewCard = {
-  type: "NewCard",
-  listId: string,
-  title: string,
-};
+// List
 
 export type NewList = {
   type: "NewList",
   name: string,
 };
 
-export type UpdateCard = {
-  type: "UpdateCard",
-  id: string,
-  delta: Partial<Card>,
+export type MoveList = {
+  type: "MoveList",
+  srcIdx: number,
+  destIdx: number,
 };
 
 export type UpdateList = {
   type: "UpdateList",
   id: string,
   delta: Partial<List>,
+};
+
+// Card
+
+export type NewCard = {
+  type: "NewCard",
+  listId: string,
+  title: string,
 };
 
 export type MoveCard = {
@@ -36,11 +40,19 @@ export type MoveCard = {
   destIdx: number,
 };
 
-export type MoveList = {
-  type: "MoveList",
-  srcIdx: number,
-  destIdx: number,
+export type UpdateCard = {
+  type: "UpdateCard",
+  id: string,
+  delta: Partial<Card>,
 };
+
+export type DeleteCard = {
+  type: "DeleteCard",
+  cardId: string,
+  listId: string,
+};
+
+// Checklist
 
 export type NewChecklist = {
   type: "NewChecklist",
@@ -86,6 +98,8 @@ export type UpdateChecklistItem = {
   delta: Partial<ChecklistItem>,
 };
 
+// Comments
+
 export type NewComment = {
   type: "NewComment",
   userId: string,
@@ -94,8 +108,8 @@ export type NewComment = {
 };
 
 type BoardAction = RenameBoard;
-type ListAction =  MoveList | NewList | UpdateList;
-type CardAction = MoveCard | NewCard | UpdateCard;
+type ListAction = NewList | MoveList | UpdateList;
+type CardAction = NewCard | MoveCard | UpdateCard | DeleteCard;
 type CommentAction = NewComment;
 
 type ChecklistAction = NewChecklist | DeleteChecklist | MoveChecklist | UpdateChecklist;

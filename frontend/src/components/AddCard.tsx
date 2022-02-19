@@ -8,6 +8,8 @@ import { NewCard } from "../redux/Creators";
 
 import Outside from "./Outside";
 
+import "./styles/AddCard.css";
+
 function AddCard() {
   const dispatch = useDispatch();
 
@@ -53,8 +55,7 @@ function AddCard() {
 
   return (
     <div className="modal-view">
-      <Outside update={close}>
-      <div className="modal-content">
+      <Outside className="modal-content flex flex-1 flex-col" update={close}>
         <TextareaAutosize
           ref={titleRef}
           rows={3}
@@ -66,9 +67,9 @@ function AddCard() {
           placeholder="New Card"
           value={title}
         />
-        <div className="list-footer footer">
+        <div className="menu mt-5 noselect spaced-right text-right">
           <button
-            className="default font-85 font-500"
+            className="default font-85"
             onClick={addCard}
           >
             Add Card
@@ -80,7 +81,6 @@ function AddCard() {
             Cancel
           </button>
         </div>
-      </div>
       </Outside>
     </div>
   );

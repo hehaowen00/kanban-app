@@ -10,7 +10,7 @@ function Navbar({ name } : Props): ReactElement {
   return (
     <div className="navbar">
       <div className="left">
-        <input className="title-input" value={name_} />
+        <input className="default title-input" type="text" value={name_} />
         <button className="default">Save</button>
       </div>
       <div className="center">

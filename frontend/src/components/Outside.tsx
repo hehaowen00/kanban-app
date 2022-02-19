@@ -14,12 +14,12 @@ function useOutsideRef(ref: any, update: any) {
   }, [ref, update]);
 }
 
-function Outside({ children, update }: Props) {
+function Outside({ children, className, style, update }: Props) {
   let ref = useRef<any>(null);
   useOutsideRef(ref, update);
 
   return (
-    <div ref={ref}>
+    <div ref={ref} className={className} style={style}>
       {children}
     </div>
   );
@@ -28,6 +28,8 @@ function Outside({ children, update }: Props) {
 type Props = {
   children: any,
   update: any,
+  className?: any,
+  style?: any,
 };
 
 export default Outside;

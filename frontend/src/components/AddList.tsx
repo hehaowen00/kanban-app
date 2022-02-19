@@ -20,30 +20,33 @@ function AddList(): ReactElement {
   const [toggle, setToggle] = useState(false);
   const [name, setName] = useState("");
 
+  let containerRef = useRef<any>(null);
   let inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    inputRef.current?.focus();
+    if (toggle) {
+      containerRef.current?.scrollIntoView({ behavior: "smooth" });
+      inputRef.current?.focus();
+    }
   });
 
-  const handleClick = () => {
+  const onClick = () => {
     setToggle(!toggle);
   };
 
-  const handlePaste = (event: ClipboardEvent) => {
+  const onPaste = (event: ClipboardEvent) => {
     const append = event.clipboardData.getData("text");
     setName(name + append);
   };
 
-  const handleUpdate = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const onUpdate = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setName(event.target.value);
   };
 
-  const createList = () => {
+  const addList = () => {
     if (name !== "") {
       dispatch(NewList(name));
       setName("");
-      setToggle(false);
     }
   }
 
@@ -52,45 +55,68 @@ function AddList(): ReactElement {
     setToggle(false);
   }
 
-  const submitList = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      createList();
+  const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setToggle(false);
     }
   };
 
-  let classes = ["list", "add-list"];
+  const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addList();
+    }
+  };
+
+  let classes = "list add-list bg-white br-3 block font-90 font-600 shadow";
 
   if (toggle) {
-    classes.push("active");
+    classes = classes + " active";
   }
 
   return (
-    <div className="list-col">
+    <div
+      ref={containerRef}
+      className="list-col"
+      onBlur={cancelNewList}
+    >
       <div
-        className={classes.join(" ")}
-        onClick={toggle ? undefined : handleClick }
+        className={classes}
+        onClick={toggle ? undefined : onClick }
       >
         {!toggle && (
-          <div className="list-header flat noselect">
-            Add List
+          <div className="list-header flat mb-0 noselect">
+            Save
           </div>
         )}
         {toggle && (
           <Fragment>
             <TextareaAutosize
               ref={inputRef}
-              className="list-header textarea-card border-sized noselect"
+              className="default textarea-card font-90 noselect"
               maxLength={255}
               placeholder="Title"
+              value={name}
 
-              onChange={handleUpdate}
-              onKeyPress={submitList}
-              onPaste={handlePaste}
+              onChange={onUpdate}
+              onKeyDown={onKeyDown}
+              onKeyPress={onKeyPress}
+              onPaste={onPaste}
             />
-            <div className="btn noselect">
-              <button className="default" onClick={createList}>Add List</button>
-              <button className="default" onClick={cancelNewList}>Cancel</button>
+            <div className="menu mt-5 noselect spaced-right text-right">
+              <button
+                className="default"
+                onClick={addList}
+              >
+                Save
+              </button>
+              <button
+                className="default"
+                onClick={cancelNewList}
+              >
+                Cancel
+              </button>
             </div>
           </Fragment>
         )}

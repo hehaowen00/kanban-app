@@ -1,13 +1,24 @@
-import { useDispatch } from "react-redux";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
-import { ChangeEvent, useState } from "react";
+
+import { useDispatch } from "react-redux";
 import { NewComment } from "../../redux/Creators";
+
+import "../styles/Comments.css";
 
 function Comments({ cardId, comments }: any) {
   const dispatch = useDispatch();
 
+  const ref = useRef<any>(null);
+
   const [visible, setVisible] = useState(false);
   const [comment, setComment] = useState("");
+
+  useEffect(() => {
+    if (visible) {
+      ref.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  });
 
   const addComment = () => {
     let action = NewComment("testing", cardId, comment.trim());
@@ -41,26 +52,42 @@ function Comments({ cardId, comments }: any) {
     setVisible(false);
   };
 
+  const comments_ = comments.map((comment: any) => {
+    let date = new Date(comment.timestamp);
+    let str = date.toLocaleTimeString("en-AU", { hour12: false }) + " " + date.toLocaleDateString();
+    return {
+      ...comment,
+      timestamp: str,
+    };
+  });
+
   return (
-    <div className="comments">
-      <span className="font-90 font-600 text-left">
+    <div className="comments block text-left">
+      <div className="font-90 font-600 noselect text-left">
         Comments
-      </span>
-      <div className="comment-view">
-        {comments.map((comment: any, index: number) => 
-          <div key={index} className="comment">
-            <div className="header"><b>User:</b> {comment.userId}</div>
-            <div className="body">
-            {comment.text}
+      </div>
+      <div className="comment-view mt-5">
+        {comments_.map((comment: any, index: number) => 
+          <div key={index} className="comment br-3 shadow">
+            <div className="header font-85">
+              <span className="font-600">User: </span>
+              {comment.userId}
+              <span className="f-right font-600">
+                {comment.timestamp}
+              </span>
+            </div>
+            <div className="body flex font-85">
+              {comment.text}
             </div>
           </div>
         )}
       </div>
-      <div className="textarea-100">
+      <div className="">
         <TextareaAutosize
-          className="default font-85 font-500"
+          className="default font-85 font-500 shadow"
           placeholder="New Comment"
           maxLength={512}
+          rows={visible ? 3 : undefined}
           value={comment}
 
           onBlur={onBlur}
@@ -69,15 +96,15 @@ function Comments({ cardId, comments }: any) {
         />
       </div>
       {visible && (
-        <div className="menu">
+        <div ref={ref} className="menu spaced-right text-right">
           <button
-            className="default ml-5"
+            className="default shadow"
             onClick={addClick}
           >
-            Add Comment
+            Save
           </button>
           <button
-            className="default ml-5"
+            className="default shadow"
             onClick={cancel}
            >
              Cancel

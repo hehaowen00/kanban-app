@@ -5,6 +5,7 @@ import "../styles/Checklist.css";
 
 import { MAX_CHECKLIST_ITEM_LENGTH } from "../../types/Limits";
 import { DeleteChecklistItem, UpdateChecklistItem } from "../../redux/Creators";
+import Outside from "../Outside";
 
 function ChecklistItem({checklistId, index, item}: any) {
   const dispatch = useDispatch();
@@ -74,8 +75,11 @@ function ChecklistItem({checklistId, index, item}: any) {
   };
 
   return (
-    <div className="item">
-      <div className="item-row">
+    <Outside
+      className="item br-3 flex flex-col mb-0"
+      update={() => setState({ ...state, visible: false })}
+    >
+      <div className="item-row flex flex-row">
         <div className="check">
           <input
             type="checkbox"
@@ -83,7 +87,7 @@ function ChecklistItem({checklistId, index, item}: any) {
             defaultChecked={status}
           />
         </div>
-        <div className="item-desc">
+        <div className="item-desc block">
           <TextareaAutosize
             ref={inputRef}
             name="desc"
@@ -102,14 +106,16 @@ function ChecklistItem({checklistId, index, item}: any) {
         </div>
       </div>
       {state.visible && (
-        <div className="menu">
+        <div className="menu mt-5 text-right">
           <button
-            className="default right"
+            className="default"
             onClick={deleteItem}
-           >Delete Item</button>
+          >
+           Delete Item
+         </button>
         </div>
         )}
-    </div>
+    </Outside>
   );
 }
 

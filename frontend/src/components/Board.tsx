@@ -2,16 +2,15 @@ import { Fragment, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
-import AddCard from "./AddCard";
+import { List } from "../types/Kanban";
+import KanbanList from "./List";
 import AddList from "./AddList";
 import CardPanel from "./CardPanel";
-import ListComponent from "./List";
+import AddCard from "./AddCard";
 import Navbar from "./Navbar";
 
 import "./styles/Board.css";
-
 import { MoveCard, MoveList } from "../redux/Creators";
-import { List } from "../types/Kanban";
 
 function Board(): ReactElement {
   const dispatch = useDispatch();
@@ -49,9 +48,10 @@ function Board(): ReactElement {
   return (
     <Fragment>
       { visible === "NewCard" && <AddCard /> }
+      { visible === "ShowCard" && <CardPanel /> }
       <Navbar name={board.name} />
-      <div className="col">
-        <div className="content">
+      <div className="board flex flex-1 flex-col">
+        <div className="content flex flex-row">
           <DragDropContext
             onDragEnd={handleDragEnd}
           >
@@ -62,11 +62,11 @@ function Board(): ReactElement {
             >
               {(provided) => (
                 <div
-                  className="lists"
+                  className="lists flex flex-1-1"
                   ref={provided.innerRef}
                 >
                   {lists.map((list: List, index: number) => (
-                    <ListComponent key={list.id} index={index} list={list} />
+                    <KanbanList key={list.id} index={index} list={list} />
                   ))}
                   {provided.placeholder}
                   <AddList />
@@ -74,7 +74,6 @@ function Board(): ReactElement {
               )}
             </Droppable>
           </DragDropContext>
-          { visible === "ShowCard" && <CardPanel /> }
         </div>
       </div>
     </Fragment>

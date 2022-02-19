@@ -23,6 +23,7 @@ export type List = {
 export type Card = {
   title: string;
   description: string;
+  dueDate: number | null,
   comments: Comment[];
   attachments: string[];
   checklists: string[];

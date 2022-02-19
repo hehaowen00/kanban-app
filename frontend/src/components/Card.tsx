@@ -5,24 +5,24 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./styles/Card.css"
 
-function Card({ index, id }: Props): ReactElement {
+function Card({ index, id, listId }: Props): ReactElement {
   const dispatch = useDispatch();
 
   const cardObject = useSelector((state: any) => {
     return { ...state.board.cards[id] };
   });
 
-  const { title, description } = cardObject;
+  const { title } = cardObject;
 
   const handleClick = () => {
-    dispatch({ type: "ShowExistingCard", cardId: id });
+    dispatch({ type: "ShowExistingCard", cardId: id, listId });
   };
 
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
         <div
-          className="card noselect"
+          className="card bg-white br-3 noselect shadow"
           key={id}
           ref={provided.innerRef}
           onClick={handleClick}
@@ -30,9 +30,6 @@ function Card({ index, id }: Props): ReactElement {
           {...provided.dragHandleProps}
         >
           <div className="card-title">{title}</div>
-          {description !== "" && (
-            <div className="card-description">{description}</div>
-          )}
         </div>
       )}
     </Draggable>
@@ -43,6 +40,7 @@ type Props = {
   key: string;
   index: number;
   id: any;
+  listId: string,
 };
 
 export default Card;

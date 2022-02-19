@@ -9,7 +9,7 @@ import Comments from "./CardPanel/Comments";
 import Checklist from "./CardPanel/Checklist";
 
 import { MAX_DESCRIPTION_LENGTH, MAX_TITLE_LENGTH } from "../types/Limits";
-import { MoveChecklist, UpdateCard } from "../redux/Creators";
+import { DeleteCard, MoveChecklist, UpdateCard } from "../redux/Creators";
 
 import "./styles/CardPanel.css";
 import Outside from "./Outside";
@@ -17,8 +17,9 @@ import Outside from "./Outside";
 function CardPanel() {
   const dispatch = useDispatch();
 
-  const cardView = useSelector((state: any) => Object.assign({}, state.panel));
-  const { cardId, visible } = cardView;
+  const { cardId, listId, visible } = useSelector((state: any) =>
+    Object.assign({}, state.panel)
+  );
 
   const { title, description, checklists, comments } = useSelector((state: any) => {
     return state.board.cards[cardId];
@@ -28,6 +29,7 @@ function CardPanel() {
     title,
     description,
     focused: false,
+    descFocused: false,
     selected: "",
   });
 
@@ -44,7 +46,23 @@ function CardPanel() {
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
+  const close = () => {
+    dispatch({ type: "CloseCardView" });
+  };
+
+  const titleUpdate = () => {
+    let title_ = state.title.trim();
+
+    if (title_ !== "") {
+      let action = UpdateCard(cardId, { title: title_.trim() });
+      dispatch(action);
+    }
+  };
+
   const titleBlur = () => {
+    titleUpdate();
+    titleRef.current?.blur();
+    setState({ ...state, focused: false });
   };
 
   const titleFocus = () => {
@@ -52,28 +70,20 @@ function CardPanel() {
     setState({ ...state, focused: true });
   }
 
-  const titleSave = () => {
-    let title_ = state.title.trim();
-    console.log(title_);
-
-    if (title_ !== "") {
-      let action = UpdateCard(cardId, { title: title_.trim() });
-      dispatch(action);
-    }
-
-    titleRef.current?.blur();
-    setState({ ...state, focused: false });
+  const deleteCard = () => {
+    dispatch(DeleteCard(cardId, listId));
+    close();
   };
-  
+
   const titleCancel = () => {
-      titleRef.current?.blur();
-      setState({ ...state, title, focused: false });
+    titleRef.current?.blur();
+    setState({ ...state, title, focused: false });
   };
 
   const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      titleSave();
+      titleUpdate();
     } 
 
     if (event.key === "Escape") {
@@ -90,10 +100,12 @@ function CardPanel() {
     if (state.description !== description) {
       updateDescription();
     }
+    setState({ ...state, descFocused: false });
   };
 
   const descFocus = () => {
     setActiveList(-1);
+    setState({ ...state, descFocused: true });
   };
 
   const descKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -122,26 +134,20 @@ function CardPanel() {
      dispatch(action);
   };
 
-  const close = () => {
-    dispatch({ type: "CloseCardView" });
-  };
-
   const [activeList, setActiveList] = useState(-1);
 
   return (
-    <Fragment>
     <div className="card-view-cover">
-    </div>
-    <Outside update={close}>
-      <div
-        className="list card-view"
+      <Outside
+        className="list card-view bg-white flex flex-1 flex-col font-90 text-left"
+        update={close}
         style={{ display: visible ? "block" : "none" }}
       >
-        <div className="title">
+        <div className="block">
           <TextareaAutosize
             name="title"
             ref={titleRef}
-            className="default font-90 font-600"
+            className="default font-90 font-600 shadow"
             maxLength={MAX_TITLE_LENGTH}
             onChange={updateState}
             onBlur={titleBlur}
@@ -151,47 +157,64 @@ function CardPanel() {
             spellCheck={false}
             value={state.title}
           />
-          {!state.focused && (
-            <div className="test">
+          {state.focused && (
+            <div className="menu mt-5 spaced-right text-right">
               <button
-                className="default"
-                onClick={titleSave}
+                className="shadow default"
+                onClick={titleUpdate}
               >
-                Delete
+                Save
+              </button>
+              <button
+                className="shadow default"
+                onClick={titleCancel}
+              >
+                Cancel
               </button>
             </div>
           )}
-          {state.focused && (
-          <div className="test">
-            <button
-              className="default"
-              onClick={titleSave}
-            >
-              Save
-            </button>
-            <button
-              className="default"
-              onClick={titleCancel}
-            >
-              Cancel
-            </button>
-          </div>
+          {!state.focused && (
+            <div className="menu mt-5 text-right">
+              <button
+                className="default shadow"
+                onClick={deleteCard}
+              >
+                Delete Card
+              </button>
+            </div>
           )}
         </div>
         <TextareaAutosize
           name="description"
           ref={descriptionRef}
-          className="default font-85"
+          className="description shadow default font-85"
           maxLength={MAX_DESCRIPTION_LENGTH}
           onBlur={descBlur}
           onChange={updateState}
           onFocus={descFocus}
           onKeyPress={descKeyPress}
           placeholder="Description"
-          rows={4}
+          rows={state.description === "" || state.descFocused ? 5 : 3}
           spellCheck={false}
           value={state.description}
         />
+        <div className="menu-bar spaced-right text-left">
+            <button
+              className="default shadow-5"
+              onClick={() => setSelected("checklist")}
+            >
+              Add Checklist
+            </button>
+            <button className="default shadow-5">
+              Add Label
+            </button>
+            <button className="default shadow-5">
+              Set Start Date
+            </button>
+            <button className="default shadow-5">
+              Set End Date
+            </button>
+        </div>
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable
           droppableId="checklists"
@@ -217,22 +240,13 @@ function CardPanel() {
             {selected === "checklist" && (
               <AddChecklist cardId={cardId} close={closeSelected} />
             )}
-            {selected !== "checklist" && (
-              <div
-                className="component div-btn pad-reduced text-center font-85 font-600"
-                onClick={() => setSelected("checklist")}
-              >
-                Add Checklist
-              </div>
-            )}
           </div>
           )}
           </Droppable>
         </DragDropContext>
         <Comments cardId={cardId} comments={comments} />
-      </div>
-    </Outside>
-    </Fragment>
+      </Outside>
+    </div>
   );
 }
 
