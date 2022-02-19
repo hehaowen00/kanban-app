@@ -76,7 +76,7 @@ function ChecklistItem({checklistId, index, item}: any) {
 
   return (
     <Outside
-      className="item flex flex-col"
+      className="item br-3 flex flex-col mb-0"
       update={() => setState({ ...state, visible: false })}
     >
       <div className="item-row flex flex-row">
@@ -106,9 +106,9 @@ function ChecklistItem({checklistId, index, item}: any) {
         </div>
       </div>
       {state.visible && (
-        <div className="menu mt-5">
+        <div className="menu mt-5 text-right">
           <button
-            className="default right"
+            className="default"
             onClick={deleteItem}
           >
            Delete Item

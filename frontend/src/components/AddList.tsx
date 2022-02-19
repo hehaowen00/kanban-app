@@ -87,7 +87,7 @@ function AddList(): ReactElement {
       >
         {!toggle && (
           <div className="list-header flat mb-0 noselect">
-            Add List
+            Save
           </div>
         )}
         {toggle && (
@@ -105,8 +105,18 @@ function AddList(): ReactElement {
               onPaste={onPaste}
             />
             <div className="menu mt-5 noselect spaced-right text-right">
-              <button className="default" onClick={addList}>Add List</button>
-              <button className="default" onClick={cancelNewList}>Cancel</button>
+              <button
+                className="default"
+                onClick={addList}
+              >
+                Save
+              </button>
+              <button
+                className="default"
+                onClick={cancelNewList}
+              >
+                Cancel
+              </button>
             </div>
           </Fragment>
         )}

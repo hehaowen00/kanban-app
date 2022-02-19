@@ -119,7 +119,7 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
         {!isEditing && (
           <Fragment>
             <div
-              className="checklist-title handle font-90 font-600 margin-0"
+              className="checklist-title handle font-90 font-600 m-0"
               onClick={titleClick}
               {...provided.dragHandleProps}
             >
@@ -140,7 +140,7 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
             <TextareaAutosize
               ref={titleRef}
               name="titleInput"
-              className="checklist-title default flex flex-col font-90 font-600 margin-0"
+              className="checklist-title default flex flex-col font-90 font-600 m-0"
               maxLength={MAX_CHECKLIST_TITLE_LENGTH}
               placeholder="Checklist"
               value={state.titleInput}
@@ -173,7 +173,7 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
           <ChecklistItem key={index} index={index} checklistId={id} item={item} />
         ))}
         {isActive && (
-          <div ref={itemRef} className="item new-item">
+          <div ref={itemRef} className="item mb-0 mt-5">
             <TextareaAutosize
               name="itemInput"
               className="default font-85 font-600"
@@ -190,7 +190,7 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
                 className="default"
                 onClick={addListItem}
               >
-                Add Item
+                Save
               </button>
               <button
                 className="default"

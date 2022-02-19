@@ -93,6 +93,14 @@ textarea.default {
   border-radius: 3px;
 }
 
+.f-left {
+  float: left;
+}
+
+.f-right {
+  float: right;
+}
+
 .flex {
   display: flex;
 }
@@ -164,6 +172,10 @@ textarea.default {
   max-height: 90%;
   padding: 10px;
   width:430px;
+}
+
+.m-0 {
+  margin: 0;
 }
 
 .mb-0 {

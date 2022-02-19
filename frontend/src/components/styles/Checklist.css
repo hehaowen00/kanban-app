@@ -36,23 +36,13 @@
   opacity: 0.6;
 }
 
-.new-item {
-  border: none;
-  margin-top: 5px !important;
-  margin-bottom: 0 !important;
-  padding: 0;
-}
-
 .item {
-  border-radius: 3px;
-  margin: 0;
-  margin-bottom: 0px;
   padding: 0px 4px 0px 1px;
 }
 
 .item-row {
-  width: 100%;
   max-width: 100%;
+  width: 100%;
 }
 
 .item-row > .check {
@@ -64,4 +54,3 @@
   flex-grow: 100;
   margin-left: 5px;
 }
-

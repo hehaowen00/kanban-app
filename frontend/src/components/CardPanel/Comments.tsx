@@ -4,6 +4,8 @@ import TextareaAutosize from "react-autosize-textarea";
 import { useDispatch } from "react-redux";
 import { NewComment } from "../../redux/Creators";
 
+import "../styles/Comments.css";
+
 function Comments({ cardId, comments }: any) {
   const dispatch = useDispatch();
 
@@ -50,22 +52,37 @@ function Comments({ cardId, comments }: any) {
     setVisible(false);
   };
 
+  const comments_ = comments.map((comment: any) => {
+    let date = new Date(comment.timestamp);
+    let str = date.toLocaleTimeString("en-AU", { hour12: false }) + " " + date.toLocaleDateString();
+    return {
+      ...comment,
+      timestamp: str,
+    };
+  });
+
   return (
-    <div className="comments">
+    <div className="comments block text-left">
       <div className="font-90 font-600 noselect text-left">
         Comments
       </div>
-      <div className="comment-view">
-        {comments.map((comment: any, index: number) => 
-          <div key={index} className="comment shadow">
-            <div className="header"><b>User:</b> {comment.userId}</div>
-            <div className="body">
-            {comment.text}
+      <div className="comment-view mt-5">
+        {comments_.map((comment: any, index: number) => 
+          <div key={index} className="comment br-3 shadow">
+            <div className="header font-85">
+              <span className="font-600">User: </span>
+              {comment.userId}
+              <span className="f-right font-600">
+                {comment.timestamp}
+              </span>
+            </div>
+            <div className="body flex font-85">
+              {comment.text}
             </div>
           </div>
         )}
       </div>
-      <div className="textarea-100">
+      <div className="">
         <TextareaAutosize
           className="default font-85 font-500 shadow"
           placeholder="New Comment"
@@ -79,15 +96,15 @@ function Comments({ cardId, comments }: any) {
         />
       </div>
       {visible && (
-        <div ref={ref} className="menu">
+        <div ref={ref} className="menu spaced-right text-right">
           <button
-            className="default ml-5 shadow"
+            className="default shadow"
             onClick={addClick}
           >
-            Add Comment
+            Save
           </button>
           <button
-            className="default ml-5 shadow"
+            className="default shadow"
             onClick={cancel}
            >
              Cancel
