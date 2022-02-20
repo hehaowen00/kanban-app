@@ -2,10 +2,10 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
-import { NewChecklist } from "../../redux/Creators";
 import Outside from "../Outside";
 
-const MAX_CHECKLIST_TITLE_LENGTH = 128;
+import { NewChecklist } from "../../redux/Creators";
+import { MAX_CHECKLIST_TITLE_LENGTH } from "../../types/Limits";
 
 function AddChecklist ({ cardId, close }: any) {
   const dispatch = useDispatch(); 

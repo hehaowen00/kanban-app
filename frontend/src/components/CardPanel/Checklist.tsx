@@ -52,10 +52,6 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
     setActiveList(-1);
   };
 
-  const titleCancel = () => {
-    setEditing(false);
-  };
-
   const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -111,29 +107,20 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
     <Draggable draggableId={id} index={index}>
     {(provided: any) => (
       <div
+        key={id}
         className="checklist bg-white br-3 shadow-5"
         ref={provided.innerRef}
         {...provided.draggableProps}
       >
         <div className="header">
         {!isEditing && (
-          <Fragment>
-            <div
-              className="checklist-title handle font-90 font-600 m-0"
-              onClick={titleClick}
-              {...provided.dragHandleProps}
-            >
-              {state.titleInput}
-            </div>
-            <div className="menu mt-5 spaced-right text-right">
-                <button
-                  className="default"
-                  onClick={deleteChecklist}
-                >
-                  Delete 
-                </button>
-            </div>
-          </Fragment>
+          <div
+            className="checklist-title handle font-90 font-600 m-0"
+            onClick={titleClick}
+            {...provided.dragHandleProps}
+          >
+            {state.titleInput}
+          </div>
         )}
         {isEditing && (
           <Fragment>
@@ -154,15 +141,9 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
             <div className="menu mt-5 spaced-right text-right">
               <button
                 className="default"
-                onClick={saveTitle}
+                onMouseDown={deleteChecklist}
               >
-                Save
-              </button>
-              <button
-                className="default"
-                onClick={titleCancel}
-              >
-                Cancel
+                Delete
               </button>
             </div>
           </Fragment>
@@ -173,8 +154,9 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
           <ChecklistItem key={index} index={index} checklistId={id} item={item} />
         ))}
         {isActive && (
-          <div ref={itemRef} className="item mb-0 mt-5">
+          <div className="mb-0 mt-5">
             <TextareaAutosize
+              ref={itemRef} 
               name="itemInput"
               className="default font-85 font-600"
               maxLength={MAX_CHECKLIST_ITEM_LENGTH}

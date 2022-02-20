@@ -1,10 +1,9 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
+import "../styles/Comments.css";
 
 import { useDispatch } from "react-redux";
 import { NewComment } from "../../redux/Creators";
-
-import "../styles/Comments.css";
 
 function Comments({ cardId, comments }: any) {
   const dispatch = useDispatch();

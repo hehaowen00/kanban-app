@@ -49,7 +49,7 @@ function AddCard() {
   const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      titleRef.current?.blur();
+      addCard();
     }
   };
 

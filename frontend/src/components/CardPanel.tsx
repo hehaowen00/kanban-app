@@ -4,15 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
 import AddChecklist from "./Checklist/AddChecklist";
-import Comments from "./CardPanel/Comments";
-
 import Checklist from "./CardPanel/Checklist";
+import Comments from "./CardPanel/Comments";
+import Outside from "./Outside";
 
 import { MAX_DESCRIPTION_LENGTH, MAX_TITLE_LENGTH } from "../types/Limits";
 import { DeleteCard, MoveChecklist, UpdateCard } from "../redux/Creators";
 
 import "./styles/CardPanel.css";
-import Outside from "./Outside";
 
 function CardPanel() {
   const dispatch = useDispatch();
@@ -76,18 +75,19 @@ function CardPanel() {
   };
 
   const titleCancel = () => {
-    titleRef.current?.blur();
     setState({ ...state, title, focused: false });
   };
 
-  const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  const titleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
       titleUpdate();
+      titleRef.current?.blur();
     } 
 
     if (event.key === "Escape") {
       titleCancel();
+      titleRef.current?.blur();
     }
   };
 
@@ -152,38 +152,23 @@ function CardPanel() {
             onChange={updateState}
             onBlur={titleBlur}
             onFocus={titleFocus}
-            onKeyDown={titleKeyPress}
+            onKeyDown={titleKeyDown}
             placeholder="Title"
             spellCheck={false}
             value={state.title}
           />
           {state.focused && (
-            <div className="menu mt-5 spaced-right text-right">
-              <button
-                className="shadow default"
-                onClick={titleUpdate}
-              >
-                Save
-              </button>
-              <button
-                className="shadow default"
-                onClick={titleCancel}
-              >
-                Cancel
-              </button>
-            </div>
-          )}
-          {!state.focused && (
             <div className="menu mt-5 text-right">
               <button
                 className="default shadow"
-                onClick={deleteCard}
+                onMouseDown={deleteCard}
               >
                 Delete Card
               </button>
             </div>
           )}
         </div>
+        <div className="">
         <TextareaAutosize
           name="description"
           ref={descriptionRef}
@@ -198,22 +183,39 @@ function CardPanel() {
           spellCheck={false}
           value={state.description}
         />
-        <div className="menu-bar spaced-right text-left">
+        {state.descFocused && (
+          <div className="menu mt-5 spaced-right text-right">
             <button
-              className="default shadow-5"
-              onClick={() => setSelected("checklist")}
+              className="default shadow"
+              onMouseDown={undefined}
             >
-              Add Checklist
+              Save
             </button>
-            <button className="default shadow-5">
-              Add Label
+            <button
+              className="default shadow"
+              onMouseDown={undefined}
+            >
+              Cancel
             </button>
-            <button className="default shadow-5">
-              Set Start Date
-            </button>
-            <button className="default shadow-5">
-              Set End Date
-            </button>
+          </div>
+        )}
+        </div>
+        <div className="menu-bar spaced-right text-left">
+          <button
+            className="default shadow-5"
+            onClick={() => setSelected("checklist")}
+          >
+            Add Checklist
+          </button>
+          <button className="default shadow-5">
+            Add Label
+          </button>
+          <button className="default shadow-5">
+            Set Start Date
+          </button>
+          <button className="default shadow-5">
+            Set End Date
+          </button>
         </div>
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable

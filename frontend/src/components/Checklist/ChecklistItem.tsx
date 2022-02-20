@@ -1,11 +1,12 @@
 import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
+
 import { useDispatch } from "react-redux";
-import "../styles/Checklist.css";
 
 import { MAX_CHECKLIST_ITEM_LENGTH } from "../../types/Limits";
 import { DeleteChecklistItem, UpdateChecklistItem } from "../../redux/Creators";
-import Outside from "../Outside";
+
+import "../styles/Checklist.css";
 
 function ChecklistItem({checklistId, index, item}: any) {
   const dispatch = useDispatch();
@@ -75,10 +76,7 @@ function ChecklistItem({checklistId, index, item}: any) {
   };
 
   return (
-    <Outside
-      className="item br-3 flex flex-col mb-0"
-      update={() => setState({ ...state, visible: false })}
-    >
+    <div className="item br-3 flex flex-col mb-0">
       <div className="item-row flex flex-row">
         <div className="check">
           <input
@@ -98,6 +96,8 @@ function ChecklistItem({checklistId, index, item}: any) {
             style={style}
             value={state.desc}
 
+
+            onBlur={() => setState({ ...state, visible: false })}
             onChange={onChange}
             onFocus={onFocus}
             onKeyDown={onKeyDown}
@@ -109,13 +109,13 @@ function ChecklistItem({checklistId, index, item}: any) {
         <div className="menu mt-5 text-right">
           <button
             className="default"
-            onClick={deleteItem}
+            onMouseDown={deleteItem}
           >
            Delete Item
          </button>
         </div>
         )}
-    </Outside>
+    </div>
   );
 }
 
