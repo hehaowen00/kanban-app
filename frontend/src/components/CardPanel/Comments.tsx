@@ -81,7 +81,7 @@ function Comments({ cardId, comments }: any) {
           </div>
         )}
       </div>
-      <div className="">
+      <div className="block">
         <TextareaAutosize
           className="default font-85 font-500 shadow"
           placeholder="New Comment"

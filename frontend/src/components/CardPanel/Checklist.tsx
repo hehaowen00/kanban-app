@@ -12,7 +12,7 @@ import {
 } from "../../types/Limits";
 import { NewChecklistItem, DeleteChecklist } from "../../redux/Creators";
 
-function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
+function Checklist({ cardId, id, index } : any) {
   const dispatch = useDispatch();
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
@@ -23,7 +23,12 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
   const [state, setState] = useState({
     titleInput: title,
     itemInput: "",
+    active: false,
   });
+
+  const setActive = (value: boolean) => {
+    setState({ ...state, active: value });
+  };
 
   const updateState = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -49,7 +54,7 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
 
   const titleClick = () => {
     setEditing(true);
-    setActiveList(-1);
+    setActive(false);
   };
 
   const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -80,20 +85,23 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
   const itemRef = useRef<any>(null);
 
   useEffect(() => {
-    if (isActive) {
+    if (state.active) {
       itemRef.current?.focus();
       itemRef.current?.scrollIntoView();
     }
-  }, [isActive]);
+  }, [state.active]);
 
   const addListItem = () => {
     let newItem = state.itemInput.trim();
     if (newItem !== "") {
       let action = NewChecklistItem(id, newItem);
       dispatch(action);
-      setState({ ...state, itemInput: "", });
-      setActiveList(-1);
+      setState({ ...state, active: false, itemInput: "", });
     }
+  };
+
+  const cancelAddItem = () => {
+    setState({ ...state, active: false, itemInput: "" });
   };
 
   const itemKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -153,7 +161,7 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
         {items.map((item: any, index: number) => (
           <ChecklistItem key={index} index={index} checklistId={id} item={item} />
         ))}
-        {isActive && (
+        {state.active && (
           <div className="mb-0 mt-5">
             <TextareaAutosize
               ref={itemRef} 
@@ -162,32 +170,33 @@ function Checklist({ cardId, id, index, isActive, setActiveList } : any) {
               maxLength={MAX_CHECKLIST_ITEM_LENGTH}
               placeholder="New Item"
               value={state.itemInput}
-              rows={isActive ? 3: undefined}
+              rows={state.active ? 3: undefined}
 
+              onBlur={cancelAddItem}
               onChange={updateState}
               onKeyPress={itemKeyPress}
             />
             <div className="menu mt-5 spaced-right text-right">
               <button
                 className="default"
-                onClick={addListItem}
+                onMouseDown={addListItem}
               >
                 Save
               </button>
               <button
                 className="default"
-                onClick={() => setActiveList(-1)}
+                onMouseDown={cancelAddItem}
               >
                 Cancel
               </button>
             </div>
           </div>
         )}
-        {!isActive && (
+        {!state.active && (
           <div className="menu mt-5">
             <button
               className="default"
-              onClick={() => setActiveList(index)}
+              onClick={() => setActive(true)}
             >
               Add Item
             </button>

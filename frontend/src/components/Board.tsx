@@ -46,7 +46,7 @@ function Board(): ReactElement {
   };
 
   return (
-    <Fragment>
+    <div className="board-view">
       { visible === "NewCard" && <AddCard /> }
       { visible === "ShowCard" && <CardPanel /> }
       <Navbar name={board.name} />
@@ -62,7 +62,7 @@ function Board(): ReactElement {
             >
               {(provided) => (
                 <div
-                  className="lists flex flex-1-1"
+                  className="lists flex flex-row flex-1-1"
                   ref={provided.innerRef}
                 >
                   {lists.map((list: List, index: number) => (
@@ -76,7 +76,7 @@ function Board(): ReactElement {
           </DragDropContext>
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 }
 

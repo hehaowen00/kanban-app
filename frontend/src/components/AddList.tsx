@@ -78,7 +78,7 @@ function AddList(): ReactElement {
   return (
     <div
       ref={containerRef}
-      className="list-col"
+      className="list-col mr-0"
       onBlur={cancelNewList}
     >
       <div
@@ -87,7 +87,7 @@ function AddList(): ReactElement {
       >
         {!toggle && (
           <div className="list-header flat mb-0 noselect">
-            Save
+            Add List
           </div>
         )}
         {toggle && (

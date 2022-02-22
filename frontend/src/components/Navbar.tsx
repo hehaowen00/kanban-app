@@ -1,4 +1,5 @@
 import { ReactElement, useState } from "react";
+import { Link } from "react-router-dom";
 import "./styles/Navbar.css"
 
 function Navbar({ name } : Props): ReactElement {
@@ -16,7 +17,9 @@ function Navbar({ name } : Props): ReactElement {
       <div className="center">
       </div>
       <div className="right">
-        <button className="default">Dashboard</button>
+        <Link to="/">
+          <button className="default">Dashboard</button>
+        </Link>
       </div>
     </div>
   );

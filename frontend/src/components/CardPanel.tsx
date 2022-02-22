@@ -1,14 +1,13 @@
-import { ChangeEvent, Fragment, KeyboardEvent, useRef, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
-import TextareaAutosize from "react-autosize-textarea";
-import AddChecklist from "./Checklist/AddChecklist";
-import Checklist from "./CardPanel/Checklist";
+import Checklists from "./CardPanel/Checklists";
 import Comments from "./CardPanel/Comments";
+import DescriptionView from "./CardPanel/Description";
 import Outside from "./Outside";
+import TitleView from "./CardPanel/Title";
 
-import { MAX_DESCRIPTION_LENGTH, MAX_TITLE_LENGTH } from "../types/Limits";
 import { DeleteCard, MoveChecklist, UpdateCard } from "../redux/Creators";
 
 import "./styles/CardPanel.css";
@@ -24,96 +23,42 @@ function CardPanel() {
     return state.board.cards[cardId];
   });
 
+  const deleteCard = () => {
+    dispatch({ type: "CloseCardView" });
+    dispatch(DeleteCard(cardId, listId));
+  };
+
+  const updateCard = (patch: any) => {
+    dispatch(UpdateCard(cardId, patch));
+  };
+
   const [state, setState] = useState({
     title,
     description,
-    focused: false,
-    descFocused: false,
-    selected: "",
+    checklists,
+    startDate: "",
+    endDate: "",
   });
 
-  const updateState = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const [addChecklist, setAddChecklist] = useState(false);
+
+  const setTitle = (value: string) => {
+    setState({ ...state, title: value });
+  };
+
+  const setDescription = (value: string) => {
+    setState({ ...state, description: value });
+  };
+
+  const updateState = (event: ChangeEvent<any>) => {
     let { name, value } = event.target;
     setState({ ...state, [name]: value });
   };
 
   const [selected, setSelected] = useState("");
-  const closeSelected = () => {
-    setSelected("");
-  };
-
-  const titleRef = useRef<HTMLTextAreaElement>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const close = () => {
     dispatch({ type: "CloseCardView" });
-  };
-
-  const titleUpdate = () => {
-    let title_ = state.title.trim();
-
-    if (title_ !== "") {
-      let action = UpdateCard(cardId, { title: title_.trim() });
-      dispatch(action);
-    }
-  };
-
-  const titleBlur = () => {
-    titleUpdate();
-    titleRef.current?.blur();
-    setState({ ...state, focused: false });
-  };
-
-  const titleFocus = () => {
-    setActiveList(-1);
-    setState({ ...state, focused: true });
-  }
-
-  const deleteCard = () => {
-    dispatch(DeleteCard(cardId, listId));
-    close();
-  };
-
-  const titleCancel = () => {
-    setState({ ...state, title, focused: false });
-  };
-
-  const titleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      titleUpdate();
-      titleRef.current?.blur();
-    } 
-
-    if (event.key === "Escape") {
-      titleCancel();
-      titleRef.current?.blur();
-    }
-  };
-
-  const updateDescription = () => {
-    let action = UpdateCard(cardId, { description: state.description });
-    dispatch(action);
-  };
-
-  const descBlur = () => {
-    if (state.description !== description) {
-      updateDescription();
-    }
-    setState({ ...state, descFocused: false });
-  };
-
-  const descFocus = () => {
-    setActiveList(-1);
-    setState({ ...state, descFocused: true });
-  };
-
-  const descKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      updateDescription();
-      descriptionRef.current?.blur();
-    }
   };
 
   const handleDragEnd = (event: DropResult) => {
@@ -130,80 +75,34 @@ function CardPanel() {
       return;
     }
 
-     let action = MoveChecklist(cardId, srcIdx, destIdx);
-     dispatch(action);
+    let action = MoveChecklist(cardId, srcIdx, destIdx);
+    dispatch(action);
   };
-
-  const [activeList, setActiveList] = useState(-1);
 
   return (
     <div className="card-view-cover">
       <Outside
-        className="list card-view bg-white flex flex-1 flex-col font-90 text-left"
+        className="list card-view bg-white flex flex-1 flex-col font-90 shadow text-left"
         update={close}
         style={{ display: visible ? "block" : "none" }}
       >
-        <div className="block">
-          <TextareaAutosize
-            name="title"
-            ref={titleRef}
-            className="default font-90 font-600 shadow"
-            maxLength={MAX_TITLE_LENGTH}
-            onChange={updateState}
-            onBlur={titleBlur}
-            onFocus={titleFocus}
-            onKeyDown={titleKeyDown}
-            placeholder="Title"
-            spellCheck={false}
-            value={state.title}
-          />
-          {state.focused && (
-            <div className="menu mt-5 text-right">
-              <button
-                className="default shadow"
-                onMouseDown={deleteCard}
-              >
-                Delete Card
-              </button>
-            </div>
-          )}
-        </div>
-        <div className="">
-        <TextareaAutosize
-          name="description"
-          ref={descriptionRef}
-          className="description shadow default font-85"
-          maxLength={MAX_DESCRIPTION_LENGTH}
-          onBlur={descBlur}
-          onChange={updateState}
-          onFocus={descFocus}
-          onKeyPress={descKeyPress}
-          placeholder="Description"
-          rows={state.description === "" || state.descFocused ? 5 : 3}
-          spellCheck={false}
-          value={state.description}
+        <TitleView
+          title={title}
+          value={state.title}
+          setValue={setTitle}
+          updateCard={updateCard}
+          deleteCard={deleteCard}
         />
-        {state.descFocused && (
-          <div className="menu mt-5 spaced-right text-right">
-            <button
-              className="default shadow"
-              onMouseDown={undefined}
-            >
-              Save
-            </button>
-            <button
-              className="default shadow"
-              onMouseDown={undefined}
-            >
-              Cancel
-            </button>
-          </div>
-        )}
-        </div>
+        <DescriptionView
+          description={description}
+          value={state.description}
+          setValue={setDescription}
+          updateCard={updateCard}
+        />
         <div className="menu-bar spaced-right text-left">
           <button
             className="default shadow-5"
-            onClick={() => setSelected("checklist")}
+            onClick={() => setAddChecklist(true)}
           >
             Add Checklist
           </button>
@@ -217,35 +116,40 @@ function CardPanel() {
             Set End Date
           </button>
         </div>
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <Droppable
-          droppableId="checklists"
-          type="droppableChecklists"
-          direction="vertical"
-          >
-          {(provided: any) => (
-            <div
-              className="checklists"
-              ref={provided.innerRef}
-            >
-            {checklists.map((id: string, index: number) => (
-              <Checklist 
-                key={id}
-                index={index}
-                cardId={cardId}
-                id={id}
-                isActive={activeList === index}
-                setActiveList={setActiveList}
-              />
-            ))}
-            {provided.placeholder}
-            {selected === "checklist" && (
-              <AddChecklist cardId={cardId} close={closeSelected} />
-            )}
+        <div className="br-default br-3 spaced pad-5 shadow-5">
+          <div className="inline">
+            <span className="font-85 font-600 noselect">
+              {"Start Date "} 
+            </span>
+            <input
+              name="startDate"
+              className="default" 
+              type="date"
+              value={state.startDate}
+
+              onChange={updateState}
+            />
           </div>
-          )}
-          </Droppable>
-        </DragDropContext>
+          <div className="inline f-right">
+            <span className="font-85 font-600 noselect">
+              {"End Date "}
+            </span> 
+            <input
+              name="endDate"
+              className="default"
+              type="datetime-local"
+              value={state.endDate}
+
+              onChange={updateState}
+            />
+          </div>
+        </div>
+        <Checklists
+          cardId={cardId}
+          checklists={checklists}
+          active={addChecklist}
+          set={setAddChecklist}
+        />
         <Comments cardId={cardId} comments={comments} />
       </Outside>
     </div>

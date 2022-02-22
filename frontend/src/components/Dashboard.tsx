@@ -4,8 +4,8 @@ import "./styles/Dashboard.css";
 
 function Dashboard(): ReactElement {
   return (
-    <Fragment>
-    </Fragment>
+    <div className="bg-white">
+    </div>
   );
 }
 
