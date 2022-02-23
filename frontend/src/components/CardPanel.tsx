@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from "react";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
 import Checklists from "./CardPanel/Checklists";
@@ -8,7 +7,7 @@ import DescriptionView from "./CardPanel/Description";
 import Outside from "./Outside";
 import TitleView from "./CardPanel/Title";
 
-import { DeleteCard, MoveChecklist, UpdateCard } from "../redux/Creators";
+import { DeleteCard, UpdateCard } from "../redux/Creators";
 
 import "./styles/CardPanel.css";
 
@@ -19,7 +18,7 @@ function CardPanel() {
     Object.assign({}, state.panel)
   );
 
-  const { title, description, checklists, comments } = useSelector((state: any) => {
+  const { title, description, comments } = useSelector((state: any) => {
     return state.board.cards[cardId];
   });
 
@@ -35,12 +34,11 @@ function CardPanel() {
   const [state, setState] = useState({
     title,
     description,
-    checklists,
     startDate: "",
     endDate: "",
   });
 
-  const [addChecklist, setAddChecklist] = useState(false);
+  const [active, setActive] = useState(false);
 
   const setTitle = (value: string) => {
     setState({ ...state, title: value });
@@ -55,28 +53,8 @@ function CardPanel() {
     setState({ ...state, [name]: value });
   };
 
-  const [selected, setSelected] = useState("");
-
   const close = () => {
     dispatch({ type: "CloseCardView" });
-  };
-
-  const handleDragEnd = (event: DropResult) => {
-    const { source, destination } = event;
-
-    if (!destination) {
-      return;
-    }
-
-    const srcIdx = source.index;
-    const destIdx = destination.index;
-
-    if (srcIdx === destIdx) {
-      return;
-    }
-
-    let action = MoveChecklist(cardId, srcIdx, destIdx);
-    dispatch(action);
   };
 
   return (
@@ -102,7 +80,7 @@ function CardPanel() {
         <div className="menu-bar spaced-right text-left">
           <button
             className="default shadow-5"
-            onClick={() => setAddChecklist(true)}
+            onClick={() => setActive(true)}
           >
             Add Checklist
           </button>
@@ -137,18 +115,21 @@ function CardPanel() {
             <input
               name="endDate"
               className="default"
-              type="datetime-local"
+              type="date"
               value={state.endDate}
 
               onChange={updateState}
+            />
+            <input
+              name="endTime"
+              className="default"
+              type="time"
             />
           </div>
         </div>
         <Checklists
           cardId={cardId}
-          checklists={checklists}
-          active={addChecklist}
-          set={setAddChecklist}
+          state={{active, setActive}}
         />
         <Comments cardId={cardId} comments={comments} />
       </Outside>

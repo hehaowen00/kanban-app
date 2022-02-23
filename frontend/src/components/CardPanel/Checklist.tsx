@@ -1,5 +1,5 @@
 import { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from "react";
-import { Draggable } from "react-beautiful-dnd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
 import ChecklistItem from "../Checklist/ChecklistItem";
@@ -157,10 +157,13 @@ function Checklist({ cardId, id, index } : any) {
           </Fragment>
         )}
       </div>
-      <div className="block mt-5 relative">
+      <Droppable droppableId={id} type="droppableItems">
+      {(provided) => (
+      <div className="block mt-5 relative" ref={provided.innerRef}>
         {items.map((item: any, index: number) => (
           <ChecklistItem key={index} index={index} checklistId={id} item={item} />
         ))}
+        {provided.placeholder}
         {state.active && (
           <div className="mb-0 mt-5">
             <TextareaAutosize
@@ -203,6 +206,8 @@ function Checklist({ cardId, id, index } : any) {
           </div>
         )}
       </div>
+      )}
+      </Droppable>
     </div>
     )}
     </Draggable>

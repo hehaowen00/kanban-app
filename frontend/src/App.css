@@ -62,12 +62,17 @@ input[type=text].default {
 
 input[type=date].default {
   border: 1px solid black;
-  border-radius: 3px;;
+  border-radius: 3px;
 }
 
 input[type=datetime-local].default {
   border: 1px solid black;
-  border-radius: 3px;;
+  border-radius: 3px;
+}
+
+input[type=time].default {
+  border: 1px solid black;
+  border-radius: 3px;
 }
 
 input[type=text].default:focus {

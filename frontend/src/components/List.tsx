@@ -90,7 +90,7 @@ function List({ index, list }: Props): ReactElement {
             >
               {!visible &&
               <div
-                className="title font-85"
+                className="title font-85 noselect"
                 onClick={onClick}
               >
                 {name}

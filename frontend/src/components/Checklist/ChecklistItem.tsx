@@ -1,4 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
+import { Draggable } from "react-beautiful-dnd";
 import TextareaAutosize from "react-autosize-textarea";
 
 import { useDispatch } from "react-redux";
@@ -76,46 +77,55 @@ function ChecklistItem({checklistId, index, item}: any) {
   };
 
   return (
-    <div className="item br-3 flex flex-col mb-0">
-      <div className="item-row flex flex-row">
-        <div className="check">
-          <input
-            type="checkbox"
-            onClick={toggleStatus}
-            defaultChecked={status}
-          />
-        </div>
-        <div className="item-desc block">
-          <TextareaAutosize
-            ref={inputRef}
-            name="desc"
-            className={classes.join(" ")}
-            maxLength={MAX_CHECKLIST_ITEM_LENGTH}
-            placeholder="Item"
-            spellCheck={state.visible}
-            style={style}
-            value={state.desc}
+    <Draggable draggableId={index.toString()} index={index}>
+      {(provided) => (
+        <div
+          ref={provided.innerRef}
+          className="item bg-white br-3 flex flex-col mb-0"
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <div className="item-row flex flex-row">
+            <div className="check">
+              <input
+                type="checkbox"
+                onClick={toggleStatus}
+                defaultChecked={status}
+              />
+            </div>
+            <div className="item-desc block">
+              <TextareaAutosize
+                ref={inputRef}
+                name="desc"
+                className={classes.join(" ")}
+                maxLength={MAX_CHECKLIST_ITEM_LENGTH}
+                placeholder="Item"
+                spellCheck={state.visible}
+                style={style}
+                value={state.desc}
 
 
-            onBlur={() => setState({ ...state, visible: false })}
-            onChange={onChange}
-            onFocus={onFocus}
-            onKeyDown={onKeyDown}
-            onKeyPress={onKeyPress}
-          />
+                onBlur={() => setState({ ...state, visible: false })}
+                onChange={onChange}
+                onFocus={onFocus}
+                onKeyDown={onKeyDown}
+                onKeyPress={onKeyPress}
+              />
+            </div>
+          </div>
+          {state.visible && (
+            <div className="menu mt-5 text-right">
+              <button
+                className="default"
+                onMouseDown={deleteItem}
+              >
+               Delete Item
+             </button>
+            </div>
+            )}
         </div>
-      </div>
-      {state.visible && (
-        <div className="menu mt-5 text-right">
-          <button
-            className="default"
-            onMouseDown={deleteItem}
-          >
-           Delete Item
-         </button>
-        </div>
-        )}
-    </div>
+      )}
+    </Draggable>
   );
 }
 

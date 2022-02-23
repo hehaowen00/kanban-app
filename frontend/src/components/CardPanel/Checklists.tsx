@@ -1,14 +1,16 @@
-import { useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
 import AddChecklist from "../Checklist/AddChecklist";
 import Checklist from "./Checklist";
 
-import { MoveChecklist, UpdateCard } from "../../redux/Creators";
+import { MoveChecklist } from "../../redux/Creators";
 
-function Checklists({ cardId, checklists, active, set }: Props) {
+function Checklists({ cardId, state }: Props) {
   const dispatch = useDispatch();
+
+  const { checklists } = useSelector((state: any) => state.board.cards[cardId]);
+  const { active, setActive } = state;
 
   const handleDragEnd = (event: DropResult) => {
     const { source, destination } = event;
@@ -45,7 +47,7 @@ function Checklists({ cardId, checklists, active, set }: Props) {
           ))}
           {provided.placeholder}
           {active && (
-             <AddChecklist cardId={cardId} close={() => set(false)} />
+             <AddChecklist cardId={cardId} close={() => setActive(false)} />
           )}
         </div>
       )}
@@ -56,9 +58,7 @@ function Checklists({ cardId, checklists, active, set }: Props) {
 
 type Props = {
   cardId: string,
-  checklists: any[],
-  active: boolean,
-  set: any,
+  state: any,
 };
 
 export default Checklists;
