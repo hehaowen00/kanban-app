@@ -3,7 +3,7 @@ import { createStore, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import { Board, CardViewState, List } from "../types/Kanban";
-import ExampleBoard from "../types/Example";
+import ExampleBoard from "../types/example";
 import Action from "./Actions";
 
 const EmptyCard = {
@@ -229,6 +229,22 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
 
       return { ...state, checklists };
     }
+    case "MoveChecklistItem": {
+      const { srcId, srcIdx, destId, destIdx } = action;
+      let checklists = { ...state.checklists };
+
+      let items = [...checklists[srcId].items];
+      let el = items.splice(srcIdx, 1);
+      checklists[srcId].items = items;
+
+      items = [...checklists[destId].items];
+      items = insert(items, destIdx, el[0]);
+      checklists[destId].items = items;
+
+      let res = { ...state, checklists };
+
+      return {...res };
+    }
     case "DeleteChecklistItem": {
       const { checklistId, index } = action;
       let checklists = { ...state.checklists };
@@ -279,6 +295,9 @@ function reorder(list: any[], startIdx: number, endIdx: number): any[] {
 }
 
 function insert(arr: any[], idx: number, element: any): any[] {
+  if (idx === 0) {
+    return [element, ...arr];
+  }
   return [...arr.slice(0, idx), element, ...arr.slice(idx)];
 } 
 

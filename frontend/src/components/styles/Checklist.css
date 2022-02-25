@@ -43,14 +43,32 @@
 .item-row {
   max-width: 100%;
   width: 100%;
+  margin-bottom: 5px;
+  padding: 5px 5px 5px 0px;
 }
 
 .item-row > .check {
   margin-top: 4px;
+  margin-bottom: 2px;
   min-width: 20px;
 }
 
 .item-row > .item-desc {
   flex-grow: 100;
   margin-left: 5px;
+}
+
+.item-row > div.default {
+  padding-top: 4px;
+  margin-left: 5px;
+
+  min-width: calc(100% - 45px);
+  max-width: calc(100% - 45px);
+
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 4px 8px;
+  border: 1px solid black;
+  background: white !important;
+  max-width: inherit;
 }

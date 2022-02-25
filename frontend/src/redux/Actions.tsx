@@ -85,6 +85,14 @@ export type NewChecklistItem = {
   item: string,
 };
 
+export type MoveChecklistItem = {
+  type: "MoveChecklistItem",
+  srcId: string,
+  srcIdx: number,
+  destId: string,
+  destIdx: number,
+};
+
 export type DeleteChecklistItem = {
   type: "DeleteChecklistItem",
   checklistId: string,
@@ -108,13 +116,33 @@ export type NewComment = {
 };
 
 type BoardAction = RenameBoard;
-type ListAction = NewList | MoveList | UpdateList;
-type CardAction = NewCard | MoveCard | UpdateCard | DeleteCard;
+
+type ListAction = NewList
+  | MoveList
+  | UpdateList;
+
+type CardAction = NewCard
+  | MoveCard
+  | UpdateCard
+  | DeleteCard;
+
 type CommentAction = NewComment;
 
-type ChecklistAction = NewChecklist | DeleteChecklist | MoveChecklist | UpdateChecklist;
-type ChecklistItemAction = NewChecklistItem | DeleteChecklistItem | UpdateChecklistItem;
+type ChecklistAction = NewChecklist
+  | DeleteChecklist
+  | MoveChecklist
+  | UpdateChecklist;
 
-type Action = BoardAction | ListAction | CardAction | ChecklistAction | ChecklistItemAction | CommentAction;
+type ChecklistItemAction = NewChecklistItem
+  | MoveChecklistItem
+  | DeleteChecklistItem
+  | UpdateChecklistItem;
+
+type Action = BoardAction
+  | ListAction
+  | CardAction
+  | ChecklistAction
+  | ChecklistItemAction
+  | CommentAction;
 
 export default Action;

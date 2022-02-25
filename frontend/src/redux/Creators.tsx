@@ -71,6 +71,10 @@ export function NewChecklistItem(checklistId: string, item: string) {
   return { type: "NewChecklistItem", checklistId, item };
 }
 
+export function MoveChecklistItem(srcId: string, srcIdx: number, destId: string, destIdx: number) {
+  return { type: "MoveChecklistItem", srcId, srcIdx, destId, destIdx };
+}
+
 export function UpdateChecklistItem(
   checklistId: string,
   index: number,

@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import TextareaAutosize from "react-autosize-textarea";
 
@@ -9,7 +9,7 @@ import { DeleteChecklistItem, UpdateChecklistItem } from "../../redux/Creators";
 
 import "../styles/Checklist.css";
 
-function ChecklistItem({checklistId, index, item}: any) {
+function ChecklistItem({ checklistId, index, item }: any) {
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -18,6 +18,12 @@ function ChecklistItem({checklistId, index, item}: any) {
     desc: description,
     visible: false,
   });
+
+  useEffect(() => {
+    if (state.visible) {
+      inputRef.current?.focus();
+    }
+  }, [state.visible]);
 
   const deleteItem = () => {
     let action = DeleteChecklistItem(checklistId, index);
@@ -31,19 +37,19 @@ function ChecklistItem({checklistId, index, item}: any) {
 
   const updateDescription = () => {
     let description = state.desc.trim();
-    if (description.length !== 0) {
+      if (description.length !== 0) {
       let action = UpdateChecklistItem(checklistId, index, { description });
       dispatch(action);
     }
   };
 
+  const onClick = () => {
+    setState({ ...state, visible: true });
+  };
+
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target;
     setState({ ...state, desc: value, });
-  };
-
-  const onFocus = () => {
-    setState({ ...state, visible: true, });
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -66,53 +72,57 @@ function ChecklistItem({checklistId, index, item}: any) {
     }
   };
 
-  let classes = ["default", "font-85", "font-600"]
+  let classes = ["block", "bg-white", "default", "font-85"];
 
   if (status && !state.visible) {
     classes.push("checked");
   }
-
-  const style = {
-    border: (state.visible ? "1px solid black" : "1px solid white")
-  };
 
   return (
     <Draggable draggableId={index.toString()} index={index}>
       {(provided) => (
         <div
           ref={provided.innerRef}
-          className="item bg-white br-3 flex flex-col mb-0"
+          className="item bg-white flex flex-col mb-0"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="item-row flex flex-row">
+          <div className="item-row bg-white flex flex-row">
             <div className="check">
               <input
                 type="checkbox"
                 onClick={toggleStatus}
-                defaultChecked={status}
+                checked={status}
               />
             </div>
+            {state.visible && (
             <div className="item-desc block">
               <TextareaAutosize
                 ref={inputRef}
                 name="desc"
-                className={classes.join(" ")}
+                className="default font-85"
                 maxLength={MAX_CHECKLIST_ITEM_LENGTH}
                 placeholder="Item"
                 spellCheck={state.visible}
-                style={style}
                 value={state.desc}
 
 
                 onBlur={() => setState({ ...state, visible: false })}
                 onChange={onChange}
-                onFocus={onFocus}
                 onKeyDown={onKeyDown}
                 onKeyPress={onKeyPress}
               />
             </div>
-          </div>
+            )}
+            {!state.visible && (
+              <div
+                className={classes.join(" ")}
+                onClick={onClick}
+              >
+                {description}
+              </div>
+            )}
+            </div>
           {state.visible && (
             <div className="menu mt-5 text-right">
               <button

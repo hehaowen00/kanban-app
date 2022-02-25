@@ -18,6 +18,7 @@ function newExampleBoard()  {
     title: "Checklist 1",
     items: [
       { status: false, description: "Item 1", },
+      { status: true, description: "Item 2", },
     ]
   };
 
@@ -25,6 +26,7 @@ function newExampleBoard()  {
     id: uuidV4(),
     name: "Kanban",
     cards,
+    checklists,
     lists: [
       {
         id: uuidV4(),
@@ -32,9 +34,7 @@ function newExampleBoard()  {
         cardIds: [cardId]
       }
     ],
-    attachments: {
-    },
-    checklists,
+    attachments: {},
   };
 }
 

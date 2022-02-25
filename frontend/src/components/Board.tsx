@@ -37,12 +37,23 @@ function Board(): ReactElement {
       return;
     }
 
-    const lookup = {
-      "droppableCards": () => dispatch(MoveCard(srcId, destId, srcIdx, destIdx)),
-      "droppableLists": () => dispatch(MoveList(srcIdx, destIdx)),
-    } as any;
+    let action = undefined;
 
-    lookup[event.type]();
+    switch (event.type) {
+      case "droppableCards": {
+        action = MoveCard(srcId, destId, srcIdx, destIdx);
+        break;
+      }
+      case "droppableLists": {
+        action = MoveList(srcIdx, destIdx);
+        break;
+      }
+      default: {
+        return;
+      }
+    }
+
+    dispatch(action);
   };
 
   return (

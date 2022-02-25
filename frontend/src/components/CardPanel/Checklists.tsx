@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddChecklist from "../Checklist/AddChecklist";
 import Checklist from "./Checklist";
 
-import { MoveChecklist } from "../../redux/Creators";
+import { MoveChecklist, MoveChecklistItem } from "../../redux/Creators";
 
 function Checklists({ cardId, state }: Props) {
   const dispatch = useDispatch();
@@ -21,12 +21,29 @@ function Checklists({ cardId, state }: Props) {
 
     const srcIdx = source.index;
     const destIdx = destination.index;
+    const srcId = source.droppableId;
+    const destId = destination.droppableId;
 
     if (srcIdx === destIdx) {
       return;
     }
 
-    let action = MoveChecklist(cardId, srcIdx, destIdx);
+    let action = undefined;
+
+    switch (event.type) {
+      case "droppableChecklists": {
+        action = MoveChecklist(cardId, srcIdx, destIdx);
+        break;
+      }
+      case "droppableItems": {
+        action = MoveChecklistItem(srcId, srcIdx, destId, destIdx);
+        break;
+      }
+      default: {
+        break;
+      }
+    };
+
     dispatch(action);
   };
 

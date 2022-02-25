@@ -17,7 +17,7 @@ function Checklist({ cardId, id, index } : any) {
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
   const { title, items } = useSelector((state: any) => {
-    return state.board.checklists[id];
+    return { ...state.board.checklists[id] };
   });
 
   const [state, setState] = useState({
@@ -159,53 +159,53 @@ function Checklist({ cardId, id, index } : any) {
       </div>
       <Droppable droppableId={id} type="droppableItems">
       {(provided) => (
-      <div className="block mt-5 relative" ref={provided.innerRef}>
-        {items.map((item: any, index: number) => (
-          <ChecklistItem key={index} index={index} checklistId={id} item={item} />
-        ))}
-        {provided.placeholder}
-        {state.active && (
-          <div className="mb-0 mt-5">
-            <TextareaAutosize
-              ref={itemRef} 
-              name="itemInput"
-              className="default font-85 font-600"
-              maxLength={MAX_CHECKLIST_ITEM_LENGTH}
-              placeholder="New Item"
-              value={state.itemInput}
-              rows={state.active ? 3: undefined}
+        <div className="block mt-5 relative" ref={provided.innerRef}>
+          {items.map((item: any, index: number) => (
+            <ChecklistItem key={index} index={index} checklistId={id} item={item} />
+          ))}
+          {provided.placeholder}
+          {state.active && (
+            <div className="mb-0 mt-5">
+              <TextareaAutosize
+                ref={itemRef} 
+                name="itemInput"
+                className="default font-85 font-600"
+                maxLength={MAX_CHECKLIST_ITEM_LENGTH}
+                placeholder="New Item"
+                value={state.itemInput}
+                rows={state.active ? 3: undefined}
 
-              onBlur={cancelAddItem}
-              onChange={updateState}
-              onKeyPress={itemKeyPress}
-            />
-            <div className="menu mt-5 spaced-right text-right">
+                onBlur={cancelAddItem}
+                onChange={updateState}
+                onKeyPress={itemKeyPress}
+              />
+              <div className="menu mt-5 spaced-right text-right">
+                <button
+                  className="default"
+                  onMouseDown={addListItem}
+                >
+                  Save
+                </button>
+                <button
+                  className="default"
+                  onMouseDown={cancelAddItem}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+          {!state.active && (
+            <div className="menu mt-5">
               <button
                 className="default"
-                onMouseDown={addListItem}
+                onClick={() => setActive(true)}
               >
-                Save
-              </button>
-              <button
-                className="default"
-                onMouseDown={cancelAddItem}
-              >
-                Cancel
+                Add Item
               </button>
             </div>
-          </div>
-        )}
-        {!state.active && (
-          <div className="menu mt-5">
-            <button
-              className="default"
-              onClick={() => setActive(true)}
-            >
-              Add Item
-            </button>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
       )}
       </Droppable>
     </div>
