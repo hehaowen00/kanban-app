@@ -1,9 +1,10 @@
-import { ChangeEvent, KeyboardEvent, ReactElement, useEffect, useRef, useState } from "react";
+import { Fragment, ChangeEvent, KeyboardEvent, ReactElement, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea/lib";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Card from "./Card";
+import CardPanel from "./CardPanel";
 
 import "./styles/List.css";
 
@@ -74,9 +75,14 @@ function List({ index, list }: Props): ReactElement {
     }
   };
 
+  const cardView = useSelector((state: any) => state.panel);
+  const thisList = cardView.listId === id;
+  const cardVisible = cardView.visible;
+
   return (
     <Draggable key={id} draggableId={id} index={index}>
       {(provided) => (
+        <div className="bet">
         <div
           className="list-col"
           ref={provided.innerRef}
@@ -130,6 +136,8 @@ function List({ index, list }: Props): ReactElement {
             </div>
           </div>
         </div>
+        { thisList && cardVisible === "ShowCard" && <CardPanel /> }
+      </div>
       )}
     </Draggable>
   );

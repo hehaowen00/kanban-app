@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Checklists from "./CardPanel/Checklists";
@@ -57,10 +57,16 @@ function CardPanel() {
     dispatch({ type: "CloseCardView" });
   };
 
+  let container = useRef<any>(null);
+
+  useEffect(() => {
+    container.current?.scrollIntoView();
+  });
+
   return (
-    <div className="card-view-cover">
+    <div ref={container} className="padded">
       <Outside
-        className="list card-view bg-white flex flex-1 flex-col font-90 shadow text-left"
+        className="list card-view bg-grey flex flex-1 flex-col font-90 shadow text-left"
         update={close}
         style={{ display: visible ? "block" : "none" }}
       >
@@ -94,8 +100,8 @@ function CardPanel() {
             Set End Date
           </button>
         </div>
-        <div className="br-default br-3 spaced pad-5 shadow-5">
-          <div className="inline">
+        <div className="br-default bg-white br-3 spaced pad-5 shadow-5">
+          <div className="">
             <span className="font-85 font-600 noselect">
               {"Start Date "} 
             </span>
@@ -108,7 +114,7 @@ function CardPanel() {
               onChange={updateState}
             />
           </div>
-          <div className="inline f-right">
+          <div className="">
             <span className="font-85 font-600 noselect">
               {"End Date "}
             </span> 
@@ -132,6 +138,7 @@ function CardPanel() {
           state={{active, setActive}}
         />
         <Comments cardId={cardId} comments={comments} />
+        <button onClick={close}>Close </button>
       </Outside>
     </div>
   );

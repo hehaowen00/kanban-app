@@ -59,7 +59,6 @@ function Board(): ReactElement {
   return (
     <div className="board-view">
       { visible === "NewCard" && <AddCard /> }
-      { visible === "ShowCard" && <CardPanel /> }
       <Navbar name={board.name} />
       <div className="board flex flex-1 flex-col">
         <div className="content flex flex-row">

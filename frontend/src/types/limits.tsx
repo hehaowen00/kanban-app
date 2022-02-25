@@ -1,5 +1,5 @@
-export const MAX_DESCRIPTION_LENGTH = 1024;
-export const MAX_TITLE_LENGTH = 512;
+export const MAX_DESCRIPTION_LENGTH = 2048;
+export const MAX_TITLE_LENGTH = 1024;
 
 export const MAX_CHECKLIST_TITLE_LENGTH = 128;
-export const MAX_CHECKLIST_ITEM_LENGTH = 512;
+export const MAX_CHECKLIST_ITEM_LENGTH = 1024;

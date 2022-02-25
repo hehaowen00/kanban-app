@@ -95,6 +95,10 @@ textarea.default {
   background: white;
 }
 
+.bg-grey {
+  background: #ecf0f3 !important;
+}
+
 .block {
   display: block;
 }
@@ -257,4 +261,19 @@ textarea.default {
 
 .text-center {
   text-align: center;
+}
+
+.bet {
+  display: flex;
+  flex-direction: row;
+  margin-right: 10px;
+}
+
+.bet:last-child {
+  height: 100%;
+}
+
+.padded {
+  margin-left: 10px;
+  padding-bottom:20px;
 }
