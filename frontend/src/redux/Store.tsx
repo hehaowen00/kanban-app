@@ -241,9 +241,7 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
       items = insert(items, destIdx, el[0]);
       checklists[destId].items = items;
 
-      let res = { ...state, checklists };
-
-      return {...res };
+      return { ...state, checklists };
     }
     case "DeleteChecklistItem": {
       const { checklistId, index } = action;

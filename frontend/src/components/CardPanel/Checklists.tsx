@@ -24,10 +24,6 @@ function Checklists({ cardId, state }: Props) {
     const srcId = source.droppableId;
     const destId = destination.droppableId;
 
-    if (srcIdx === destIdx) {
-      return;
-    }
-
     let action = undefined;
 
     switch (event.type) {

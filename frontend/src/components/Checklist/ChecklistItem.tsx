@@ -78,10 +78,13 @@ function ChecklistItem({ checklistId, index, item }: any) {
     classes.push("checked");
   }
 
+  let key = `${checklistId}-${index}`;
+
   return (
-    <Draggable draggableId={index.toString()} index={index}>
+    <Draggable draggableId={key} index={index}>
       {(provided) => (
         <div
+          key={key}
           ref={provided.innerRef}
           className="item bg-white flex flex-col mb-0"
           {...provided.draggableProps}
@@ -91,7 +94,7 @@ function ChecklistItem({ checklistId, index, item }: any) {
             <div className="check">
               <input
                 type="checkbox"
-                onClick={toggleStatus}
+                onChange={toggleStatus}
                 checked={status}
               />
             </div>
@@ -105,7 +108,6 @@ function ChecklistItem({ checklistId, index, item }: any) {
                 placeholder="Item"
                 spellCheck={state.visible}
                 value={state.desc}
-
 
                 onBlur={() => setState({ ...state, visible: false })}
                 onChange={onChange}
