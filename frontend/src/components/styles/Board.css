@@ -22,7 +22,7 @@
 
 .lists {
   background: transparent;
-  margin: 0 0.625rem;
+  margin: 0 15px;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0px !important;

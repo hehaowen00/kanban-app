@@ -104,7 +104,7 @@ function AddList(): ReactElement {
               onKeyPress={onKeyPress}
               onPaste={onPaste}
             />
-            <div className="menu mt-5 noselect spaced-right text-right">
+            <div className="menu mb-0 mt-5 noselect spaced-right text-right">
               <button
                 className="default"
                 onClick={addList}

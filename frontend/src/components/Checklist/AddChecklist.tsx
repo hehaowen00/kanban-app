@@ -50,7 +50,7 @@ function AddChecklist ({ cardId, close }: any) {
 
   return (
     <Outside update={cancelClick}>
-      <div ref={containerRef} className="add-checklist br-3 shadow">
+      <div ref={containerRef} className="add-checklist bg-white br-3 shadow">
         <TextareaAutosize
           ref={inputRef}
           className="default font-85 font-600 margin-0"

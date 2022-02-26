@@ -1,4 +1,4 @@
-import { ChangeEvent,KeyboardEvent, useEffect, useRef, useState } from "react";
+import { Fragment, ChangeEvent,KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
@@ -6,20 +6,17 @@ import TextareaAutosize from "react-autosize-textarea";
 import { MAX_TITLE_LENGTH } from "../types/Limits";
 import { NewCard } from "../redux/Creators";
 
-import Outside from "./Outside";
-
 import "./styles/AddCard.css";
 
-function AddCard() {
+function AddCard({ listId, close }: any) {
   const dispatch = useDispatch();
-
-  const { listId } = useSelector((state: any) => state.panel);
 
   const [title, setTitle_] = useState("");
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     titleRef.current?.focus();
+    titleRef.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   const addCard = () => {
@@ -31,8 +28,9 @@ function AddCard() {
     }
   };
 
-  const close = () => {
-    dispatch({ type: "CloseCardView" });
+  const onClose = () => {
+    console.log('close');
+    close();
   };
 
   const titleBlur = () => {
@@ -54,35 +52,26 @@ function AddCard() {
   };
 
   return (
-    <div className="modal-view">
-      <Outside className="modal-content flex flex-1 flex-col" update={close}>
-        <TextareaAutosize
-          ref={titleRef}
-          rows={3}
-          className="default font-90 font-600"
-          maxLength={MAX_TITLE_LENGTH}
-          onBlur={titleBlur}
-          onChange={titleChange}
-          onKeyPress={titleKeyPress}
-          placeholder="New Card"
-          value={title}
-        />
-        <div className="menu mt-5 noselect spaced-right text-right">
-          <button
-            className="default font-85"
-            onClick={addCard}
-          >
-            Add Card
-          </button>
-          <button
-            className="default font-85"
-            onClick={close}
-          >
-            Cancel
-          </button>
-        </div>
-      </Outside>
+    <Fragment>
+    <div className="card-view-cover" onClick={onClose}></div>
+    <div className="card no-pad bg-white br-3 flex flex-1 flex-col shadow z-2">
+      <TextareaAutosize
+        ref={titleRef}
+        rows={5}
+        className="default no-bdr font-90"
+        maxLength={MAX_TITLE_LENGTH}
+        onBlur={titleBlur}
+        onChange={titleChange}
+        onKeyPress={titleKeyPress}
+        placeholder="New Card"
+        value={title}
+      />
     </div>
+    <div className="menu inline spaced-right text-right z-2">
+      <button className="default no-bdr shadow" onClick={addCard}>Save</button>
+      <button className="default no-bdr shadow" onClick={onClose}>Cancel</button>
+    </div>
+    </Fragment>
   );
 }
 

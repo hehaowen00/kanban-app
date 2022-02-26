@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState, useRef } from "react";
+import { Fragment, ChangeEvent, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Checklists from "./CardPanel/Checklists";
@@ -64,10 +64,11 @@ function CardPanel() {
   });
 
   return (
-    <div ref={container} className="padded">
-      <Outside
-        className="list card-view bg-grey flex flex-1 flex-col font-90 shadow text-left"
-        update={close}
+    <Fragment>
+    <div className="card-view-cover" onClick={close}></div>
+    <div ref={container} className="padded z-2">
+      <div
+        className="list card-view br-3 bg-grey flex flex-1 flex-col font-90 shadow text-left"
         style={{ display: visible ? "block" : "none" }}
       >
         <TitleView
@@ -138,9 +139,9 @@ function CardPanel() {
           state={{active, setActive}}
         />
         <Comments cardId={cardId} comments={comments} />
-        <button onClick={close}>Close </button>
-      </Outside>
+      </div>
     </div>
+    </Fragment>
   );
 }
 

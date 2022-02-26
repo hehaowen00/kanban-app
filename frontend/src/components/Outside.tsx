@@ -18,6 +18,7 @@ function useOutsideRef(ref: any, update: any) {
 
       while (node && !current.contains(node)) {
         if (node.parentNode === current) {
+          update();
           return;
         }
         if (node.parentNode !== null) {
@@ -25,13 +26,10 @@ function useOutsideRef(ref: any, update: any) {
         } else {
           return;
         }
-        if (node && current.contains(node)) {
+        if (node && node.contains(current)) {
+          update();
           return;
         }
-      }
-
-      if (!current.contains(node)) {
-        update();
       }
     };
 
@@ -42,12 +40,18 @@ function useOutsideRef(ref: any, update: any) {
   }, [ref, update]);
 }
 
-function Outside({ children, className, style, update }: Props) {
+function Outside({ children, className, style, update, onMouseDown, onClick }: Props) {
   let ref = useRef<any>(null);
   useOutsideRef(ref, update);
 
   return (
-    <div ref={ref} className={className} style={style}>
+    <div
+      ref={ref}
+      className={className}
+      style={style}
+      onMouseDown={onMouseDown}
+      onClick={onClick}
+    >
       {children}
     </div>
   );
@@ -58,6 +62,8 @@ type Props = {
   update: any,
   className?: any,
   style?: any,
+  onMouseDown?: any,
+  onClick?: any,
 };
 
 export default Outside;

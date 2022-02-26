@@ -67,7 +67,7 @@ function Comments({ cardId, comments }: any) {
       </div>
       <div className="comment-view mt-5">
         {comments_.map((comment: any, index: number) => 
-          <div key={index} className="comment br-3 shadow">
+          <div key={index} className="comment bg-white br-3 shadow">
             <div className="header font-85">
               <span className="font-600">User: </span>
               {comment.userId}

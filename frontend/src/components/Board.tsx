@@ -5,7 +5,6 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { List } from "../types/Kanban";
 import KanbanList from "./List";
 import AddList from "./AddList";
-import CardPanel from "./CardPanel";
 import AddCard from "./AddCard";
 import Navbar from "./Navbar";
 
@@ -40,11 +39,11 @@ function Board(): ReactElement {
     let action = undefined;
 
     switch (event.type) {
-      case "droppableCards": {
+      case "cards": {
         action = MoveCard(srcId, destId, srcIdx, destIdx);
         break;
       }
-      case "droppableLists": {
+      case "lists": {
         action = MoveList(srcIdx, destIdx);
         break;
       }
@@ -56,6 +55,10 @@ function Board(): ReactElement {
     dispatch(action);
   };
 
+  const dragStart = () => {
+    dispatch({type: "CloseCardView" });
+  };
+
   return (
     <div className="board-view">
       { visible === "NewCard" && <AddCard /> }
@@ -63,11 +66,12 @@ function Board(): ReactElement {
       <div className="board flex flex-1 flex-col">
         <div className="content flex flex-row">
           <DragDropContext
+            onDragStart={dragStart}
             onDragEnd={handleDragEnd}
           >
             <Droppable
               droppableId="lists"
-              type="droppableLists"
+              type="lists"
               direction="horizontal"
             >
               {(provided) => (

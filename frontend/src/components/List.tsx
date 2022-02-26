@@ -9,6 +9,7 @@ import CardPanel from "./CardPanel";
 import "./styles/List.css";
 
 import { UpdateList } from "../redux/Creators";
+import AddCard from "./AddCard";
 
 function List({ index, list }: Props): ReactElement {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ function List({ index, list }: Props): ReactElement {
 
   const listId = id;
   let [listInput, setListInput] = useState(name);
+  const [newCard, setNewCard] = useState(false);
 
   useEffect(() => {
     if (!visible) {
@@ -35,7 +37,8 @@ function List({ index, list }: Props): ReactElement {
   }, [visible]);
 
   const handleAddItem = () => {
-    dispatch({ type: "NewCardPrompt", listId: id }); 
+    // dispatch({ type: "NewCardPrompt", listId: id }); 
+    setNewCard(true);
   };
 
   const updateList = (payload: any) => {
@@ -82,22 +85,22 @@ function List({ index, list }: Props): ReactElement {
   return (
     <Draggable key={id} draggableId={id} index={index}>
       {(provided) => (
-        <div className="bet">
         <div
-          className="list-col"
+          className="bet"
           ref={provided.innerRef}
-          key={index}
           {...provided.draggableProps}
         >
+        <div
+          className="list-col"
+          key={index}
+        >
           <div className="list br-3 bg-white flex flex-1-1 flex-col shadow">
-            <div
-              className="list-header bg-none br-3 flex flex-col font-90 font-600"
-              {...provided.dragHandleProps}
-            >
+            <div className="list-header bg-none br-3 flex flex-col font-90 font-600">
               {!visible &&
               <div
                 className="title font-85 noselect"
                 onClick={onClick}
+                {...provided.dragHandleProps}
               >
                 {name}
               </div>}
@@ -113,7 +116,7 @@ function List({ index, list }: Props): ReactElement {
               />
             )}
             </div>
-            <Droppable droppableId={id} type="droppableCards">
+            <Droppable droppableId={id} type="cards">
               {(provided) => (
                 <div
                   className="list-body flex flex-1 flex-col relative"
@@ -123,6 +126,12 @@ function List({ index, list }: Props): ReactElement {
                     <Card key={id} index={index} id={id} listId={listId} />
                   ))}
                   {provided.placeholder}
+                  {newCard && (
+                    <AddCard
+                      listId={id}
+                      close={() => setNewCard(false)}
+                    />
+                  )}
                 </div>
               )}
             </Droppable>

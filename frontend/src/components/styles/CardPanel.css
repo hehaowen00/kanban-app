@@ -16,10 +16,15 @@
   height: 98%;
   max-width: 25%;
   min-width: 400px;
-  max-height: 90%;
-  overflow-y: auto;
+  max-height: none;
+  margin-bottom: 50px;
+  overflow-y: hidden;
   padding: 10px 15px 15px 15px !important;
   width: 25%;
+}
+
+.z-2 {
+  z-index: 2 !important;
 }
 
 .card-view > * {
