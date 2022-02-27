@@ -3,25 +3,26 @@ import TextareaAutosize from "react-autosize-textarea/lib";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
-import Card from "./Card";
+import AddCard from "./AddCard";
+import CardView from "./Card";
 import CardPanel from "./CardPanel";
+
+import { UpdateList } from "../redux/Creators";
+import { AppState } from "../redux/Store";
+import { List } from "../types/Kanban";
 
 import "./styles/List.css";
 
-import { UpdateList } from "../redux/Creators";
-import AddCard from "./AddCard";
-
-function List({ index, list }: Props): ReactElement {
+function ListView({ index, list }: Props): ReactElement {
   const dispatch = useDispatch();
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const { id, name, cardIds } = list;
   const [visible, setVisible] = useState(false);
 
-  const cardView = useSelector((state: any) => state.panel);
+  const cardView = useSelector((state: AppState) => state.panel);
   const thisList = cardView.listId === id;
   const { showCard } = cardView;
-  console.log('list', thisList, showCard);
 
   const [listInput, setListInput] = useState(name);
   const [newCard, setNewCard] = useState(false);
@@ -48,7 +49,7 @@ function List({ index, list }: Props): ReactElement {
     dispatch({ type: "DeleteList", id });
   };
 
-  const updateList = (payload: any) => {
+  const updateList = (payload: Partial<List>) => {
     dispatch(UpdateList(id, payload));
   };
 
@@ -129,7 +130,7 @@ function List({ index, list }: Props): ReactElement {
                   ref={provided.innerRef}
                 >
                   {cardIds.map((cardId: string, index: number) => (
-                    <Card key={cardId} index={index} id={cardId} listId={id} />
+                    <CardView key={cardId} index={index} id={cardId} listId={id} />
                   ))}
                   {provided.placeholder}
                   {newCard && (
@@ -161,7 +162,7 @@ function List({ index, list }: Props): ReactElement {
 type Props = {
   key: string;
   index: number;
-  list: any,
+  list: List,
 };
 
-export default List;
+export default ListView;

@@ -7,11 +7,11 @@ import Outside from "../Outside";
 import { NewChecklist } from "../../redux/Creators";
 import { MAX_CHECKLIST_TITLE_LENGTH } from "../../types/Limits";
 
-function AddChecklist ({ cardId, close }: any) {
+function AddChecklist ({ cardId, close }: Props) {
   const dispatch = useDispatch(); 
   const [title, setTitle] = useState("");
 
-  const containerRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -79,5 +79,10 @@ function AddChecklist ({ cardId, close }: any) {
     </Outside>
   );
 }
+
+type Props = {
+  cardId: string,
+  close: () => void,
+};
 
 export default AddChecklist;

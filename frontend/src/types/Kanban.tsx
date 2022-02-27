@@ -1,6 +1,6 @@
 export type CardViewState = {
-  cardId: string | null,
-  listId: string | null,
+  cardId: string,
+  listId: string,
   showCard: boolean,
 };
 

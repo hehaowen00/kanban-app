@@ -17,8 +17,8 @@ const EmptyCard = {
 };
 
 const DefaultCardViewState = {
-  cardId: null,
-  listId: null,
+  cardId: "",
+  listId: "",
   showCard: false,
 };
 
@@ -26,8 +26,8 @@ function CardViewReducer(state: CardViewState = DefaultCardViewState, action: Ca
   switch (action.type) {
     case "CloseCardView": {
       return {
-        cardId: null,
-        listId: null,
+        cardId: "",
+        listId: "",
         showCard: false,
       }
     }
@@ -55,7 +55,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
 
       let lists = [...state.lists];
       let cards = { ...state.cards };
-      let list = lists.find((list: any) => list.id === listId);
+      let list = lists.find((list: List) => list.id === listId);
 
       if (list !== undefined) {
         let cardId = uuidV4();
@@ -292,7 +292,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
   }
 }
     
-function reorder(list: any[], startIdx: number, endIdx: number): any[] {
+function reorder<Type>(list: Type[], startIdx: number, endIdx: number): Type[] {
   const arr = Array.from(list);
   const [removed] = arr.splice(startIdx, 1);
 
@@ -300,16 +300,17 @@ function reorder(list: any[], startIdx: number, endIdx: number): any[] {
   return arr;
 }
 
-function insert(arr: any[], idx: number, element: any): any[] {
+function insert<Type>(arr: Type[], idx: number, element: Type): Type[] {
   if (idx === 0) {
     return [element, ...arr];
   }
   return [...arr.slice(0, idx), element, ...arr.slice(idx)];
 } 
 
-const reducer = combineReducers({
+const appReducer = combineReducers({
   board: BoardReducer,
   panel: CardViewReducer,
 });
 
-export default createStore(reducer as any, composeWithDevTools());
+export type AppState = ReturnType<typeof appReducer>;
+export default createStore(appReducer, composeWithDevTools());

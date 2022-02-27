@@ -1,18 +1,17 @@
 import { ReactElement } from "react";
 import { Draggable } from "react-beautiful-dnd";
-
 import { useDispatch, useSelector } from "react-redux";
+
+import { AppState } from "../redux/Store";
 
 import "./styles/Card.css"
 
-function Card({ index, id, listId }: Props): ReactElement {
+function CardView({ index, id, listId }: Props): ReactElement {
   const dispatch = useDispatch();
 
-  const cardObject = useSelector((state: any) => {
+  const { title } = useSelector((state: AppState) => {
     return { ...state.board.cards[id] };
   });
-
-  const { title } = cardObject;
 
   const handleClick = () => {
     dispatch({ type: "ShowExistingCard", cardId: id, listId });
@@ -40,8 +39,8 @@ function Card({ index, id, listId }: Props): ReactElement {
 type Props = {
   key: string;
   index: number;
-  id: any;
+  id: string;
   listId: string,
 };
 
-export default Card;
+export default CardView;
