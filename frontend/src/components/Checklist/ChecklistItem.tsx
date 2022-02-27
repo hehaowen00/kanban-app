@@ -4,12 +4,13 @@ import TextareaAutosize from "react-autosize-textarea";
 
 import { useDispatch } from "react-redux";
 
-import { MAX_CHECKLIST_ITEM_LENGTH } from "../../types/Limits";
 import { DeleteChecklistItem, UpdateChecklistItem } from "../../redux/Creators";
+import { ChecklistItem } from "../../types/Kanban";
+import { MAX_CHECKLIST_ITEM_LENGTH } from "../../types/Limits";
 
 import "../styles/Checklist.css";
 
-function ChecklistItem({ checklistId, index, item }: any) {
+function ChecklistItemView({ checklistId, index, item }: Props) {
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -41,6 +42,10 @@ function ChecklistItem({ checklistId, index, item }: any) {
       let action = UpdateChecklistItem(checklistId, index, { description });
       dispatch(action);
     }
+  };
+
+  const onBlur = () => {
+    setState({ ...state, visible: false });
   };
 
   const onClick = () => {
@@ -109,7 +114,7 @@ function ChecklistItem({ checklistId, index, item }: any) {
                 spellCheck={state.visible}
                 value={state.desc}
 
-                onBlur={() => setState({ ...state, visible: false })}
+                onBlur={onBlur}
                 onChange={onChange}
                 onKeyDown={onKeyDown}
                 onKeyPress={onKeyPress}
@@ -141,4 +146,10 @@ function ChecklistItem({ checklistId, index, item }: any) {
   );
 }
 
-export default ChecklistItem;
+type Props = {
+  checklistId: string,
+  index: number,
+  item: ChecklistItem,
+};
+
+export default ChecklistItemView;

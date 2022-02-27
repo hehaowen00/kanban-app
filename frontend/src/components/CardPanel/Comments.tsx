@@ -1,14 +1,17 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
-import "../styles/Comments.css";
-
 import { useDispatch } from "react-redux";
+
+import { Comment } from "../../types/Kanban";
+
 import { NewComment } from "../../redux/Creators";
 
-function Comments({ cardId, comments }: any) {
+import "../styles/Comments.css";
+
+function Comments({ cardId, comments }: Props) {
   const dispatch = useDispatch();
 
-  const ref = useRef<any>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const [visible, setVisible] = useState(false);
   const [comment, setComment] = useState("");
@@ -51,7 +54,7 @@ function Comments({ cardId, comments }: any) {
     setVisible(false);
   };
 
-  const comments_ = comments.map((comment: any) => {
+  const comments_ = comments.map((comment: Comment) => {
     let date = new Date(comment.timestamp);
     let str = date.toLocaleTimeString("en-AU", { hour12: false }) + " " + date.toLocaleDateString();
     return {
@@ -113,5 +116,10 @@ function Comments({ cardId, comments }: any) {
     </div>
   );
 }
+
+export type Props = {
+  cardId: string,
+  comments: Comment[],
+};
 
 export default Comments;

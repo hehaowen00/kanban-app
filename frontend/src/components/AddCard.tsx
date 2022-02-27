@@ -8,7 +8,7 @@ import { NewCard } from "../redux/Creators";
 
 import "./styles/AddCard.css";
 
-function AddCard({ listId, close }: any) {
+function AddCard({ listId, close }: Props) {
   const dispatch = useDispatch();
 
   const [title, setTitle_] = useState("");
@@ -29,7 +29,6 @@ function AddCard({ listId, close }: any) {
   };
 
   const onClose = () => {
-    console.log('close');
     close();
   };
 
@@ -84,5 +83,10 @@ function AddCard({ listId, close }: any) {
     </Fragment>
   );
 }
+
+type Props = {
+  listId: string,
+  close: () => void,
+};
 
 export default AddCard;

@@ -2,22 +2,25 @@ import { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } fro
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
-import ChecklistItem from "../Checklist/ChecklistItem";
+import ChecklistItemView from "../Checklist/ChecklistItem";
 import TextareaAutosize from "react-autosize-textarea";
-import "../styles/Checklist.css";
 
+import { NewChecklistItem, DeleteChecklist } from "../../redux/Creators";
+import { AppState } from "../../redux/Store";
+import { ChecklistItem } from "../../types/Kanban";
 import {
   MAX_CHECKLIST_TITLE_LENGTH,
   MAX_CHECKLIST_ITEM_LENGTH,
 } from "../../types/Limits";
-import { NewChecklistItem, DeleteChecklist } from "../../redux/Creators";
 
-function Checklist({ cardId, id, index } : any) {
+import "../styles/Checklist.css";
+
+function ChecklistView({ cardId, id, index } : Props) {
   const dispatch = useDispatch();
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
-  const { title, items } = useSelector((state: any) => {
-    return { ...state.board.checklists[id] };
+  const { title, items } = useSelector(({ board }: AppState) => {
+    return { ...board.checklists[id] };
   });
 
   const [state, setState] = useState({
@@ -41,7 +44,7 @@ function Checklist({ cardId, id, index } : any) {
     if (isEditing) {
       if (titleRef.current !== null) {
         titleRef.current.focus();
-        let length: any = titleRef.current.value.length;
+        let length: number = titleRef.current.value.length;
         titleRef.current.selectionStart = length;
         titleRef.current.selectionEnd = length;
       }
@@ -82,7 +85,7 @@ function Checklist({ cardId, id, index } : any) {
     dispatch(action);
   };
 
-  const itemRef = useRef<any>(null);
+  const itemRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (state.active) {
@@ -160,8 +163,8 @@ function Checklist({ cardId, id, index } : any) {
       <Droppable droppableId={id} type="droppableItems">
       {(provided) => (
         <div className="block mt-5 relative" ref={provided.innerRef}>
-          {items.map((item: any, index: number) => (
-            <ChecklistItem key={index} index={index} checklistId={id} item={item} />
+          {items.map((item: ChecklistItem, index: number) => (
+            <ChecklistItemView key={index} index={index} checklistId={id} item={item} />
           ))}
           {provided.placeholder}
           {state.active && (
@@ -214,4 +217,10 @@ function Checklist({ cardId, id, index } : any) {
   );
 }
 
-export default Checklist;
+type Props = {
+  cardId: string,
+  id: string,
+  index: number,
+};
+
+export default ChecklistView;

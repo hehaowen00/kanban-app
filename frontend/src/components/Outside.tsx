@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
 
-function useOutsideRef(ref: any, update: any) {
+function useOutsideRef(ref: RefObject<HTMLDivElement>, update: () => void) {
   useEffect(() => {
     const handleClick = (event: any) => {
       const { current }= ref;
@@ -41,7 +41,7 @@ function useOutsideRef(ref: any, update: any) {
 }
 
 function Outside({ children, className, style, update, onMouseDown, onClick }: Props) {
-  let ref = useRef<any>(null);
+  let ref = useRef<HTMLDivElement>(null);
   useOutsideRef(ref, update);
 
   return (
@@ -58,12 +58,12 @@ function Outside({ children, className, style, update, onMouseDown, onClick }: P
 }
 
 type Props = {
-  children: any,
-  update: any,
-  className?: any,
-  style?: any,
-  onMouseDown?: any,
-  onClick?: any,
+  children: React.ReactNode,
+  update: () => void,
+  className?: string,
+  style?: React.CSSProperties,
+  onMouseDown?: () => void,
+  onClick?: () => void,
 };
 
 export default Outside;

@@ -1,20 +1,20 @@
-import { ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 import { List } from "../types/Kanban";
 import KanbanList from "./List";
-import AddList from "./AddList";
-import AddCard from "./AddCard";
+import AddListView from "./AddList";
 import Navbar from "./Navbar";
 
-import "./styles/Board.css";
 import { MoveCard, MoveList } from "../redux/Creators";
+import { AppState } from "../redux/Store";
 
-function Board(): ReactElement {
+import "./styles/Board.css";
+
+function BoardView() {
   const dispatch = useDispatch();
 
-  const board = useSelector((state: any)  => state.board);
+  const board = useSelector((state: AppState)  => state.board);
   const lists = board.lists;
 
   const handleDragEnd = (event: DropResult) => {
@@ -79,7 +79,7 @@ function Board(): ReactElement {
                     <KanbanList key={list.id} index={index} list={list} />
                   ))}
                   {provided.placeholder}
-                  <AddList />
+                  <AddListView />
                 </div>
               )}
             </Droppable>
@@ -90,4 +90,4 @@ function Board(): ReactElement {
   );
 }
 
-export default Board;
+export default BoardView;

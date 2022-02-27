@@ -1,5 +1,4 @@
-import React from "react";
-import Board from "./components/Board";
+import BoardView from "./components/Board";
 import Dashboard from "./components/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -10,7 +9,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/board" element={<Board />} />
+        <Route path="/board" element={<BoardView />} />
       </Routes>
     </BrowserRouter>
   );

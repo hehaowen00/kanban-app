@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 
+import { Card } from "../../types/Kanban";
 import { MAX_TITLE_LENGTH } from "../../types/Limits";
 
 function TitleView({ title, value, setValue, updateCard, deleteCard }: Props) {
@@ -86,9 +87,9 @@ function TitleView({ title, value, setValue, updateCard, deleteCard }: Props) {
 type Props = {
   title: string,
   value: string,
-  setValue: any,
-  updateCard: any,
-  deleteCard: any,
+  setValue: (value: string) => void,
+  updateCard: (partial: Partial<Card>) => void,
+  deleteCard: () => void,
 };
 
 export default TitleView;

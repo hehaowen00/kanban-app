@@ -14,13 +14,13 @@ import { NewList } from "../redux/Creators";
 
 import "./styles/AddList.css";
 
-function AddList(): ReactElement {
+function AddListView(): ReactElement {
   const dispatch = useDispatch();
 
   const [toggle, setToggle] = useState(false);
   const [name, setName] = useState("");
 
-  let containerRef = useRef<any>(null);
+  let containerRef = useRef<HTMLDivElement>(null);
   let inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -125,4 +125,4 @@ function AddList(): ReactElement {
   );
 }
 
-export default AddList;
+export default AddListView;

@@ -1,5 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
+import { Card } from "../../types/Kanban";
 
 import { MAX_DESCRIPTION_LENGTH } from "../../types/Limits";
 
@@ -88,8 +89,8 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
 type Props = {
   description: string,
   value: string,
-  setValue: any,
-  updateCard: any,
+  setValue: (v: string) => void,
+  updateCard: (payload: Partial<Card>) => void,
 };
 
 export default DescriptionView;

@@ -7,18 +7,20 @@ import DescriptionView from "./CardPanel/Description";
 import TitleView from "./CardPanel/Title";
 
 import { DeleteCard, UpdateCard } from "../redux/Creators";
+import { Card } from "../types/Kanban";
+import { AppState } from "../redux/Store";
 
 import "./styles/CardPanel.css";
 
 function CardPanel() {
   const dispatch = useDispatch();
 
-  const { cardId, listId, visible } = useSelector((state: any) =>
-    Object.assign({}, state.panel)
-  );
+  const { cardId, listId } = useSelector(({ panel }: AppState) => {
+    return { ...panel };
+  });
 
-  const { title, description, comments } = useSelector((state: any) => {
-    return state.board.cards[cardId];
+  const { title, description, comments } = useSelector(({ board }: AppState) => {
+    return { ...board.cards[cardId] };
   });
 
   const deleteCard = () => {
@@ -26,9 +28,15 @@ function CardPanel() {
     dispatch(DeleteCard(cardId, listId));
   };
 
-  const updateCard = (patch: any) => {
+  const updateCard = (patch: Partial<Card>) => {
     dispatch(UpdateCard(cardId, patch));
   };
+
+  let containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    containerRef.current?.scrollIntoView();
+  });
 
   const [state, setState] = useState({
     title,
@@ -47,7 +55,7 @@ function CardPanel() {
     setState({ ...state, description: value });
   };
 
-  const updateState = (event: ChangeEvent<any>) => {
+  const updateState = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     let { name, value } = event.target;
     setState({ ...state, [name]: value });
   };
@@ -56,16 +64,10 @@ function CardPanel() {
     dispatch({ type: "CloseCardView" });
   };
 
-  let container = useRef<any>(null);
-
-  useEffect(() => {
-    container.current?.scrollIntoView();
-  });
-
   return (
     <Fragment>
     <div className="card-view-cover" onClick={close}></div>
-    <div ref={container} className="padded z-2">
+    <div ref={containerRef} className="padded z-2">
       <div
         className="list card-view br-3 bg-grey block font-90 shadow text-left"
       >

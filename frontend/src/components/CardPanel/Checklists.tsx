@@ -1,15 +1,16 @@
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
-import AddChecklist from "../Checklist/AddChecklist";
-import Checklist from "./Checklist";
+import AddChecklistView from "../Checklist/AddChecklist";
+import ChecklistView from "./Checklist";
 
 import { MoveChecklist, MoveChecklistItem } from "../../redux/Creators";
+import { AppState } from "../../redux/Store";
 
-function Checklists({ cardId, state }: Props) {
+function ChecklistsView({ cardId, state }: Props) {
   const dispatch = useDispatch();
 
-  const { checklists } = useSelector((state: any) => state.board.cards[cardId]);
+  const { checklists } = useSelector(({ board }: AppState) => board.cards[cardId]);
   const { active, setActive } = state;
 
   const handleDragEnd = (event: DropResult) => {
@@ -56,11 +57,11 @@ function Checklists({ cardId, state }: Props) {
           ref={provided.innerRef}
         >
           {checklists.map((id: string, index: number) => (
-            <Checklist key={id} index={index} cardId={cardId} id={id} />
+            <ChecklistView key={id} index={index} cardId={cardId} id={id} />
           ))}
           {provided.placeholder}
           {active && (
-             <AddChecklist cardId={cardId} close={() => setActive(false)} />
+             <AddChecklistView cardId={cardId} close={() => setActive(false)} />
           )}
         </div>
       )}
@@ -71,7 +72,10 @@ function Checklists({ cardId, state }: Props) {
 
 type Props = {
   cardId: string,
-  state: any,
+  state: {
+    active: boolean,
+    setActive: (value: boolean) => void,
+  },
 };
 
-export default Checklists;
+export default ChecklistsView;
