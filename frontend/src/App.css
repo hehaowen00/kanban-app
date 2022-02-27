@@ -172,32 +172,6 @@ textarea.default {
   display: inline;
 }
 
-.modal-view {
-  background-color: rgba(0,0,0,0.4);
-  height: 100%;
-  left: 0;
-  max-height: 100%;
-  margin-bottom: 10px;
-  overflow: auto;
-  padding-bottom: 10px;
-  padding-top: 50px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-}
-
-.modal-content {
-  background-color: #fefefe;
-  border: 1px solid #888;
-  border-radius: 3px;
-  font-size: 0.9rem;
-  margin: auto;
-  max-height: 90%;
-  padding: 10px;
-  width:430px;
-}
-
 .m-0 {
   margin: 0;
 }
@@ -218,7 +192,19 @@ textarea.default {
   outline: none;
 }
 
-.noselect {
+.no-bdr {
+  outline: none;
+  border: none !important;
+}
+
+.no-bdr:focus {
+  outline: none;
+}
+
+.no-pad {
+  padding: 0 !important;
+}
+.no-select {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -263,30 +249,7 @@ textarea.default {
   text-align: center;
 }
 
-.bet {
-  display: flex;
-  flex-direction: row;
-  margin-right: 10px;
+.z-2 {
+  z-index: 2 !important;
 }
 
-.bet:last-child {
-  height: 100%;
-}
-
-.padded {
-  margin-left: 10px;
-  padding-bottom:20px;
-}
-
-.no-bdr {
-  outline: none;
-  border: none !important;
-}
-
-.no-bdr:focus {
-  outline: none;
-}
-
-.no-pad {
-  padding: 0 !important;
-}

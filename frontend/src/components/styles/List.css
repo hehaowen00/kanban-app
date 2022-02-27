@@ -1,13 +1,22 @@
+.list-view {
+  margin-right: 10px;
+}
+
+.list-view:last-child {
+  height: 100%;
+}
+
 .list-col {
+  /* figure out how to make this list not shrink when scroll bar is visible */
   max-height: 90vh;
-  min-height: 100%;
   max-width: 21rem;
   min-width: 21rem;
+  padding-bottom:10px;
 }
 
 .list {
   margin-bottom: 10px;
-  max-height: 98%;
+  max-height: 100%;
   padding: 5px 5px 0px 5px;
   white-space: nowrap;
 }

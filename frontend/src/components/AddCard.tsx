@@ -1,5 +1,5 @@
 import { Fragment, ChangeEvent,KeyboardEvent, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
 
@@ -29,7 +29,6 @@ function AddCard({ listId, close }: any) {
   };
 
   const onClose = () => {
-    console.log('close');
     close();
   };
 
@@ -68,8 +67,18 @@ function AddCard({ listId, close }: any) {
       />
     </div>
     <div className="menu inline spaced-right text-right z-2">
-      <button className="default no-bdr shadow" onClick={addCard}>Save</button>
-      <button className="default no-bdr shadow" onClick={onClose}>Cancel</button>
+      <button 
+        className="default no-bdr shadow"
+        onClick={addCard}
+      >
+        Save
+      </button>
+      <button
+        className="default no-bdr shadow"
+        onClick={onClose}
+      >
+        Cancel
+      </button>
     </div>
     </Fragment>
   );

@@ -1,17 +1,23 @@
-import { ReactElement, useState } from "react";
+import { ChangeEvent, ReactElement, useState } from "react";
 import { Link } from "react-router-dom";
 import "./styles/Navbar.css"
 
 function Navbar({ name } : Props): ReactElement {
-  const [name_, setName_] = useState(name);
+  const [title, setTitle] = useState(name);
 
-  const onChange = () => {
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
   }
 
   return (
     <div className="navbar">
       <div className="left">
-        <input className="default title-input" type="text" value={name_} />
+        <input
+          className="default title-input"
+          type="text"
+          value={title}
+          onChange={onChange}
+        />
         <button className="default">Save</button>
       </div>
       <div className="center">

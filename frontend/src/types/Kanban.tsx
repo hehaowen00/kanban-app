@@ -1,7 +1,7 @@
 export type CardViewState = {
   cardId: string | null,
   listId: string | null,
-  visible: "NewCard" | "ShowCard" | null,
+  showCard: boolean,
 };
 
 export type Board = {
@@ -18,7 +18,6 @@ export type List = {
   name: string;
   cardIds: string[];
 };
-
 
 export type Card = {
   title: string;

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Checklists from "./CardPanel/Checklists";
 import Comments from "./CardPanel/Comments";
 import DescriptionView from "./CardPanel/Description";
-import Outside from "./Outside";
 import TitleView from "./CardPanel/Title";
 
 import { DeleteCard, UpdateCard } from "../redux/Creators";
@@ -68,8 +67,7 @@ function CardPanel() {
     <div className="card-view-cover" onClick={close}></div>
     <div ref={container} className="padded z-2">
       <div
-        className="list card-view br-3 bg-grey flex flex-1 flex-col font-90 shadow text-left"
-        style={{ display: visible ? "block" : "none" }}
+        className="list card-view br-3 bg-grey block font-90 shadow text-left"
       >
         <TitleView
           title={title}
@@ -103,7 +101,7 @@ function CardPanel() {
         </div>
         <div className="br-default bg-white br-3 spaced pad-5 shadow-5">
           <div className="">
-            <span className="font-85 font-600 noselect">
+            <span className="font-85 font-600 no-select">
               {"Start Date "} 
             </span>
             <input
@@ -116,7 +114,7 @@ function CardPanel() {
             />
           </div>
           <div className="">
-            <span className="font-85 font-600 noselect">
+            <span className="font-85 font-600 no-select">
               {"End Date "}
             </span> 
             <input

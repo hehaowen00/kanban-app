@@ -1,4 +1,4 @@
-import { Fragment, ChangeEvent, KeyboardEvent, ReactElement, useEffect, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, ReactElement, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea/lib";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,8 +18,12 @@ function List({ index, list }: Props): ReactElement {
   const { id, name, cardIds } = list;
   const [visible, setVisible] = useState(false);
 
-  const listId = id;
-  let [listInput, setListInput] = useState(name);
+  const cardView = useSelector((state: any) => state.panel);
+  const thisList = cardView.listId === id;
+  const { showCard } = cardView;
+  console.log('list', thisList, showCard);
+
+  const [listInput, setListInput] = useState(name);
   const [newCard, setNewCard] = useState(false);
 
   useEffect(() => {
@@ -37,8 +41,11 @@ function List({ index, list }: Props): ReactElement {
   }, [visible]);
 
   const handleAddItem = () => {
-    // dispatch({ type: "NewCardPrompt", listId: id }); 
     setNewCard(true);
+  };
+
+  const deleteList = () => {
+    dispatch({ type: "DeleteList", id });
   };
 
   const updateList = (payload: any) => {
@@ -78,15 +85,11 @@ function List({ index, list }: Props): ReactElement {
     }
   };
 
-  const cardView = useSelector((state: any) => state.panel);
-  const thisList = cardView.listId === id;
-  const cardVisible = cardView.visible;
-
   return (
     <Draggable key={id} draggableId={id} index={index}>
       {(provided) => (
         <div
-          className="bet"
+          className="list-view flex flex-row"
           ref={provided.innerRef}
           {...provided.draggableProps}
         >
@@ -98,12 +101,15 @@ function List({ index, list }: Props): ReactElement {
             <div className="list-header bg-none br-3 flex flex-col font-90 font-600">
               {!visible &&
               <div
-                className="title font-85 noselect"
+                className="title font-85 no-select"
                 onClick={onClick}
                 {...provided.dragHandleProps}
               >
                 {name}
               </div>}
+              <button className="default" onClick={deleteList}>
+              Delete
+              </button>
             {visible && (
               <TextareaAutosize 
                 ref={ref}
@@ -122,8 +128,8 @@ function List({ index, list }: Props): ReactElement {
                   className="list-body flex flex-1 flex-col relative"
                   ref={provided.innerRef}
                 >
-                  {cardIds.map((id: string, index: number) => (
-                    <Card key={id} index={index} id={id} listId={listId} />
+                  {cardIds.map((cardId: string, index: number) => (
+                    <Card key={cardId} index={index} id={cardId} listId={id} />
                   ))}
                   {provided.placeholder}
                   {newCard && (
@@ -135,7 +141,7 @@ function List({ index, list }: Props): ReactElement {
                 </div>
               )}
             </Droppable>
-            <div className="list-footer br-3 flex flex-col font-80 font-600 noselect">
+            <div className="list-footer br-3 flex flex-col font-80 font-600 no-select">
               <button
                 className="default add-card-btn"
                 onClick={handleAddItem}
@@ -145,7 +151,7 @@ function List({ index, list }: Props): ReactElement {
             </div>
           </div>
         </div>
-        { thisList && cardVisible === "ShowCard" && <CardPanel /> }
+        { thisList && showCard && <CardPanel /> }
       </div>
       )}
     </Draggable>
