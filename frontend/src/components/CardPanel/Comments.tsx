@@ -62,7 +62,7 @@ function Comments({ cardId, comments }: any) {
 
   return (
     <div className="comments block text-left">
-      <div className="font-90 font-600 noselect text-left">
+      <div className="font-90 font-600 no-select text-left">
         Comments
       </div>
       <div className="comment-view mt-5">

@@ -4,7 +4,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import { Board, CardViewState, List } from "../types/Kanban";
 import ExampleBoard from "../types/example";
-import Action from "./Actions";
+import BoardAction from "./Actions";
+import CardPanelAction from "./CardPanelActions";
 
 const EmptyCard = {
   title: "",
@@ -18,32 +19,25 @@ const EmptyCard = {
 const DefaultCardViewState = {
   cardId: null,
   listId: null,
-  visible: null,
+  showCard: false,
 };
 
-function CardViewReducer(state: CardViewState = DefaultCardViewState, action: any) {
+function CardViewReducer(state: CardViewState = DefaultCardViewState, action: CardPanelAction) {
   switch (action.type) {
     case "CloseCardView": {
       return {
         cardId: null,
         listId: null,
-        visible: null,
-      }
-    }
-    case "NewCardPrompt": {
-      const { listId } = action;
-      return {
-        cardId: null,
-        listId,
-        visible: "NewCard",
+        showCard: false,
       }
     }
     case "ShowExistingCard": {
       const { cardId, listId, } = action;
+      console.log(action);
       return {
         cardId,
         listId,
-        visible: "ShowCard",
+        showCard: true,
       };
     }
     default:
@@ -51,7 +45,7 @@ function CardViewReducer(state: CardViewState = DefaultCardViewState, action: an
   }
 }
 
-function BoardReducer(state: Board = ExampleBoard, action: Action) {
+function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
   switch (action.type) {
     case "RenameBoard": {
       const { name } = action;
@@ -161,6 +155,21 @@ function BoardReducer(state: Board = ExampleBoard, action: Action) {
       }
 
       return state;
+    }
+    case "DeleteList": {
+      const { id } = action;
+
+      let lists = [ ...state.lists ];
+      let idx = lists.findIndex((list) => list.id === id);
+      let deleted = lists.splice(idx, 1);
+      let { cardIds } = deleted[0];
+
+      let cards = { ...state.cards };
+      for (let cardId in cardIds) {
+        delete cards[cardId];
+      }
+
+      return { ...state, cards, lists };
     }
     case "NewChecklist": {
       const { cardId, title } = action;

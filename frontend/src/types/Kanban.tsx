@@ -1,7 +1,7 @@
 export type CardViewState = {
   cardId: string | null,
   listId: string | null,
-  visible: "NewCard" | "ShowCard" | null,
+  showCard: boolean,
 };
 
 export type Board = {

@@ -2,8 +2,6 @@
   background-color: rgba(0,0,0,0.4);
   height: 100%;
   left: 0;
-  padding: 0 auto;
-  padding-bottom: 125px;
   position: fixed;
   top: 0;
   width: 100%;
@@ -13,18 +11,15 @@
 
 .card-view {
   margin: 0 auto;
-  height: 98%;
+  margin-left: 10px;
+  height: calc(90vh - 20px);
   max-width: 25%;
   min-width: 400px;
-  max-height: none;
-  margin-bottom: 50px;
+  max-height: calc(90vh - 20px);
   overflow-y: hidden;
   padding: 10px 15px 15px 15px !important;
+  padding-bottom:20px;
   width: 25%;
-}
-
-.z-2 {
-  z-index: 2 !important;
 }
 
 .card-view > * {

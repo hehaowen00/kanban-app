@@ -86,7 +86,7 @@ function AddList(): ReactElement {
         onClick={toggle ? undefined : onClick }
       >
         {!toggle && (
-          <div className="list-header flat mb-0 noselect">
+          <div className="list-header flat mb-0 no-select">
             Add List
           </div>
         )}
@@ -94,7 +94,7 @@ function AddList(): ReactElement {
           <Fragment>
             <TextareaAutosize
               ref={inputRef}
-              className="default textarea-card font-90 noselect"
+              className="default textarea-card font-90 no-select"
               maxLength={255}
               placeholder="Title"
               value={name}
@@ -104,7 +104,7 @@ function AddList(): ReactElement {
               onKeyPress={onKeyPress}
               onPaste={onPaste}
             />
-            <div className="menu mb-0 mt-5 noselect spaced-right text-right">
+            <div className="menu mb-0 mt-5 no-select spaced-right text-right">
               <button
                 className="default"
                 onClick={addList}

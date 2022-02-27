@@ -1,4 +1,4 @@
-import { Fragment, ReactElement } from "react";
+import { ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
@@ -16,9 +16,6 @@ function Board(): ReactElement {
 
   const board = useSelector((state: any)  => state.board);
   const lists = board.lists;
-
-  const cardView = useSelector((state: any) => state.panel);
-  const { visible } = cardView;
 
   const handleDragEnd = (event: DropResult) => {
     const { source, destination } = event;
@@ -61,7 +58,6 @@ function Board(): ReactElement {
 
   return (
     <div className="board-view">
-      { visible === "NewCard" && <AddCard /> }
       <Navbar name={board.name} />
       <div className="board flex flex-1 flex-col">
         <div className="content flex flex-row">

@@ -12,6 +12,11 @@ export type NewList = {
   name: string,
 };
 
+export type DeleteList = {
+  type: "DeleteList",
+  id: string,
+};
+
 export type MoveList = {
   type: "MoveList",
   srcIdx: number,
@@ -119,7 +124,8 @@ type BoardAction = RenameBoard;
 
 type ListAction = NewList
   | MoveList
-  | UpdateList;
+  | UpdateList
+  | DeleteList;
 
 type CardAction = NewCard
   | MoveCard

@@ -14,10 +14,6 @@ function Card({ index, id, listId }: Props): ReactElement {
 
   const { title } = cardObject;
 
-  const { cardId } = useSelector((state: any) => {
-    return { ...state.panel };
-  });
-
   const handleClick = () => {
     dispatch({ type: "ShowExistingCard", cardId: id, listId });
   };
@@ -26,7 +22,7 @@ function Card({ index, id, listId }: Props): ReactElement {
     <Draggable draggableId={id} index={index}>
       {(provided) => (
         <div
-          className="card bg-white br-3 noselect shadow"
+          className="card bg-white br-3 no-select shadow"
           key={id}
           onClick={handleClick}
 
