@@ -81,7 +81,7 @@ input[type=text].default:focus {
 
 textarea.default {
   border: 1px solid black;
-  border-radius: 2px;
+  border-radius: 3px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -89,6 +89,11 @@ textarea.default {
   padding: 4px 8px;
   resize: none;
   width: 100%;
+  word-break: break-word;
+}
+
+.bg-none {
+  background: none;
 }
 
 .bg-white {
@@ -148,6 +153,10 @@ textarea.default {
   box-shadow: none;
 }
 
+.font-80 {
+  font-size: 0.80rem;
+}
+
 .font-85 {
   font-size: 0.85rem;
 }
@@ -172,12 +181,16 @@ textarea.default {
   display: inline;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 .m-0 {
   margin: 0;
 }
 
 .mb-0 {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 .mt-5 {
@@ -186,6 +199,10 @@ textarea.default {
 
 .mr-0 {
   margin-right: 0;
+}
+
+.mr-5 {
+  margin-right: 5px;
 }
 
 .no-outline {

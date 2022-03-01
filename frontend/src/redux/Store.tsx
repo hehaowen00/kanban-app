@@ -11,6 +11,7 @@ const EmptyCard = {
   title: "",
   description: "",
   dueDate: null,
+  labels: [],
   attachments: [],
   checklists: [],
   comments: [],

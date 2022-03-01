@@ -8,6 +8,7 @@ export type Board = {
   id: string;
   name: string;
   cards: Record<string, Card>,
+  labels: string[],
   lists: List[];
   attachments: Record<string, Attachment>,
   checklists: Record<string, Checklist>,
@@ -23,9 +24,15 @@ export type Card = {
   title: string;
   description: string;
   dueDate: number | null,
-  comments: Comment[];
-  attachments: string[];
+  labels: Label[],
   checklists: string[];
+  attachments: string[];
+  comments: Comment[];
+};
+
+export type Label = {
+  title: string,
+  color: string,
 };
 
 export type Checklist = {

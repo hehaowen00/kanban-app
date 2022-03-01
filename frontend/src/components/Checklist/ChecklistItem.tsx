@@ -91,11 +91,11 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
         <div
           key={key}
           ref={provided.innerRef}
-          className="item bg-white flex flex-col mb-0"
+          className="item bg-white br-3 flex flex-col mb-0"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="item-row bg-white flex flex-row">
+          <div className="item-row br-3 bg-white flex flex-row">
             <div className="check">
               <input
                 type="checkbox"

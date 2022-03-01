@@ -1,5 +1,6 @@
 .list-view {
   margin-right: 10px;
+  height: fit-content;
 }
 
 .list-view:last-child {
@@ -8,26 +9,29 @@
 
 .list-col {
   /* figure out how to make this list not shrink when scroll bar is visible */
-  max-height: 90vh;
+  max-height: 90vh !important;
   max-width: 21rem;
   min-width: 21rem;
-  padding-bottom:10px;
+  padding-bottom: 10px;
 }
 
 .list {
-  margin-bottom: 10px;
   max-height: 100%;
-  padding: 5px 5px 0px 5px;
   white-space: nowrap;
 }
 
 .list-header {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
   flex-shrink: 0;
-  margin-bottom: 5px;
-  padding: 0px;
+  padding: 3px;
   white-space: break-spaces;
-  word-break: break-all;
+  word-break: break-word;
   word-wrap: break-word;
+}
+
+.edit {
+  padding: 5px;
 }
 
 .list-body:empty {
@@ -36,7 +40,6 @@
 }
 
 .list-body:not(empty) {
-  border-radius: 3px;
   box-shadow: inset 5px 5px 10px 0 rgba(0, 0, 0, 0.25),
    -5px -5px 10px 0 rgba(255, 255, 255, 0.3);
   overflow-y: auto;
@@ -50,7 +53,7 @@
 }
 
 .title {
-  border: 1px solid white;
+  padding: 5px 10px;
 }
 
 .title:first-child {

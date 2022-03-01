@@ -2,9 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 import { List } from "../types/Kanban";
-import KanbanList from "./List";
+import ListView from "./List";
 import AddListView from "./AddList";
 import Navbar from "./Navbar";
+import SettingsView from "./Settings";
 
 import { MoveCard, MoveList } from "../redux/Creators";
 import { AppState } from "../redux/Store";
@@ -76,7 +77,7 @@ function BoardView() {
                   ref={provided.innerRef}
                 >
                   {lists.map((list: List, index: number) => (
-                    <KanbanList key={list.id} index={index} list={list} />
+                    <ListView key={list.id} index={index} list={list} />
                   ))}
                   {provided.placeholder}
                   <AddListView />
@@ -84,6 +85,7 @@ function BoardView() {
               )}
             </Droppable>
           </DragDropContext>
+          <SettingsView />
         </div>
       </div>
     </div>

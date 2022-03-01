@@ -13,7 +13,7 @@
 
 .checklist {
   border: 1px solid black;
-  padding: 8px;
+  padding: 8px 8px 2px 8px;
 }
 
 .checklist-title {
@@ -30,10 +30,10 @@
 }
 
 .checked {
+  opacity: 0.6;
   text-decoration: line-through;
   text-decoration-thickness: 0.1rem !important;
   text-decoration-color: black !important;
-  opacity: 0.6;
 }
 
 .item {
@@ -43,13 +43,13 @@
 .item-row {
   max-width: 100%;
   width: 100%;
-  margin-bottom: 5px;
-  padding: 5px 5px 5px 0px;
+  padding: 5px 6px 5px 0px;
 }
 
 .item-row > .check {
-  margin-top: 4px;
+  margin-top: 3px;
   margin-bottom: 2px;
+  margin-left: 2px;
   min-width: 20px;
 }
 
@@ -59,7 +59,6 @@
 }
 
 .item-row > div.default {
-  padding-top: 4px;
   margin-left: 5px;
 
   min-width: calc(100% - 45px);

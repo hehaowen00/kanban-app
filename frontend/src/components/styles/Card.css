@@ -3,16 +3,10 @@
   margin-bottom: 5px;
   padding: 5px 10px;
   white-space: break-spaces;
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .card-title {
   white-space: break-spaces;
-  word-break: break-all;
-}
-
-.card-description {
-  white-space: break-spaces;
-  word-break: break-all;
-  word-wrap: break-word;
+  word-break: break-word;
 }

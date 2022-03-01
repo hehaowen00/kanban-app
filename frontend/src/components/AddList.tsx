@@ -11,6 +11,7 @@ import {
 import TextareaAutosize from "react-autosize-textarea";
 import { useDispatch } from "react-redux";
 import { NewList } from "../redux/Creators";
+import { MAX_LIST_TITLE_LENGTH } from "../types/Limits";
 
 import "./styles/AddList.css";
 
@@ -69,24 +70,23 @@ function AddListView(): ReactElement {
     }
   };
 
-  let classes = "list add-list bg-white br-3 block font-90 font-600 shadow";
+  let classes = `bg-white br-3 block font-90 font-600 shadow ${toggle ? "active add": "add-list"}`;
 
-  if (toggle) {
-    classes = classes + " active";
-  }
+  let listColClasses = `add-col ${toggle ? "z-2" : ""}`;
 
   return (
+    <Fragment>
+    {toggle &&  <div className="card-view-cover bg-none" onClick={cancelNewList}></div> }
     <div
       ref={containerRef}
-      className="list-col mr-0"
-      onBlur={cancelNewList}
+      className={listColClasses}
     >
       <div
         className={classes}
         onClick={toggle ? undefined : onClick }
       >
         {!toggle && (
-          <div className="list-header flat mb-0 no-select">
+          <div className="flat mb-0 no-select">
             Add List
           </div>
         )}
@@ -95,7 +95,7 @@ function AddListView(): ReactElement {
             <TextareaAutosize
               ref={inputRef}
               className="default textarea-card font-90 no-select"
-              maxLength={255}
+              maxLength={MAX_LIST_TITLE_LENGTH}
               placeholder="Title"
               value={name}
 
@@ -122,6 +122,7 @@ function AddListView(): ReactElement {
         )}
       </div>
     </div>
+    </Fragment>
   );
 }
 

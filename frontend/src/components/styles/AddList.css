@@ -1,5 +1,8 @@
 .add-list {
-  padding: 8px 10px !important;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+  max-height: 100%;
+  white-space: nowrap;
 }
 
 .add-list:focus {
@@ -17,4 +20,18 @@
 
 .menu {
   margin-bottom: 5px;
+}
+
+.add {
+  white-space: nowrap;
+  padding: 5px;
+}
+
+.add-col {
+  height: fit-content;
+  max-height: unset;
+  max-width: 21rem;
+  min-height: 0px;
+  min-width: 21rem;
+  padding-bottom: 0px;
 }

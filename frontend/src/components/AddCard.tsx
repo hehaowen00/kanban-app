@@ -20,8 +20,8 @@ function AddCard({ listId, close }: Props) {
   }, []);
 
   const addCard = () => {
-    if (title !== "") {
-      let action = NewCard(listId, title);
+    if (title.trim() !== "") {
+      let action = NewCard(listId, title.trim());
       dispatch(action);
       setTitle_("");
       close();
@@ -57,7 +57,7 @@ function AddCard({ listId, close }: Props) {
       <TextareaAutosize
         ref={titleRef}
         rows={5}
-        className="default no-bdr font-90"
+        className="default no-bdr font-85"
         maxLength={MAX_TITLE_LENGTH}
         onBlur={titleBlur}
         onChange={titleChange}

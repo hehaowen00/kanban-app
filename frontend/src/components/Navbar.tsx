@@ -26,6 +26,7 @@ function Navbar({ name } : Props): ReactElement {
         <Link to="/">
           <button className="default">Dashboard</button>
         </Link>
+        <button className="default">Settings</button>
       </div>
     </div>
   );
