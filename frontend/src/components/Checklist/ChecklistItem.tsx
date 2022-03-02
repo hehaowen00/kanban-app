@@ -8,6 +8,7 @@ import { DeleteChecklistItem, UpdateChecklistItem } from "../../redux/Creators";
 import { ChecklistItem } from "../../types/Kanban";
 import { MAX_CHECKLIST_ITEM_LENGTH } from "../../types/Limits";
 
+import { lockYAxis } from "../styles/util";
 import "../styles/Checklist.css";
 
 function ChecklistItemView({ checklistId, index, item }: Props) {
@@ -94,6 +95,7 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
           className="item bg-white br-3 flex flex-col mb-0"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          style={lockYAxis(provided.draggableProps.style)}
         >
           <div className="item-row br-3 bg-white flex flex-row">
             <div className="check">

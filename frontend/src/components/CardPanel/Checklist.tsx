@@ -13,7 +13,9 @@ import {
   MAX_CHECKLIST_ITEM_LENGTH,
 } from "../../types/Limits";
 
+import { lockYAxis } from "../styles/util";
 import "../styles/Checklist.css";
+
 
 function ChecklistView({ cardId, id, index } : Props) {
   const dispatch = useDispatch();
@@ -122,6 +124,7 @@ function ChecklistView({ cardId, id, index } : Props) {
         className="checklist bg-white br-3 shadow-5"
         ref={provided.innerRef}
         {...provided.draggableProps}
+        style={lockYAxis(provided.draggableProps.style)}
       >
         <div className="header">
         {!isEditing && (
@@ -202,7 +205,7 @@ function ChecklistView({ cardId, id, index } : Props) {
             <div className="menu mt-5">
               <button
                 className="default"
-                onClick={() => setActive(true)}
+                onMouseDown={() => setActive(true)}
               >
                 Add Item
               </button>
