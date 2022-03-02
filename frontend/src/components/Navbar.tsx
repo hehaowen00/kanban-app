@@ -10,8 +10,8 @@ function Navbar({ name } : Props): ReactElement {
   }
 
   return (
-    <div className="navbar">
-      <div className="left">
+    <div className="navbar bg-white flex flex-row flex-1 shadow z-2">
+      <div className="text-left">
         <input
           className="default title-input"
           type="text"
@@ -20,9 +20,9 @@ function Navbar({ name } : Props): ReactElement {
         />
         <button className="default">Save</button>
       </div>
-      <div className="center">
+      <div className="text-center">
       </div>
-      <div className="right">
+      <div className="text-right">
         <Link to="/">
           <button className="default">Dashboard</button>
         </Link>
