@@ -22,5 +22,13 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "compilerOptions": {
+    "target": "ESNEXT",
+    "module": "esModuleInterop",
+    "jsx": "preserve",
+    "strict": true,
+    "allowSyntheticDefaultImports": false,
+    "esModuleInterop": true
+  }
 }
