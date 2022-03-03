@@ -1,4 +1,4 @@
-import { Fragment, ChangeEvent,KeyboardEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent,KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
@@ -51,7 +51,7 @@ function AddCard({ listId, close }: Props) {
   };
 
   return (
-    <Fragment>
+    <>
     <div className="card-view-cover" onClick={onClose}></div>
     <div className="card no-pad bg-white br-3 flex flex-1 flex-col shadow z-2">
       <TextareaAutosize
@@ -80,7 +80,7 @@ function AddCard({ listId, close }: Props) {
         Cancel
       </button>
     </div>
-    </Fragment>
+    </>
   );
 }
 

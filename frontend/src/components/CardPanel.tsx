@@ -65,7 +65,7 @@ function CardPanel() {
   };
 
   return (
-    <Fragment>
+    <>
     <div className="card-view-cover" onClick={close}></div>
     <div ref={containerRef} className="padded z-2">
       <div
@@ -144,7 +144,7 @@ function CardPanel() {
         <Comments cardId={cardId} comments={comments} />
       </div>
     </div>
-    </Fragment>
+    </>
   );
 }
 

@@ -10,12 +10,12 @@
 }
 
 .card-view {
-  margin: 0 auto;
-  margin-left: 10px;
   height: calc(90vh - 25px);
-  max-width: 390px;
-  min-width: 390px;
+  margin: 0 auto;
+  margin-right: 10px;
   max-height: calc(90vh - 25px);
+  max-width: 22rem;
+  min-width: 22rem; 
   overflow-y: hidden;
   padding: 10px 15px 15px 15px !important;
   padding-bottom:20px;
@@ -58,7 +58,6 @@
   max-width: 100%;
   display: flex;
   flex-wrap: wrap;
-  text-align: left;
   padding: 5px 5px 0px 0px;
   text-align: justify;
   text-align-last: left;

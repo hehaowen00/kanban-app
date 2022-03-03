@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
-import { List } from "../types/Kanban";
-import ListView from "./List";
 import AddListView from "./AddList";
+import CardPanel from "./CardPanel";
+import ListView from "./List";
 import Navbar from "./Navbar";
 import SettingsView from "./Settings";
 
+import { List } from "../types/Kanban";
 import { MoveCard, MoveList } from "../redux/Creators";
 import { AppState } from "../redux/Store";
 
@@ -15,8 +16,7 @@ import "./styles/Board.css";
 function BoardView() {
   const dispatch = useDispatch();
 
-  const board = useSelector((state: AppState)  => state.board);
-  const lists = board.lists;
+  const { lists, labels, name } = useSelector(({ board }: AppState) => board);
 
   const handleDragEnd = (event: DropResult) => {
     const { source, destination } = event;
@@ -57,9 +57,11 @@ function BoardView() {
     dispatch({type: "CloseCardView" });
   };
 
+  const { listId } = useSelector((state: AppState) => state.panel);
+
   return (
     <div className="board-view">
-      <Navbar name={board.name} />
+      <Navbar name={name} />
       <div className="board flex flex-1 flex-col">
         <div className="content flex flex-row">
           <DragDropContext
@@ -77,7 +79,15 @@ function BoardView() {
                   ref={provided.innerRef}
                 >
                   {lists.map((list: List, index: number) => (
-                    <ListView key={list.id} index={index} list={list} />
+                    <>
+                      <ListView key={list.id} index={index} list={list} />
+                      { listId === list.id && (
+                        <>
+                          <div className="card-view-cover bg-none"></div>
+                          <CardPanel />
+                        </>
+                      )}
+                    </>
                   ))}
                   {provided.placeholder}
                   <AddListView />
@@ -85,7 +95,7 @@ function BoardView() {
               )}
             </Droppable>
           </DragDropContext>
-          <SettingsView />
+          <SettingsView labels={labels} />
         </div>
       </div>
     </div>

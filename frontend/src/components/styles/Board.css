@@ -25,7 +25,8 @@
   margin: 0 15px;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 0px !important;
+  padding: 0px;
+  padding-right: 15px;
   vertical-align: top;
   white-space: nowrap;
 }

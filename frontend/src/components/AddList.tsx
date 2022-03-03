@@ -2,7 +2,6 @@ import {
   ReactElement,
   ChangeEvent,
   ClipboardEvent,
-  Fragment,
   KeyboardEvent,
   useEffect,
   useRef,
@@ -75,7 +74,7 @@ function AddListView(): ReactElement {
   let listColClasses = `add-col ${toggle ? "z-2" : ""}`;
 
   return (
-    <Fragment>
+    <>
     {toggle &&  <div className="card-view-cover bg-none" onClick={cancelNewList}></div> }
     <div
       ref={containerRef}
@@ -91,7 +90,7 @@ function AddListView(): ReactElement {
           </div>
         )}
         {toggle && (
-          <Fragment>
+          <>
             <TextareaAutosize
               ref={inputRef}
               className="default textarea-card font-90 no-select"
@@ -118,11 +117,11 @@ function AddListView(): ReactElement {
                 Cancel
               </button>
             </div>
-          </Fragment>
+          </>
         )}
       </div>
     </div>
-    </Fragment>
+    </>
   );
 }
 

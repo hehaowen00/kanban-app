@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,7 +15,6 @@ import {
 
 import { lockYAxis } from "../styles/util";
 import "../styles/Checklist.css";
-
 
 function ChecklistView({ cardId, id, index } : Props) {
   const dispatch = useDispatch();
@@ -137,7 +136,7 @@ function ChecklistView({ cardId, id, index } : Props) {
           </div>
         )}
         {isEditing && (
-          <Fragment>
+          <>
             <TextareaAutosize
               ref={titleRef}
               name="titleInput"
@@ -160,7 +159,7 @@ function ChecklistView({ cardId, id, index } : Props) {
                 Delete
               </button>
             </div>
-          </Fragment>
+          </>
         )}
       </div>
       <Droppable droppableId={id} type="droppableItems">

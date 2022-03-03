@@ -30,8 +30,7 @@
 .add-col {
   height: fit-content;
   max-height: unset;
-  max-width: 21rem;
-  min-height: 0px;
-  min-width: 21rem;
+  max-width: 18rem;
+  min-width: 18rem;
   padding-bottom: 0px;
 }

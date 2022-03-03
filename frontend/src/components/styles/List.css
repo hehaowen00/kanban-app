@@ -10,8 +10,8 @@
 .list-col {
   /* figure out how to make this list not shrink when scroll bar is visible */
   max-height: 90vh !important;
-  max-width: 21rem;
-  min-width: 21rem;
+  max-width: 18rem;
+  min-width: 18rem;
   padding-bottom: 10px;
 }
 

@@ -1,19 +1,17 @@
-import { ChangeEvent, Fragment, KeyboardEvent, ReactElement, useEffect, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, ReactElement, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea/lib";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
 import AddCard from "./AddCard";
 import CardView from "./Card";
-import CardPanel from "./CardPanel";
 
-import { UpdateList } from "../redux/Creators";
+import { DeleteList, UpdateList } from "../redux/Creators";
 import { AppState } from "../redux/Store";
 import { List } from "../types/Kanban";
 
-import "./styles/List.css";
-import { MAX_LIST_TITLE } from "../types/Limits";
 import { MAX_LIST_TITLE_LENGTH } from "../types/Limits";
+import "./styles/List.css";
 
 function ListView({ index, list }: Props): ReactElement {
   const dispatch = useDispatch();
@@ -48,7 +46,7 @@ function ListView({ index, list }: Props): ReactElement {
   };
 
   const deleteList = () => {
-    dispatch({ type: "DeleteList", id });
+    dispatch(DeleteList(id));
   };
 
   const updateList = (payload: Partial<List>) => {
@@ -98,25 +96,23 @@ function ListView({ index, list }: Props): ReactElement {
           ref={provided.innerRef}
           {...provided.draggableProps}
         >
-        {visible && (
-          <div className="card-view-cover bg-none" onClick={onBlur}></div>
-        )}
         <div
           className="list-col"
           key={index}
         >
           <div className="list br-3 bg-white flex flex-1-1 flex-col shadow slide-in">
             <div className={headerClasses}>
-              {!visible &&
+            {!visible && (
               <div
-                className="title font-85 no-select"
+                className="title font-80 no-select"
                 onClick={onClick}
                 {...provided.dragHandleProps}
               >
                 {name}
-              </div>}
+              </div>
+            )}
             {visible && (
-              <Fragment>
+              <>
                 <TextareaAutosize 
                   ref={ref}
                   className="default font-85 font-600"
@@ -131,7 +127,7 @@ function ListView({ index, list }: Props): ReactElement {
                     Delete
                   </button>
                 </div>
-              </Fragment>
+              </>
             )}
             </div>
             <Droppable droppableId={id} type="cards">
@@ -165,7 +161,6 @@ function ListView({ index, list }: Props): ReactElement {
             )}
           </div>
         </div>
-        { thisList && showCard && <CardPanel /> }
       </div>
       )}
     </Draggable>
