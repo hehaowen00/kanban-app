@@ -2,14 +2,15 @@ export type CardViewState = {
   cardId: string,
   listId: string,
   showCard: boolean,
+  showMenu: boolean,
 };
 
 export type Board = {
   id: string;
   name: string;
-  cards: Record<string, Card>,
-  labels: string[],
   lists: List[];
+  cards: Record<string, Card>,
+  labels: Record<string, Label>,
   attachments: Record<string, Attachment>,
   checklists: Record<string, Checklist>,
 };
@@ -24,15 +25,14 @@ export type Card = {
   title: string;
   description: string;
   dueDate: number | null,
-  labels: Label[],
+  labels: string[],
   checklists: string[];
   attachments: string[];
   comments: Comment[];
 };
 
 export type Label = {
-  title: string,
-  color: string,
+  name: string,
 };
 
 export type Checklist = {

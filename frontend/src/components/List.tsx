@@ -7,7 +7,6 @@ import AddCard from "./AddCard";
 import CardView from "./Card";
 
 import { DeleteList, UpdateList } from "../redux/Creators";
-import { AppState } from "../redux/Store";
 import { List } from "../types/Kanban";
 
 import { MAX_LIST_TITLE_LENGTH } from "../types/Limits";
@@ -19,10 +18,6 @@ function ListView({ index, list }: Props): ReactElement {
 
   const { id, name, cardIds } = list;
   const [visible, setVisible] = useState(false);
-
-  const cardView = useSelector((state: AppState) => state.panel);
-  const thisList = cardView.listId === id;
-  const { showCard } = cardView;
 
   const [listInput, setListInput] = useState(name);
   const [newCard, setNewCard] = useState(false);
@@ -53,10 +48,6 @@ function ListView({ index, list }: Props): ReactElement {
     dispatch(UpdateList(id, payload));
   };
 
-  const onBlur = () => {
-    setVisible(false);
-  }
-
   const onClick = () => {
     setVisible(true);
   }
@@ -86,7 +77,7 @@ function ListView({ index, list }: Props): ReactElement {
     }
   };
 
-  const headerClasses = `list-header bg-white block br-3 flex flex-col font-90 font-600 ${visible ? "z-2" : ""}`;
+  const headerClasses = `list-header ${visible ? "z-2" : ""}`;
 
   return (
     <Draggable key={id} draggableId={id} index={index}>
@@ -104,7 +95,7 @@ function ListView({ index, list }: Props): ReactElement {
             <div className={headerClasses}>
             {!visible && (
               <div
-                className="title font-80 no-select"
+                className="title font-90 no-select"
                 onClick={onClick}
                 {...provided.dragHandleProps}
               >

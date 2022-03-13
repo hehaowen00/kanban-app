@@ -79,6 +79,15 @@ input[type=text].default:focus {
   outline: 1px solid #0079bf;
 }
 
+select.default {
+  background: white;
+  font-family: "Roboto";
+}
+
+option {
+  font-family: "Roboto" !important;
+}
+
 textarea.default {
   border: 1px solid black;
   border-radius: 3px;
@@ -153,6 +162,10 @@ textarea.default {
   box-shadow: none;
 }
 
+.font-75 {
+  font-size: 0.70rem;
+}
+
 .font-80 {
   font-size: 0.80rem;
 }
@@ -197,6 +210,10 @@ textarea.default {
   margin-top: 5px;
 }
 
+.ml-auto {
+  margin-left: auto;
+}
+
 .mr-0 {
   margin-right: 0;
 }
@@ -232,6 +249,10 @@ textarea.default {
 
 .pad-5 {
   padding: 5px;
+}
+
+.red {
+  color: red;
 }
 
 .relative {
@@ -270,3 +291,50 @@ textarea.default {
   z-index: 2 !important;
 }
 
+.w-100 {
+  width: 100%;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  border: 1px solid black;
+  font-size: 0.85rem;
+}
+
+.dropdown-title {
+  margin: 1px 6px;
+}
+
+.dropdown:hover {
+  cursor: pointer;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: white;
+  border: 1px solid black;
+  min-width: 90px;
+  z-index: 1;
+  margin-left: -1px;
+  padding: 3px 0px;
+  width: fit-content;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 2px 4px;
+}
+
+.dropdown-item:hover {
+  background: grey;
+}

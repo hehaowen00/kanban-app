@@ -1,0 +1,68 @@
+.label-badge {
+  border: 1px solid black;
+  border-radius: 3px;
+  cursor: pointer;
+  display: block;
+  padding: 2px 4px;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.labels {
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px 5px 0px 5px;
+}
+
+.show {
+  padding: 5px 5px 0px 5px;
+  text-align: justify;
+  text-align-last: left;
+  word-wrap: break-word;
+}
+
+.labels-cancel {
+  margin-bottom: 5px;
+}
+
+.labels-title {
+  margin-top: 5px;
+}
+
+.label-item {
+  max-width: 100%;
+}
+
+.label-description {
+  max-width: inherit;
+  vertical-align: middle !important;
+  white-space: pre-wrap;
+  width: 100%;
+  word-break: break-all;
+}
+
+.label-select {
+  max-width: 20px;
+  height: 20px !important;
+  margin-top: -1px;
+}
+
+.card-label-item {
+  border: 1px solid black;
+  border-top-right-radius: 3px;
+  box-sizing:border-box;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+  padding: 5px 5px 0px 5px;
+  width: 100%;
+}
+
+.labels-header {
+  margin-top: 2px;
+}

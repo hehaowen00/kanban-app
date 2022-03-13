@@ -5,6 +5,30 @@ export type RenameBoard = {
   name: string,
 };
 
+export type NewLabel = {
+  type: "NewLabel",
+  name: string,
+  description: string,
+};
+
+export type DeleteLabel = {
+  type: "DeleteLabel",
+  cardId: string,
+  labelId: string,
+};
+
+export type AddLabel = {
+  type: "AddLabel",
+  cardId: string,
+  labelId: string,
+};
+
+export type RemoveLabel = {
+  type: "RemoveLabel",
+  cardId: string,
+  labelId: string,
+};
+
 // List
 
 export type NewList = {
@@ -120,7 +144,10 @@ export type NewComment = {
   text: string,
 };
 
-type BoardAction = RenameBoard;
+type BoardAction = RenameBoard
+  | NewLabel
+  | AddLabel
+  | RemoveLabel;
 
 type ListAction = NewList
   | MoveList

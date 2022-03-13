@@ -21,12 +21,14 @@ const DefaultCardViewState = {
   cardId: "",
   listId: "",
   showCard: false,
+  showMenu: false,
 };
 
 function CardViewReducer(state: CardViewState = DefaultCardViewState, action: CardPanelAction) {
   switch (action.type) {
     case "CloseCardView": {
       return {
+        ...state,
         cardId: "",
         listId: "",
         showCard: false,
@@ -35,9 +37,16 @@ function CardViewReducer(state: CardViewState = DefaultCardViewState, action: Ca
     case "ShowExistingCard": {
       const { cardId, listId, } = action;
       return {
+        ...state,
         cardId,
         listId,
         showCard: true,
+      };
+    }
+    case "ShowMenu": {
+      return {
+        ...state,
+        showMenu: !state.showMenu,
       };
     }
     default:
@@ -50,6 +59,41 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
     case "RenameBoard": {
       const { name } = action;
       return { ...state, name };
+    }
+    case "NewLabel": {
+      let id = uuidV4();
+      let newLabel = action.name;
+      let labels = { ...state.labels };
+
+      for (const key in labels) {
+        let { name } = labels[key];
+        if (name === newLabel) {
+          return state;
+        }
+      }
+
+      labels[id] = { 
+        name: newLabel,
+      };
+
+      return { ...state, labels };
+    }
+    case "AddLabel": {
+      const { cardId, labelId } = action;
+      let cards = { ...state.cards };
+      let labels = [...cards[cardId].labels];
+      if (labels.includes(labelId)) {
+        return state;
+      }
+      cards[cardId].labels = [...labels, labelId];
+      return { ...state, cards };
+    }
+    case "RemoveLabel": {
+      const { cardId, labelId } = action;
+      let cards = { ...state.cards };
+      let labels = cards[cardId].labels.filter((id: string) => id !== labelId);
+      cards[cardId].labels = [...labels];
+      return { ...state, cards };
     }
     case "NewCard": {
       const { listId, title } = action;

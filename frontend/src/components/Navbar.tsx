@@ -1,9 +1,16 @@
 import { ChangeEvent, ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import "./styles/Navbar.css"
 
 function Navbar({ name } : Props): ReactElement {
   const [title, setTitle] = useState(name);
+
+  const dispatch = useDispatch();
+
+  const toggleMenu = () => {
+    dispatch({ type: "ShowMenu" });
+  };
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -26,7 +33,7 @@ function Navbar({ name } : Props): ReactElement {
         <Link to="/">
           <button className="default">Dashboard</button>
         </Link>
-        <button className="default">Settings</button>
+        <button className="default" onClick={toggleMenu}>Settings</button>
       </div>
     </div>
   );

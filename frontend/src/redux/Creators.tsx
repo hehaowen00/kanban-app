@@ -1,9 +1,34 @@
 import { Card, Checklist, ChecklistItem, List } from "../types/Kanban";
 
+// Card Panel
+
+export function ShowExistingCard(cardId: string, listId: string) {
+  return { type: "ShowExistingCard", cardId, listId };
+}
+
+export function CloseCardView() {
+  return { type: "CloseCardView" };
+}
+
+export function ShowMenu() {
+}
+
 // Board
 
 export function RenameBoard(name: string) {
   return { type: "RenameBoard", name };
+}
+
+export function NewLabel(name: string) {
+  return { type: "NewLabel", name };
+}
+
+export function AddLabel(cardId: string, labelId: string) {
+  return { type: "AddLabel", cardId, labelId };
+}
+
+export function RemoveLabel(cardId: string, labelId: string) {
+  return { type: "RemoveLabel", cardId, labelId };
 }
 
 // List
@@ -20,7 +45,8 @@ export function UpdateList(id: string, delta: Partial<List>) {
   return { type: "UpdateList", id, delta };
 }
 
-export function DeleteList() {
+export function DeleteList(id: string) {
+  return { type: "DeleteList", id }
 }
 
 // Card

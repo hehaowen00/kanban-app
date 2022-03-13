@@ -13,7 +13,7 @@
 
 .checklist {
   border: 1px solid black;
-  padding: 8px 8px 2px 8px;
+  padding: 5px 5px 2px 5px;
 }
 
 .checklist-title {
@@ -43,7 +43,7 @@
 .item-row {
   max-width: 100%;
   width: 100%;
-  padding: 5px 6px 5px 0px;
+  padding: 5px 5px 5px 0px;
 }
 
 .item-row > .check {

@@ -8,7 +8,12 @@ type ShowExistingCard = {
   listId: string,
 };
 
+type ShowMenu = {
+  type: "ShowMenu",
+};
+
 type Action = CloseCardView
-  | ShowExistingCard;
+  | ShowExistingCard
+  | ShowMenu;
 
 export default Action;

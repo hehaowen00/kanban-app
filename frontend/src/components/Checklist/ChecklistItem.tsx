@@ -132,15 +132,15 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
               </div>
             )}
             </div>
-          {state.visible && (
-            <div className="menu mt-5 text-right">
-              <button
-                className="default"
-                onMouseDown={deleteItem}
-              >
-               Delete Item
-             </button>
-            </div>
+            {state.visible && (
+              <div className="menu text-right">
+                <button
+                  className="default"
+                  onMouseDown={deleteItem}
+                >
+                 Delete Item
+               </button>
+              </div>
             )}
         </div>
       )}

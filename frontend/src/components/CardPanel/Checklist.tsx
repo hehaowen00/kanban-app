@@ -140,7 +140,7 @@ function ChecklistView({ cardId, id, index } : Props) {
             <TextareaAutosize
               ref={titleRef}
               name="titleInput"
-              className="checklist-title default flex flex-col font-90 font-600 m-0"
+              className="checklist-title default flex flex-col font-85 font-600 m-0"
               maxLength={MAX_CHECKLIST_TITLE_LENGTH}
               placeholder="Checklist"
               value={state.titleInput}

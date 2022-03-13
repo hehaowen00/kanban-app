@@ -31,13 +31,6 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
 
   const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     switch (event.key) {
-      case "Enter": {
-        event.preventDefault();
-        descriptionUpdate();
-        setFocused(false);
-        ref.current?.blur();
-        break;
-      }
       case "Escape": {
         event.preventDefault();
         setValue(description);
@@ -57,7 +50,7 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
         className="description shadow default font-85"
         maxLength={MAX_DESCRIPTION_LENGTH}
         placeholder="Description"
-        rows={value === "" || focused ? 5 : 3}
+        rows={3}
         spellCheck={focused}
         value={value}
 

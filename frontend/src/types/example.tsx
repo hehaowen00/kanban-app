@@ -8,6 +8,7 @@ function newExampleBoard()  {
   cards[cardId] = {
     title: "Hello, World!",
     description: "",
+    labels: [],
     attachments: [] as any[],
     checklists: [checklistId],
     comments: [] as any[],
@@ -22,11 +23,15 @@ function newExampleBoard()  {
     ]
   };
 
+  let labels: any = {
+  };
+
   return {
     id: uuidV4(),
     name: "Kanban",
     cards,
     checklists,
+    labels,
     lists: [
       {
         id: uuidV4(),

@@ -1,12 +1,13 @@
-import { Fragment, ChangeEvent, useEffect, useState, useRef } from "react";
+import { ChangeEvent, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Checklists from "./CardPanel/Checklists";
 import Comments from "./CardPanel/Comments";
 import DescriptionView from "./CardPanel/Description";
+import LabelView from "./CardPanel/LabelsView";
 import TitleView from "./CardPanel/Title";
 
-import { DeleteCard, UpdateCard } from "../redux/Creators";
+import { CloseCardView, DeleteCard, UpdateCard } from "../redux/Creators";
 import { Card } from "../types/Kanban";
 import { AppState } from "../redux/Store";
 
@@ -19,12 +20,12 @@ function CardPanel() {
     return { ...panel };
   });
 
-  const { title, description, comments } = useSelector(({ board }: AppState) => {
+  const { title, description, labels, comments } = useSelector(({ board }: AppState) => {
     return { ...board.cards[cardId] };
   });
 
   const deleteCard = () => {
-    dispatch({ type: "CloseCardView" });
+    dispatch(CloseCardView());
     dispatch(DeleteCard(cardId, listId));
   };
 
@@ -46,6 +47,7 @@ function CardPanel() {
   });
 
   const [active, setActive] = useState(false);
+  const [selectLabels, setSelectLabels] = useState(false);
 
   const setTitle = (value: string) => {
     setState({ ...state, title: value });
@@ -61,7 +63,7 @@ function CardPanel() {
   };
 
   const close = () => {
-    dispatch({ type: "CloseCardView" });
+    dispatch(CloseCardView());
   };
 
   return (
@@ -69,7 +71,7 @@ function CardPanel() {
     <div className="card-view-cover" onClick={close}></div>
     <div ref={containerRef} className="padded z-2">
       <div
-        className="list card-view br-3 bg-grey block font-90 shadow text-left"
+        className="list card-view br-3 bg-grey block font-85 shadow text-left"
       >
         <TitleView
           title={title}
@@ -91,24 +93,24 @@ function CardPanel() {
           >
             Add Checklist
           </button>
-          <button className="default shadow-5">
+          <button
+            className="default shadow-5"
+            onClick={() => setSelectLabels(true)}
+          >
             Add Label
           </button>
           <button className="default shadow-5">
             Add Date
           </button>
         </div>
-        <div className="labels br-default bg-white br-3 spaced shadow-5">
-          <div className="label font-80 font-600 inline-block no-select">
-            For Review
-          </div>
-          <div className="label font-80 font-600 inline-block no-select">
-            Help Wanted
-          </div>
-          <div className="label font-80 font-600 inline-block no-select">
-            Urgent
-          </div>
-        </div>
+        {(labels.length > 0 || selectLabels) && (
+          <LabelView
+            cardId={cardId}
+            assigned={labels}
+            selectLabels={selectLabels}
+            close={() => setSelectLabels(false)}
+          />
+        )}
         <div className="br-default bg-white br-3 spaced pad-5 shadow-5">
           <div className="">
             <span className="date font-85 font-600 inline-block no-select">
