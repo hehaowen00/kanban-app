@@ -39,7 +39,7 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
 
   const updateDescription = () => {
     let description = state.desc.trim();
-      if (description.length !== 0) {
+    if (description.length !== 0) {
       let action = UpdateChecklistItem(checklistId, index, { description });
       dispatch(action);
     }
@@ -106,22 +106,22 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
               />
             </div>
             {state.visible && (
-            <div className="item-desc block">
-              <TextareaAutosize
-                ref={inputRef}
-                name="desc"
-                className="default font-85"
-                maxLength={MAX_CHECKLIST_ITEM_LENGTH}
-                placeholder="Item"
-                spellCheck={state.visible}
-                value={state.desc}
+              <div className="item-desc block">
+                <TextareaAutosize
+                  ref={inputRef}
+                  name="desc"
+                  className="default font-85"
+                  maxLength={MAX_CHECKLIST_ITEM_LENGTH}
+                  placeholder="Item"
+                  spellCheck={state.visible}
+                  value={state.desc}
 
-                onBlur={onBlur}
-                onChange={onChange}
-                onKeyDown={onKeyDown}
-                onKeyPress={onKeyPress}
-              />
-            </div>
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  onKeyDown={onKeyDown}
+                  onKeyPress={onKeyPress}
+                />
+              </div>
             )}
             {!state.visible && (
               <div
@@ -131,17 +131,17 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
                 {description}
               </div>
             )}
+          </div>
+          {state.visible && (
+            <div className="menu text-right">
+              <button
+                className="default"
+                onMouseDown={deleteItem}
+              >
+                Delete Item
+              </button>
             </div>
-            {state.visible && (
-              <div className="menu text-right">
-                <button
-                  className="default"
-                  onMouseDown={deleteItem}
-                >
-                 Delete Item
-               </button>
-              </div>
-            )}
+          )}
         </div>
       )}
     </Draggable>

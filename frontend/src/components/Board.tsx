@@ -60,7 +60,7 @@ function BoardView() {
   const { listId, showMenu } = useSelector((state: AppState) => state.panel);
 
   return (
-    <div className="board-view">
+    <div className="board-view bg-blue-700">
       <Navbar name={name} />
       <div className="board flex flex-1 flex-col">
         <div className="content flex flex-row">
@@ -81,7 +81,7 @@ function BoardView() {
                   {lists.map((list: List, index: number) => (
                     <>
                       <ListView key={list.id} index={index} list={list} />
-                      { listId === list.id && (
+                      {listId === list.id && (
                         <>
                           <div className="card-view-cover bg-none"></div>
                           <CardPanel />

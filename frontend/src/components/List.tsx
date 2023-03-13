@@ -87,72 +87,72 @@ function ListView({ index, list }: Props): ReactElement {
           ref={provided.innerRef}
           {...provided.draggableProps}
         >
-        <div
-          className="list-col"
-          key={index}
-        >
-          <div className="list br-3 bg-white flex flex-1-1 flex-col shadow slide-in">
-            <div className={headerClasses}>
-            {!visible && (
-              <div
-                className="title font-90 no-select"
-                onClick={onClick}
-                {...provided.dragHandleProps}
-              >
-                {name}
+          <div
+            className="list-col"
+            key={index}
+          >
+            <div className="list br-3 bg-white flex flex-1-1 flex-col shadow slide-in">
+              <div className={headerClasses}>
+                {!visible && (
+                  <div
+                    className="title font-90 no-select"
+                    onClick={onClick}
+                    {...provided.dragHandleProps}
+                  >
+                    {name}
+                  </div>
+                )}
+                {visible && (
+                  <>
+                    <TextareaAutosize
+                      ref={ref}
+                      className="default font-85 font-600"
+                      maxLength={MAX_LIST_TITLE_LENGTH}
+                      onChange={onChange}
+                      onKeyDown={onKeyDown}
+                      onKeyPress={onKeyPress}
+                      value={listInput}
+                    />
+                    <div className="menu mb-0 inline spaced-right text-right float-right">
+                      <button className="default mt-5" onClick={deleteList}>
+                        Delete
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
-            )}
-            {visible && (
-              <>
-                <TextareaAutosize 
-                  ref={ref}
-                  className="default font-85 font-600"
-                  maxLength={MAX_LIST_TITLE_LENGTH}
-                  onChange={onChange}
-                  onKeyDown={onKeyDown}
-                  onKeyPress={onKeyPress}
-                  value={listInput}
-                />
-                <div className="menu mb-0 inline spaced-right text-right">
-                  <button className="default mt-5" onClick={deleteList}>
-                    Delete
+              <Droppable droppableId={id} type="cards">
+                {(provided) => (
+                  <div
+                    className="list-body flex flex-1 flex-col relative"
+                    ref={provided.innerRef}
+                  >
+                    {cardIds.map((cardId: string, index: number) => (
+                      <CardView key={cardId} index={index} id={cardId} listId={id} />
+                    ))}
+                    {provided.placeholder}
+                    {newCard && (
+                      <AddCard
+                        listId={id}
+                        close={() => setNewCard(false)}
+                      />
+                    )}
+                  </div>
+                )}
+              </Droppable>
+              {!newCard && (
+                <div className="list-footer br-3 flex flex-col font-80 font-600 no-select">
+                  <button
+                    className="add-card-btn default mb-[5px] px-[3px] py-[0px] hover:cursor-pointer"
+                    onClick={handleAddItem}
+                  >
+                    Add Card
                   </button>
                 </div>
-              </>
-            )}
-            </div>
-            <Droppable droppableId={id} type="cards">
-              {(provided) => (
-                <div
-                  className="list-body flex flex-1 flex-col relative"
-                  ref={provided.innerRef}
-                >
-                  {cardIds.map((cardId: string, index: number) => (
-                    <CardView key={cardId} index={index} id={cardId} listId={id} />
-                  ))}
-                  {provided.placeholder}
-                  {newCard && (
-                    <AddCard
-                      listId={id}
-                      close={() => setNewCard(false)}
-                    />
-                  )}
-                </div>
               )}
-            </Droppable>
-            {!newCard && (
-              <div className="list-footer br-3 flex flex-col font-80 font-600 no-select">
-                <button
-                  className="default add-card-btn"
-                  onClick={handleAddItem}
-                >
-                  Add Card
-                </button>
-              </div>
-            )}
+            </div>
           </div>
         </div>
-      </div>
       )}
     </Draggable>
   );

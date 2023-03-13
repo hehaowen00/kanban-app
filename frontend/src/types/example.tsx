@@ -1,6 +1,6 @@
 import { v4 as uuidV4 } from "uuid";
 
-function newExampleBoard()  {
+function newExampleBoard() {
   let cardId = uuidV4();
   let checklistId = uuidV4();
 
@@ -9,6 +9,8 @@ function newExampleBoard()  {
     title: "Hello, World!",
     description: "",
     labels: [],
+    startDate: "2023-03-01",
+    endDate: "",
     attachments: [] as any[],
     checklists: [checklistId],
     comments: [] as any[],

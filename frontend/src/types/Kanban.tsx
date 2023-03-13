@@ -24,7 +24,9 @@ export type List = {
 export type Card = {
   title: string;
   description: string;
-  dueDate: number | null,
+  startDate: string | null,
+  endDate: string | null,
+  dates: Record<string, string>,
   labels: string[],
   checklists: string[];
   attachments: string[];

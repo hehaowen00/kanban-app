@@ -11,7 +11,7 @@ function CardView({ index, id, listId }: Props): ReactElement {
   const dispatch = useDispatch();
 
   const { title, labels } = useSelector(({ board }: AppState) => {
-    const { title, labels } =  board.cards[id];
+    const { title, labels } = board.cards[id];
     let xs = labels.map((id: string) => {
       return { id, ...board.labels[id] };
     });
@@ -21,7 +21,7 @@ function CardView({ index, id, listId }: Props): ReactElement {
     };
   });
 
-  const sorted = labels.sort((a: any, b: any) =>{
+  const sorted = labels.sort((a: any, b: any) => {
     if (a.name > b.name) {
       return 1;
     }
@@ -36,7 +36,7 @@ function CardView({ index, id, listId }: Props): ReactElement {
     <Draggable draggableId={id} index={index}>
       {(provided) => (
         <div
-          className="card bg-white br-3 no-select shadow"
+          className="card bg-white br-3 no-select shadow drop-shadow"
           key={id}
           onClick={handleClick}
 
@@ -47,7 +47,7 @@ function CardView({ index, id, listId }: Props): ReactElement {
           <div className="card-title">{title}</div>
           {labels.length > 0 && (
             <div className="card-labels bg-white">
-              {labels.map(({id, name}: any) => 
+              {labels.map(({ id, name }: any) =>
                 <div key={id} className="badge br-default br-3 font-75 font-600 inline-block no-select">
                   {name}
                 </div>

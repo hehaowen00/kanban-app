@@ -1,6 +1,5 @@
 import { v4 as uuidV4 } from "uuid";
 import { createStore, combineReducers } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 
 import { Board, CardViewState, List } from "../types/Kanban";
 import ExampleBoard from "../types/example";
@@ -72,7 +71,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
         }
       }
 
-      labels[id] = { 
+      labels[id] = {
         name: newLabel,
       };
 
@@ -119,7 +118,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
       let cards = { ...state.cards };
       cards[id] = { ...cards[id], ...delta };
 
-      return { ...state, cards: { ...cards} };
+      return { ...state, cards: { ...cards } };
     }
     case "DeleteCard": {
       const { cardId, listId } = action;
@@ -127,7 +126,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
       let cards = { ...state.cards };
       delete cards[cardId];
 
-      let lists = [ ...state.lists ];
+      let lists = [...state.lists];
       let idx = lists.findIndex((list: List) => list.id === listId);
 
       if (idx === -1) {
@@ -151,7 +150,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
       return { ...state, lists };
     }
     case "MoveCard": {
-      const { srcId, srcIdx, destId, destIdx } = action; 
+      const { srcId, srcIdx, destId, destIdx } = action;
       let lists = [...state.lists];
 
       const srcListIdx = lists.findIndex((list: List) => list.id === srcId);
@@ -161,7 +160,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
       }
 
       if (srcId === destId) {
-        let cards = reorder(lists[srcListIdx].cardIds, srcIdx, destIdx); 
+        let cards = reorder(lists[srcListIdx].cardIds, srcIdx, destIdx);
         lists[srcListIdx].cardIds = cards;
 
         return { ...state, lists };
@@ -190,7 +189,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
     }
     case "UpdateList": {
       const { id, delta } = action;
-      let lists = [ ...state.lists ];
+      let lists = [...state.lists];
       let idx = lists.findIndex((list) => list.id === id);
 
       if (idx !== -1) {
@@ -203,7 +202,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
     case "DeleteList": {
       const { id } = action;
 
-      let lists = [ ...state.lists ];
+      let lists = [...state.lists];
       let idx = lists.findIndex((list) => list.id === id);
       let deleted = lists.splice(idx, 1);
       let { cardIds } = deleted[0];
@@ -261,7 +260,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
     }
     case "UpdateChecklist": {
       const { checklistId, delta } = action;
-      let checklist = { ...state.checklists[checklistId], ...delta};
+      let checklist = { ...state.checklists[checklistId], ...delta };
 
       let checklists = { ...state.checklists };
       checklists[checklistId] = checklist;
@@ -301,7 +300,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
       let checklists = { ...state.checklists };
       let checklist = checklists[checklistId];
 
-      let items = [ ...checklist.items ];
+      let items = [...checklist.items];
       items.splice(index);
 
       checklist.items = [...items];
@@ -314,7 +313,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
 
       let checklists = { ...state.checklists };
       let checklist = checklists[checklistId];
-      let items = [ ...checklist.items ];
+      let items = [...checklist.items];
 
       items[index] = { ...items[index], ...delta };
       checklists[checklistId].items = items;
@@ -324,9 +323,9 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
     case "NewComment": {
       const { userId, cardId, text } = action;
       let cards = { ...state.cards };
-      let comment_  = { userId, timestamp: Date.now(), text };
+      let comment_ = { userId, timestamp: Date.now(), text };
 
-      let comments = [ ...cards[cardId].comments, comment_ ];
+      let comments = [...cards[cardId].comments, comment_];
       cards[cardId].comments = comments;
 
       return { ...state, cards };
@@ -336,7 +335,7 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
     }
   }
 }
-    
+
 function reorder<Type>(list: Type[], startIdx: number, endIdx: number): Type[] {
   const arr = Array.from(list);
   const [removed] = arr.splice(startIdx, 1);
@@ -350,7 +349,7 @@ function insert<Type>(arr: Type[], idx: number, element: Type): Type[] {
     return [element, ...arr];
   }
   return [...arr.slice(0, idx), element, ...arr.slice(idx)];
-} 
+}
 
 const appReducer = combineReducers({
   board: BoardReducer,
@@ -358,4 +357,4 @@ const appReducer = combineReducers({
 });
 
 export type AppState = ReturnType<typeof appReducer>;
-export default createStore(appReducer, composeWithDevTools());
+export default createStore(appReducer);

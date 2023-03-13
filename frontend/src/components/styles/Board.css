@@ -1,9 +1,9 @@
 .board-view {
-  background: linear-gradient(#1e528e 0%, #2d91c2 100%); /* day time sky */
-  /* night time sky */
-  background: -webkit-linear-gradient(to top, #283E51, #0A2342);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top, #283E51, #0A2342); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: -olinear-gradient(to top, #283E51, #0A2342); 
+  /* background: linear-gradient(#1e528e 0%, #2d91c2 100%); /* day time sky */
+  /* /* night time sky */
+  /* background: -webkit-linear-gradient(to top, #283E51, #0A2342);  /* Chrome 10-25, Safari 5.1-6 */
+  /* background: linear-gradient(to top, #283E51, #0A2342); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /* background: -olinear-gradient(to top, #283E51, #0A2342);  */
 
   font-family: 'Roboto' !important;
   height: 100%;
