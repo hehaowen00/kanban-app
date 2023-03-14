@@ -7,8 +7,8 @@ import Outside from "../Outside";
 import { NewChecklist } from "../../redux/Creators";
 import { MAX_CHECKLIST_TITLE_LENGTH } from "../../types/Limits";
 
-function AddChecklist ({ cardId, close }: Props) {
-  const dispatch = useDispatch(); 
+function AddChecklist({ cardId, close }: Props) {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -50,26 +50,27 @@ function AddChecklist ({ cardId, close }: Props) {
 
   return (
     <Outside update={cancelClick}>
-      <div ref={containerRef} className="add-checklist bg-white br-3 shadow">
+      <div ref={containerRef} className="mt-2">
         <TextareaAutosize
           ref={inputRef}
-          className="default font-85 font-600 margin-0"
+          name="titleInput"
+          className="checklist-title rounded default flex flex-col font-85 font-500 m-0 focus:drop-shadow"
           maxLength={MAX_CHECKLIST_TITLE_LENGTH}
-          placeholder="New Checklist"
+          placeholder="Checklist"
           value={title}
-
+          spellCheck={false}
           onChange={titleChange}
           onKeyPress={titleKeyPress}
         />
         <div className="menu mb-0 mt-5 spaced-right text-right">
           <button
-            className="default"
+            className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
             onClick={addList}
-           >
-             Add Checklist
-           </button>
+          >
+            Add Checklist
+          </button>
           <button
-            className="default"
+            className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
             onClick={cancelClick}
           >
             Cancel

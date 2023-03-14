@@ -69,58 +69,58 @@ function AddListView(): ReactElement {
     }
   };
 
-  let classes = `bg-white br-3 block font-90 font-600 shadow ${toggle ? "active add": "add-list"}`;
+  let classes = `bg-white br-3 block font-90 font-600 shadow ${toggle ? "active add" : "add-list"}`;
 
   let listColClasses = `add-col ${toggle ? "z-2" : ""}`;
 
   return (
     <>
-    {toggle &&  <div className="card-view-cover bg-none" onClick={cancelNewList}></div> }
-    <div
-      ref={containerRef}
-      className={listColClasses}
-    >
+      {toggle && <div className="card-view-cover bg-none" onClick={cancelNewList}></div>}
       <div
-        className={classes}
-        onClick={toggle ? undefined : onClick }
+        ref={containerRef}
+        className={listColClasses}
       >
-        {!toggle && (
-          <div className="flat mb-0 no-select">
-            Add List
-          </div>
-        )}
-        {toggle && (
-          <>
-            <TextareaAutosize
-              ref={inputRef}
-              className="default textarea-card font-90 no-select"
-              maxLength={MAX_LIST_TITLE_LENGTH}
-              placeholder="Title"
-              value={name}
-
-              onChange={onUpdate}
-              onKeyDown={onKeyDown}
-              onKeyPress={onKeyPress}
-              onPaste={onPaste}
-            />
-            <div className="menu mb-0 mt-5 no-select spaced-right text-right">
-              <button
-                className="default"
-                onClick={addList}
-              >
-                Save
-              </button>
-              <button
-                className="default"
-                onClick={cancelNewList}
-              >
-                Cancel
-              </button>
+        <div
+          className={classes}
+          onClick={toggle ? undefined : onClick}
+        >
+          {!toggle && (
+            <div className="flat mb-0 font-85 no-select">
+              Add List
             </div>
-          </>
-        )}
+          )}
+          {toggle && (
+            <>
+              <TextareaAutosize
+                ref={inputRef}
+                className="default textarea-card font-85 no-select focus:bg-white"
+                maxLength={MAX_LIST_TITLE_LENGTH}
+                placeholder="Title"
+                value={name}
+
+                onChange={onUpdate}
+                onKeyDown={onKeyDown}
+                onKeyPress={onKeyPress}
+                onPaste={onPaste}
+              />
+              <div className="menu mb-0 mt-5 no-select spaced-right text-right">
+                <button
+                  className="text-white bg-sky-600 hover:bg-sky-700 rounded px-3 py-1"
+                  onClick={addList}
+                >
+                  Add List
+                </button>
+                <button
+                  className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
+                  onClick={cancelNewList}
+                >
+                  Cancel
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
     </>
   );
 }

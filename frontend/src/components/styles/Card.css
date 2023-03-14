@@ -1,7 +1,6 @@
 .card {
   font-size: 0.85rem;
   margin-bottom: 5px;
-  padding: 5px;
   white-space: break-spaces;
   word-break: break-word;
 }
@@ -11,13 +10,11 @@
 }
 
 .card-title {
-  margin-left: 5px;;
   white-space: break-spaces;
   word-break: break-word;
 }
 
 .card-labels {
-  margin-top: 5px;
   display: flex;
   flex-wrap: wrap;
 

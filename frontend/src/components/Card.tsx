@@ -36,7 +36,7 @@ function CardView({ index, id, listId }: Props): ReactElement {
     <Draggable draggableId={id} index={index}>
       {(provided) => (
         <div
-          className="card bg-white br-3 no-select shadow drop-shadow"
+          className="card bg-white br-3 no-select drop-shadow hover:bg-gray-100"
           key={id}
           onClick={handleClick}
 
@@ -44,9 +44,11 @@ function CardView({ index, id, listId }: Props): ReactElement {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="card-title">{title}</div>
+          <div className="card-title font-85 px-2 py-1">
+            {title}
+          </div>
           {labels.length > 0 && (
-            <div className="card-labels bg-white">
+            <div className="card-labels mb-[4px]">
               {labels.map(({ id, name }: any) =>
                 <div key={id} className="badge br-default br-3 font-75 font-600 inline-block no-select">
                   {name}

@@ -40,8 +40,6 @@
 }
 
 .list-body:not(empty) {
-  box-shadow: inset 5px 5px 10px 0 rgba(0, 0, 0, 0.25),
-   -5px -5px 10px 0 rgba(255, 255, 255, 0.3);
   overflow-y: auto;
   padding: 5px 5px 0px 5px;
 }

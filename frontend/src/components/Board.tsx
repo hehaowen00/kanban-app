@@ -60,7 +60,7 @@ function BoardView() {
   const { listId, showMenu } = useSelector((state: AppState) => state.panel);
 
   return (
-    <div className="board-view bg-blue-700">
+    <div className="board-view bg-sky-700">
       <Navbar name={name} />
       <div className="board flex flex-1 flex-col">
         <div className="content flex flex-row">

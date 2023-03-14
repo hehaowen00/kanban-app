@@ -5,7 +5,7 @@ import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/kanban">
       <Routes>
         <Route path="/" element={<BoardView />} />
       </Routes>

@@ -1,9 +1,6 @@
 .label-badge {
-  border: 1px solid black;
-  border-radius: 3px;
   cursor: pointer;
   display: block;
-  padding: 2px 4px;
   max-width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -53,13 +50,10 @@
 }
 
 .card-label-item {
-  border: 1px solid black;
-  border-top-right-radius: 3px;
-  box-sizing:border-box;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   margin-bottom: 5px;
-  padding: 5px 5px 0px 5px;
   width: 100%;
 }
 

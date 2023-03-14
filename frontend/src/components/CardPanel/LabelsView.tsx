@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AddLabel, RemoveLabel } from "../../redux/Creators";
+import { AddLabel, NewLabel, RemoveLabel } from "../../redux/Creators";
 import { AppState } from "../../redux/Store";
 
 import "../styles/Labels.css";
@@ -34,13 +35,24 @@ function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
     dispatch(RemoveLabel(cardId, id));
   };
 
+  const [newLabel, setNewLabel] = useState('');
+
+  const handleKey = (e: any) => {
+    const key = e.key;
+    console.log('key', key)
+    if (key === "Enter") {
+      dispatch(NewLabel(newLabel))
+      setNewLabel('')
+    }
+  }
+
   return (
-    <div className={`labels ${selectLabels ? "show" : ""} br-default bg-white br-3 spaced shadow-5`}>
+    <div className={`labels ${selectLabels ? "show" : ""} br-3 spaced`}>
       {!selectLabels && (
         assigned.map((id: string) => (
           <div
             key={id}
-            className="label-badge font-75 font-600 inline-block no-select"
+            className="label-badge font-80 px-2 py-[2px] rounded drop-shadow bg-purple-500 font-600 bg-white inline-block no-select"
             onClick={() => removeLabel(id)}
           >
             {labelsObj[id].name}
@@ -51,7 +63,7 @@ function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
         <>
           <div className="font-85 font-600 flex flex-row w-100" >
             <div className="labels-header inline-block no-select">
-              Select Labels
+              Labels
             </div>
             <div className="inline-block ml-auto">
               <button
@@ -62,22 +74,33 @@ function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
               </button>
             </div>
           </div>
+          <input type="text"
+            className="flex-1 bg-white drop-shadow px-2 py-1 mb-1 rounded w-full"
+            style={{
+              border: 'none',
+            }}
+            maxLength={48}
+            placeholder="Add Label"
+            value={newLabel}
+            onChange={e => setNewLabel(e.target.value)}
+            onKeyDown={handleKey}
+          />
           <div className="labels-body flex flex-col relative w-100">
-          {labelsArr.map((label: any) => (
-            <div key={label.key} className="flex flex-col">
-            <div className="card-label-item br-3">
-              <div className="label-description font-85 no-select">
-                {label.name}
+            {labelsArr.map((label: any) => (
+              <div key={label.key} className="flex flex-col">
+                <div className="card-label-item rounded bg-gray-100">
+                  <div className="px-2 label-description font-85 no-select bg-white">
+                    {label.name}
+                  </div>
+                  <input
+                    type="checkbox"
+                    className="label-select check accent-blue-700"
+                    onClick={toggleLabel(label.key)}
+                    checked={assigned.includes(label.key)}
+                  />
+                </div>
               </div>
-              <input
-                type="checkbox"
-                className="label-select check"
-                onClick={toggleLabel(label.key)}
-                checked={assigned.includes(label.key)}
-              />
-            </div>
-            </div>
-          ))}
+            ))}
           </div>
         </>
       )}

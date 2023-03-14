@@ -2,7 +2,9 @@ lockfileVersion: 5.4
 
 specifiers:
   '@types/react': ^18.0.27
+  '@types/react-beautiful-dnd': ^13.1.3
   '@types/react-dom': ^18.0.10
+  '@types/uuid': ^9.0.1
   '@vitejs/plugin-react': ^3.1.0
   autoprefixer: ^10.4.14
   postcss: ^8.4.21
@@ -32,7 +34,9 @@ dependencies:
 
 devDependencies:
   '@types/react': 18.0.28
+  '@types/react-beautiful-dnd': 13.1.3
   '@types/react-dom': 18.0.11
+  '@types/uuid': 9.0.1
   '@vitejs/plugin-react': 3.1.0_vite@4.1.4
   autoprefixer: 10.4.14_postcss@8.4.21
   postcss: 8.4.21
@@ -549,6 +553,12 @@ packages:
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
 
+  /@types/react-beautiful-dnd/13.1.3:
+    resolution: {integrity: sha512-BNdmvONKtsrZq3AGrujECQrIn8cDT+fZsxBLXuX3YWY/nHfZinUFx4W88eS0rkcXzuLbXpKOsu/1WCMPMLEpPg==}
+    dependencies:
+      '@types/react': 18.0.28
+    dev: true
+
   /@types/react-dom/18.0.11:
     resolution: {integrity: sha512-O38bPbI2CWtgw/OoQoY+BRelw7uysmXbWvw3nLWO21H1HSh+GOlqPuXshJfjmpNlKiiSDG9cc1JZAaMmVdcTlw==}
     dependencies:
@@ -576,6 +586,10 @@ packages:
   /@types/use-sync-external-store/0.0.3:
     resolution: {integrity: sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==}
     dev: false
+
+  /@types/uuid/9.0.1:
+    resolution: {integrity: sha512-rFT3ak0/2trgvp4yYZo5iKFEPsET7vKydKF+VRCxlQ9bpheehyAJH89dAkaLEq/j/RZXJIqcgsmPJKUP1Z28HA==}
+    dev: true
 
   /@vitejs/plugin-react/3.1.0_vite@4.1.4:
     resolution: {integrity: sha512-AfgcRL8ZBhAlc3BFdigClmTUMISmmzHn7sB2h9U1odvc5U/MjWXsAaz18b/WoppUTDBzxOJwo2VdClfUcItu9g==}

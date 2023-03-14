@@ -9,7 +9,8 @@ import CardPanelAction from "./CardPanelActions";
 const EmptyCard = {
   title: "",
   description: "",
-  dueDate: null,
+  startDate: "",
+  endDate: "",
   labels: [],
   attachments: [],
   checklists: [],

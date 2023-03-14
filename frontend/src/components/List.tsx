@@ -49,6 +49,7 @@ function ListView({ index, list }: Props): ReactElement {
   };
 
   const onClick = () => {
+    setListInput(name);
     setVisible(true);
   }
 
@@ -91,11 +92,11 @@ function ListView({ index, list }: Props): ReactElement {
             className="list-col"
             key={index}
           >
-            <div className="list br-3 bg-white flex flex-1-1 flex-col shadow slide-in">
+            <div className="list br-3 bg-gray-100 flex flex-1-1 flex-col shadow slide-in">
               <div className={headerClasses}>
                 {!visible && (
                   <div
-                    className="title font-90 no-select"
+                    className="title font-85 no-select"
                     onClick={onClick}
                     {...provided.dragHandleProps}
                   >
@@ -106,16 +107,20 @@ function ListView({ index, list }: Props): ReactElement {
                   <>
                     <TextareaAutosize
                       ref={ref}
-                      className="default font-85 font-600"
+                      className="default font-85 px-[10px] py-[5px] focus:drop-shadow"
                       maxLength={MAX_LIST_TITLE_LENGTH}
+                      onBlur={() => setVisible(false)}
                       onChange={onChange}
                       onKeyDown={onKeyDown}
                       onKeyPress={onKeyPress}
                       value={listInput}
                     />
-                    <div className="menu mb-0 inline spaced-right text-right float-right">
-                      <button className="default mt-5" onClick={deleteList}>
-                        Delete
+                    <div className="menu mb-0 mt-[5px] inline spaced-right text-right float-right">
+                      <button
+                        className="text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
+                        onClick={deleteList}
+                      >
+                        Delete List
                       </button>
                     </div>
                   </>
@@ -143,7 +148,7 @@ function ListView({ index, list }: Props): ReactElement {
               {!newCard && (
                 <div className="list-footer br-3 flex flex-col font-80 font-600 no-select">
                   <button
-                    className="add-card-btn default mb-[5px] px-[3px] py-[0px] hover:cursor-pointer"
+                    className="add-card-btn bg-none hover:bg-gray-300 mx-[5px] default mb-[5px] px-[3px] py-[0px] hover:cursor-pointer"
                     onClick={handleAddItem}
                   >
                     Add Card

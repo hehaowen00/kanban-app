@@ -1,4 +1,4 @@
-import { ChangeEvent,KeyboardEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
@@ -52,34 +52,34 @@ function AddCard({ listId, close }: Props) {
 
   return (
     <>
-    <div className="card-view-cover" onClick={onClose}></div>
-    <div className="card no-pad bg-white br-3 flex flex-1 flex-col shadow z-2">
-      <TextareaAutosize
-        ref={titleRef}
-        rows={5}
-        className="default no-bdr font-85"
-        maxLength={MAX_TITLE_LENGTH}
-        onBlur={titleBlur}
-        onChange={titleChange}
-        onKeyPress={titleKeyPress}
-        placeholder="New Card"
-        value={title}
-      />
-    </div>
-    <div className="menu inline spaced-right text-right z-2">
-      <button 
-        className="default no-bdr shadow"
-        onClick={addCard}
-      >
-        Save
-      </button>
-      <button
-        className="default no-bdr shadow"
-        onClick={onClose}
-      >
-        Cancel
-      </button>
-    </div>
+      <div className="card-view-cover" onClick={onClose}></div>
+      <div className="card no-pad bg-white br-3 flex flex-1 flex-col shadow z-2">
+        <TextareaAutosize
+          ref={titleRef}
+          rows={5}
+          className="default no-bdr font-85 px-2 py-1"
+          maxLength={MAX_TITLE_LENGTH}
+          onBlur={titleBlur}
+          onChange={titleChange}
+          onKeyPress={titleKeyPress}
+          placeholder="New Card"
+          value={title}
+        />
+      </div>
+      <div className="menu inline spaced-right text-right z-2">
+        <button
+          className="text-white bg-sky-600 hover:bg-sky-700 rounded px-3 py-1"
+          onClick={addCard}
+        >
+          Save
+        </button>
+        <button
+          className="text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
+          onClick={onClose}
+        >
+          Cancel
+        </button>
+      </div>
     </>
   );
 }

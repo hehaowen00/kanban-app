@@ -9,6 +9,10 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
 
   const ref = useRef<HTMLTextAreaElement>(null);
 
+  const [state, setState] = useState({
+    desc: value,
+  })
+
   const descriptionUpdate = () => {
     let value_ = value.trim();
     updateCard({ description: value_ });
@@ -22,7 +26,7 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
 
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     let { value } = event.target;
-    setValue(value);
+    setState({ desc: value });
   };
 
   const onFocus = () => {
@@ -33,7 +37,7 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
     switch (event.key) {
       case "Escape": {
         event.preventDefault();
-        setValue(description);
+        setState({ desc: description });
         setFocused(false);
         ref.current?.blur();
         break;
@@ -43,16 +47,22 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
     }
   };
 
+  const saveDesc = () => {
+    let desc = state.desc.trim()
+    setState({ desc });
+    setValue(desc)
+  };
+
   return (
     <div className="block">
       <TextareaAutosize
         ref={ref}
-        className="description shadow default font-85"
+        className="description focus:drop-shadow default font-85"
         maxLength={MAX_DESCRIPTION_LENGTH}
         placeholder="Description"
         rows={3}
         spellCheck={focused}
-        value={value}
+        value={state.desc}
 
         onBlur={onBlur}
         onChange={onChange}
@@ -62,13 +72,13 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
       {focused && (
         <div className="menu mt-5 spaced-right text-right">
           <button
-            className="default shadow"
-            onMouseDown={undefined}
+            className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
+            onMouseDown={saveDesc}
           >
             Save
           </button>
           <button
-            className="default shadow"
+            className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
             onMouseDown={undefined}
           >
             Cancel

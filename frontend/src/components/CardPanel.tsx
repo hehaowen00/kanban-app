@@ -87,22 +87,24 @@ function CardPanel() {
             setValue={setDescription}
             updateCard={updateCard}
           />
-          <div className="menu-bar spaced-right text-left">
+          <div className="menu-bar spaced-right text-left text-center">
             <button
-              className="default shadow-5"
+              className="bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
               onMouseDown={() => setActive(true)}
             >
               Add Checklist
             </button>
             <button
-              className="default shadow-5"
+              className="bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
               onClick={() => setSelectLabels(true)}
             >
               Add Label
             </button>
-            <button className="default shadow-5">
+            {/* <button
+              className="text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
+            >
               Add Date
-            </button>
+            </button> */}
           </div>
           {(labels.length > 0 || selectLabels) && (
             <LabelView
@@ -112,14 +114,14 @@ function CardPanel() {
               close={() => setSelectLabels(false)}
             />
           )}
-          <div className="br-default bg-white br-3 spaced pad-5 shadow-5">
+          <div className="bg-grey-100 br-3 spaced pad-5 border-none">
             <div className="">
               <span className="date font-85 font-600 inline-block no-select">
                 {"Start Date "}
               </span>
               <input
                 name="startDate"
-                className="default"
+                className="default px-2 py-1 border-none drop-shadow"
                 type="date"
                 value={state.startDate}
 
@@ -127,12 +129,12 @@ function CardPanel() {
               />
             </div>
             <div className="mt-5">
-              <span className="date font-85 font-600 inline-block no-select">
-                {"End Date "}
+              <span className="date py-1 font-85 font-600 inline-block no-select">
+                {"Due Date "}
               </span>
               <input
                 name="endDate"
-                className="default mr-5"
+                className="default mr-5 px-2 py-1 border-none drop-shadow"
                 type="date"
                 value={state.endDate}
 

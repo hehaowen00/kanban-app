@@ -23,7 +23,7 @@ function Comments({ cardId, comments }: Props) {
   });
 
   const addComment = () => {
-    let action = NewComment("testing", cardId, comment.trim());
+    let action = NewComment("Testing", cardId, comment);
     dispatch(action);
   };
 
@@ -69,16 +69,15 @@ function Comments({ cardId, comments }: Props) {
         Comments
       </div>
       <div className="comment-view mt-5">
-        {comments_.map((comment: any, index: number) => 
-          <div key={index} className="comment bg-white br-3 shadow">
-            <div className="header font-85">
-              <span className="font-600">User: </span>
+        {comments_.map((comment: any, index: number) =>
+          <div key={index} className="">
+            <div className="header font-85 px-1">
               {comment.userId}
-              <span className="f-right font-600">
+              <span className="f-right text-slate-400">
                 {comment.timestamp}
               </span>
             </div>
-            <div className="body flex font-85">
+            <div className="body mt-1 flex font-85 bg-white px-2 py-1" style={{ whiteSpace: 'pre-line' }}>
               {comment.text}
             </div>
           </div>
@@ -87,9 +86,9 @@ function Comments({ cardId, comments }: Props) {
       <div className="block">
         <TextareaAutosize
           className="default font-85 font-500 shadow"
-          placeholder="New Comment"
+          placeholder="Post Comment"
           maxLength={512}
-          rows={visible ? 3 : undefined}
+          rows={visible ? 3 : 2}
           value={comment}
 
           onBlur={onBlur}
@@ -100,17 +99,17 @@ function Comments({ cardId, comments }: Props) {
       {visible && (
         <div ref={ref} className="menu spaced-right text-right">
           <button
-            className="default shadow"
+            className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
             onClick={addClick}
           >
-            Save
+            Send
           </button>
           <button
-            className="default shadow"
+            className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
             onClick={cancel}
-           >
-             Cancel
-           </button>
+          >
+            Cancel
+          </button>
         </div>
       )}
     </div>

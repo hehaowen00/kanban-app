@@ -59,7 +59,7 @@ function TitleView({ title, value, setValue, updateCard, deleteCard }: Props) {
     <div className="block">
       <TextareaAutosize
         ref={ref}
-        className="default font-90 font-600 shadow"
+        className="default font-90 font-500 focus:drop-shadow"
         maxLength={MAX_TITLE_LENGTH}
         placeholder="Title"
         spellCheck={focused}
@@ -73,7 +73,7 @@ function TitleView({ title, value, setValue, updateCard, deleteCard }: Props) {
       {focused && (
         <div className="menu mt-5 text-right">
           <button
-            className="default shadow"
+            className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
             onMouseDown={onMouseDown}
           >
             Delete Card

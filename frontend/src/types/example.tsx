@@ -3,25 +3,31 @@ import { v4 as uuidV4 } from "uuid";
 function newExampleBoard() {
   let cardId = uuidV4();
   let checklistId = uuidV4();
+  let checklist2 = uuidV4();
 
   let cards: any = {};
   cards[cardId] = {
     title: "Hello, World!",
-    description: "",
+    description: "Edit me",
     labels: [],
-    startDate: "2023-03-01",
+    startDate: "",
     endDate: "",
     attachments: [] as any[],
-    checklists: [checklistId],
+    checklists: [checklistId, checklist2],
     comments: [] as any[],
   };
 
   let checklists: any = {};
   checklists[checklistId] = {
-    title: "Checklist 1",
+    title: "Checklist 1 (Click me!)",
     items: [
-      { status: false, description: "Item 1", },
-      { status: true, description: "Item 2", },
+      { status: false, description: "Edit checklist name", },
+    ]
+  };
+  checklists[checklist2] = {
+    title: "Checklist 2",
+    items: [
+      { status: false, description: "Drag and drop checklist 1 below", },
     ]
   };
 
@@ -30,7 +36,7 @@ function newExampleBoard() {
 
   return {
     id: uuidV4(),
-    name: "Kanban",
+    name: "Kanban App",
     cards,
     checklists,
     labels,

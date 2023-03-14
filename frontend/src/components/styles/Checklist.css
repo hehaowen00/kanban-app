@@ -4,21 +4,16 @@
 }
 
 .checklists {
-  margin-bottom: 15px !important;
+  margin-bottom: 10px !important;
 }
 
-.checklists > * {
-  margin-bottom: 10px;
-}
+.checklists>* {}
 
 .checklist {
-  border: 1px solid black;
-  padding: 5px 5px 2px 5px;
+  /* padding: 5px 5px 2px 5px; */
 }
 
 .checklist-title {
-  border: 1px solid black;
-  border-radius: 2px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -46,19 +41,19 @@
   padding: 5px 5px 5px 0px;
 }
 
-.item-row > .check {
+.item-row>.check {
   margin-top: 3px;
   margin-bottom: 2px;
   margin-left: 2px;
   min-width: 20px;
 }
 
-.item-row > .item-desc {
+.item-row>.item-desc {
   flex-grow: 100;
   margin-left: 5px;
 }
 
-.item-row > div.default {
+.item-row>div.default {
   margin-left: 5px;
 
   min-width: calc(100% - 45px);
@@ -67,7 +62,5 @@
   white-space: pre-wrap;
   word-wrap: break-word;
   padding: 4px 8px;
-  border: 1px solid black;
-  background: white !important;
   max-width: inherit;
 }

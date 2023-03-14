@@ -41,7 +41,9 @@ function ChecklistsView({ cardId, state }: Props) {
       }
     };
 
-    dispatch(action);
+    if (action !== undefined) {
+      dispatch(action);
+    }
   };
 
   return (
@@ -51,20 +53,20 @@ function ChecklistsView({ cardId, state }: Props) {
         type="droppableChecklists"
         direction="vertical"
       >
-      {(provided: any) => (
-        <div
-          className="checklists"
-          ref={provided.innerRef}
-        >
-          {checklists.map((id: string, index: number) => (
-            <ChecklistView key={id} index={index} cardId={cardId} id={id} />
-          ))}
-          {provided.placeholder}
-          {active && (
-             <AddChecklistView cardId={cardId} close={() => setActive(false)} />
-          )}
-        </div>
-      )}
+        {(provided: any) => (
+          <div
+            className="checklists"
+            ref={provided.innerRef}
+          >
+            {checklists.map((id: string, index: number) => (
+              <ChecklistView key={id} index={index} cardId={cardId} id={id} />
+            ))}
+            {provided.placeholder}
+            {active && (
+              <AddChecklistView cardId={cardId} close={() => setActive(false)} />
+            )}
+          </div>
+        )}
       </Droppable>
     </DragDropContext>
   );

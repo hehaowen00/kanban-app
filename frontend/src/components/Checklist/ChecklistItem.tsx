@@ -17,13 +17,14 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
 
   const { status, description } = item;
   const [state, setState] = useState({
-    desc: description,
+    desc: '',
     visible: false,
   });
 
   useEffect(() => {
     if (state.visible) {
       inputRef.current?.focus();
+      inputRef.current?.setSelectionRange(state.desc.length, state.desc.length);
     }
   }, [state.visible]);
 
@@ -50,7 +51,7 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
   };
 
   const onClick = () => {
-    setState({ ...state, visible: true });
+    setState({ ...state, desc: description, visible: true });
   };
 
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -78,7 +79,7 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
     }
   };
 
-  let classes = ["block", "bg-white", "default", "font-85"];
+  let classes = ["block", "rounded", "bg-white", "default", "font-85"];
 
   if (status && !state.visible) {
     classes.push("checked");
@@ -88,29 +89,30 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
 
   return (
     <Draggable draggableId={key} index={index}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <div
           key={key}
           ref={provided.innerRef}
-          className="item bg-white br-3 flex flex-col mb-0"
+          className={`item br-3 flex flex-col mb-0 ${snapshot.isDragging && 'bg-gray-100 drop-shadow'}`}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={lockYAxis(provided.draggableProps.style)}
+          style={lockYAxis(provided.draggableProps.style || {})}
         >
-          <div className="item-row br-3 bg-white flex flex-row">
+          <div className="item-row br-3 flex flex-row">
             <div className="check">
               <input
                 type="checkbox"
+                className="accent-blue-700"
                 onChange={toggleStatus}
                 checked={status}
               />
             </div>
             {state.visible && (
-              <div className="item-desc block">
+              <div className="item-desc rounded block">
                 <TextareaAutosize
                   ref={inputRef}
                   name="desc"
-                  className="default font-85"
+                  className="default font-85 focus:drop-shadow"
                   maxLength={MAX_CHECKLIST_ITEM_LENGTH}
                   placeholder="Item"
                   spellCheck={state.visible}
@@ -135,7 +137,7 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
           {state.visible && (
             <div className="menu text-right">
               <button
-                className="default"
+                className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
                 onMouseDown={deleteItem}
               >
                 Delete Item

@@ -26,7 +26,7 @@ function Labels({ labels }: Props) {
 
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target;
-    setState({ 
+    setState({
       ...state,
       [name]: value,
     });

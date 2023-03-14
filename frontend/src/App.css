@@ -1,7 +1,6 @@
 html,
 body {
   color: black;
-  font-family: 'Roboto' !important;
   height: 100%;
   width: 100%;
   max-height: 100%;
@@ -12,21 +11,27 @@ body {
   font-family: 'Roboto' !important;
 }
 
-*:focus {
-  outline: 2px solid #0079bf;
-  border: 1px solid transparent;
+button {
+  border: none;
 }
 
-input[type=checkbox]:focus {
+*:focus {
+  /* outline: 2px solid #0079bf; */
+  /* border: 1px solid transparent; */
+}
+
+input:focus {
   outline: none;
 }
 
 textarea {
   font-family: 'Roboto' !important;
+  padding: 4px 8px;
 }
 
 textarea:focus {
-  outline: 1px solid #0079bf;
+  /* outline: 1px solid #0079bf; */
+  outline: none;
 }
 
 #root {
@@ -41,8 +46,7 @@ textarea:focus {
 }
 
 button.default {
-  background: white;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 3px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -52,7 +56,6 @@ button.default {
 }
 
 input[type=text].default {
-  border: 1px solid black;
   border-radius: 3px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -61,17 +64,17 @@ input[type=text].default {
 }
 
 input[type=date].default {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 3px;
 }
 
 input[type=datetime-local].default {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 3px;
 }
 
 input[type=time].default {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 3px;
 }
 
@@ -89,13 +92,14 @@ option {
 }
 
 textarea.default {
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  border: none;
   border-radius: 3px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   display: block;
-  padding: 4px 8px;
+  /* padding: 4px 8px; */
   resize: none;
   width: 100%;
   word-break: break-word;
@@ -150,6 +154,7 @@ textarea.default {
 .flex-1-1 {
   flex: 1 1 auto;
 }
+
 .flex-col {
   flex-direction: column;
 }
@@ -238,6 +243,7 @@ textarea.default {
 .no-pad {
   padding: 0 !important;
 }
+
 .no-select {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -259,19 +265,11 @@ textarea.default {
   position: relative;
 }
 
-.shadow {
-  box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
-}
-
-.shadow-5 {
-  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.25);
-}
-
-.spaced-left > * + * {
+.spaced-left>*+* {
   margin-right: 5px;
 }
 
-.spaced-right > * + * {
+.spaced-right>*+* {
   margin-left: 5px;
 }
 
