@@ -21,10 +21,10 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
     }
   }, [focused]);
 
-  const descriptionUpdate = () => {
-    let value_ = value.trim();
-    updateCard({ description: value_ });
-  };
+  // const descriptionUpdate = () => {
+  //   let value_ = value.trim();
+  //   updateCard({ description: value_ });
+  // };
 
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     let { value } = event.target;

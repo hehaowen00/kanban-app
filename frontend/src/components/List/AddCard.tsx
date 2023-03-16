@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
 
@@ -13,8 +13,11 @@ function AddCard({ listId, close }: Props) {
 
   const [title, setTitle_] = useState("");
   const titleRef = useRef<HTMLTextAreaElement>(null);
+  const containerRef = useSelector(({ ui }: any) => { return ui.end; });
 
   useEffect(() => {
+    // console.log(containerRef);
+    containerRef.current?.scrollIntoView({ behavior: "auto" });
     titleRef.current?.focus();
     titleRef.current?.scrollIntoView({ behavior: "smooth" });
   }, []);

@@ -114,7 +114,7 @@ function CardPanel() {
               close={() => setSelectLabels(false)}
             />
           )}
-          <div className="bg-grey-100 br-3 spaced pad-5 border-none">
+          <div className="bg-grey-100 br-3 spaced pad-5 border-none flex flex-row">
             <div className="">
               <span className="date font-85 font-600 inline-block no-select">
                 {"Start Date "}
@@ -128,7 +128,7 @@ function CardPanel() {
                 onChange={updateState}
               />
             </div>
-            <div className="mt-5">
+            <div className="ml-auto">
               <span className="date py-1 font-85 font-600 inline-block no-select">
                 {"Due Date "}
               </span>

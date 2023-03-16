@@ -102,7 +102,7 @@ function Comments({ cardId, comments }: Props) {
         />
       </div>
       {visible && (
-        <div ref={ref} className="menu spaced-right text-right">
+        <div ref={ref} className="menu spaced-right text-right mb-0">
           <button
             className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
             onClick={addClick}

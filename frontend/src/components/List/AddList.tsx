@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import TextareaAutosize from "react-autosize-textarea";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NewList } from "../../redux/Creators";
 import { MAX_LIST_TITLE_LENGTH } from "../../types/Limits";
 
@@ -21,6 +21,7 @@ function AddListView(): ReactElement {
   const [name, setName] = useState("");
 
   let containerRef = useRef<HTMLDivElement>(null);
+  dispatch({ type: "setRef", payload: containerRef });
   let inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {

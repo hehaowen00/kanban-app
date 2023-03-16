@@ -5,6 +5,7 @@ import { Board, CardViewState, List } from "../types/Kanban";
 import ExampleBoard from "../types/example";
 import BoardAction from "./Actions";
 import CardPanelAction from "./CardPanelActions";
+import { useRef } from "react";
 
 const EmptyCard = {
   title: "",
@@ -337,6 +338,17 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
   }
 }
 
+function UIReducer(state: any = { end: null }, action: any) {
+  switch (action.type) {
+    case "setRef": {
+      return { end: action.payload };
+    }
+    default: {
+      return state;
+    }
+  }
+}
+
 function reorder<Type>(list: Type[], startIdx: number, endIdx: number): Type[] {
   const arr = Array.from(list);
   const [removed] = arr.splice(startIdx, 1);
@@ -355,6 +367,7 @@ function insert<Type>(arr: Type[], idx: number, element: Type): Type[] {
 const appReducer = combineReducers({
   board: BoardReducer,
   panel: CardViewReducer,
+  ui: UIReducer,
 });
 
 export type AppState = ReturnType<typeof appReducer>;
