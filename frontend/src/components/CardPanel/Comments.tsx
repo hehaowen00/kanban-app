@@ -6,7 +6,7 @@ import { Comment } from "../../types/Kanban";
 
 import { NewComment } from "../../redux/Creators";
 
-import "../styles/Comments.css";
+import "../../Styles/Comments.css";
 
 function Comments({ cardId, comments }: Props) {
   const dispatch = useDispatch();

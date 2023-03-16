@@ -4,12 +4,12 @@ import TextareaAutosize from "react-autosize-textarea";
 
 import { useDispatch } from "react-redux";
 
-import { DeleteChecklistItem, UpdateChecklistItem } from "../../redux/Creators";
-import { ChecklistItem } from "../../types/Kanban";
-import { MAX_CHECKLIST_ITEM_LENGTH } from "../../types/Limits";
+import { DeleteChecklistItem, UpdateChecklistItem } from "../../../redux/Creators";
+import { ChecklistItem } from "../../../types/Kanban";
+import { MAX_CHECKLIST_ITEM_LENGTH } from "../../../types/Limits";
 
-import { lockYAxis } from "../styles/util";
-import "../styles/Checklist.css";
+import { lockYAxis } from "../../../Styles/util";
+import "../../../Styles/Checklist.css";
 
 function ChecklistItemView({ checklistId, index, item }: Props) {
   const dispatch = useDispatch();

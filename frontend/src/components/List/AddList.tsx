@@ -9,10 +9,10 @@ import {
 } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 import { useDispatch } from "react-redux";
-import { NewList } from "../redux/Creators";
-import { MAX_LIST_TITLE_LENGTH } from "../types/Limits";
+import { NewList } from "../../redux/Creators";
+import { MAX_LIST_TITLE_LENGTH } from "../../types/Limits";
 
-import "./styles/AddList.css";
+import "../../Styles/AddList.css";
 
 function AddListView(): ReactElement {
   const dispatch = useDispatch();

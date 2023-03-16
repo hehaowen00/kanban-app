@@ -6,15 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import AddCard from "./AddCard";
 import CardView from "./Card";
 
-import { DeleteList, UpdateList } from "../redux/Creators";
-import { List } from "../types/Kanban";
+import { DeleteList, UpdateList } from "../../redux/Creators";
+import { List } from "../../types/Kanban";
 
-import { MAX_LIST_TITLE_LENGTH } from "../types/Limits";
-import "./styles/List.css";
+import { MAX_LIST_TITLE_LENGTH } from "../../types/Limits";
+import "../../Styles/List.css";
 
 function ListView({ index, list }: Props): ReactElement {
   const dispatch = useDispatch();
-  const ref = useRef<HTMLTextAreaElement>(null);
+  let listRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const { id, name, cardIds } = list;
   const [visible, setVisible] = useState(false);
@@ -27,12 +28,22 @@ function ListView({ index, list }: Props): ReactElement {
       return;
     }
 
-    let current = ref.current;
+    let current = inputRef.current;
     if (current) {
       current.focus();
       let { length } = current.value;
       current.selectionStart = length;
       current.selectionEnd = length;
+    }
+    let rect = listRef.current?.getBoundingClientRect();
+    console.log(rect)
+    if (rect) {
+      let offset = rect.x + rect.width + 100;
+      console.log('scrollTo')
+      window.scrollRight({
+        right: offset,
+        behavior: 'smooth',
+      })
     }
   }, [visible]);
 
@@ -85,12 +96,14 @@ function ListView({ index, list }: Props): ReactElement {
       {(provided) => (
         <div
           className="list-view flex flex-row"
+          // ref={div => { listRef.current = div, provided.innerRef(div) }}
           ref={provided.innerRef}
           {...provided.draggableProps}
         >
           <div
             className="list-col"
             key={index}
+            ref={listRef}
           >
             <div className="list br-3 bg-gray-100 flex flex-1-1 flex-col shadow slide-in">
               <div className={headerClasses}>
@@ -106,7 +119,7 @@ function ListView({ index, list }: Props): ReactElement {
                 {visible && (
                   <>
                     <TextareaAutosize
-                      ref={ref}
+                      ref={inputRef}
                       className="default font-85 px-[10px] py-[5px] focus:drop-shadow"
                       maxLength={MAX_LIST_TITLE_LENGTH}
                       onBlur={() => setVisible(false)}

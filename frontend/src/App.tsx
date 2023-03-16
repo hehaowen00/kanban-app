@@ -1,4 +1,4 @@
-import BoardView from "./components/Board";
+import BoardView from "./Components/Board";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";

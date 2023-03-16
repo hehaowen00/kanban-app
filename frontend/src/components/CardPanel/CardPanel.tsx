@@ -1,17 +1,17 @@
 import { ChangeEvent, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Checklists from "./CardPanel/Checklists";
-import Comments from "./CardPanel/Comments";
-import DescriptionView from "./CardPanel/Description";
-import LabelView from "./CardPanel/LabelsView";
-import TitleView from "./CardPanel/Title";
+import Checklists from "./Checklist/Checklists";
+import Comments from "./Comments";
+import DescriptionView from "./Description";
+import LabelView from "./LabelsView";
+import TitleView from "./Title";
 
-import { CloseCardView, DeleteCard, UpdateCard } from "../redux/Creators";
-import { Card } from "../types/Kanban";
-import { AppState } from "../redux/Store";
+import { CloseCardView, DeleteCard, UpdateCard } from "../../redux/Creators";
+import { Card } from "../../types/Kanban";
+import { AppState } from "../../redux/Store";
 
-import "./styles/CardPanel.css";
+import "../../Styles/CardPanel.css";
 
 function CardPanel() {
   const dispatch = useDispatch();

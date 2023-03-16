@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
-import { ShowExistingCard } from "../redux/Creators";
+import { ShowExistingCard } from "../../redux/Creators";
 
-import { AppState } from "../redux/Store";
+import { AppState } from "../../redux/Store";
 
-import "./styles/Card.css"
+import "../../Styles/Card.css"
 
 function CardView({ index, id, listId }: Props): ReactElement {
   const dispatch = useDispatch();

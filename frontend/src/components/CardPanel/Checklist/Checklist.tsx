@@ -2,19 +2,19 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
-import ChecklistItemView from "../Checklist/ChecklistItem";
+import ChecklistItemView from "./ChecklistItem";
 import TextareaAutosize from "react-autosize-textarea";
 
-import { NewChecklistItem, DeleteChecklist } from "../../redux/Creators";
-import { AppState } from "../../redux/Store";
-import { ChecklistItem } from "../../types/Kanban";
+import { NewChecklistItem, DeleteChecklist } from "../../../redux/Creators";
+import { AppState } from "../../../redux/Store";
+import { ChecklistItem } from "../../../types/Kanban";
 import {
   MAX_CHECKLIST_TITLE_LENGTH,
   MAX_CHECKLIST_ITEM_LENGTH,
-} from "../../types/Limits";
+} from "../../../types/Limits";
 
-import { lockYAxis } from "../styles/util";
-import "../styles/Checklist.css";
+import { lockYAxis } from "../../../Styles/util";
+import "../../../Styles/Checklist.css";
 
 function ChecklistView({ cardId, id, index }: Props) {
   const dispatch = useDispatch();

@@ -5,8 +5,8 @@ import TextareaAutosize from "react-autosize-textarea/lib";
 
 import Labels from "./Labels";
 
-import { Label } from "../types/Kanban";
-import "./styles/Settings.css";
+import { Label } from "../../types/Kanban";
+import "../../Styles/Settings.css";
 import { useSelector } from "react-redux";
 
 function Settings({ labels }: Props) {

@@ -1,11 +1,11 @@
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 
-import AddChecklistView from "../Checklist/AddChecklist";
+import AddChecklistView from "./AddChecklist";
 import ChecklistView from "./Checklist";
 
-import { MoveChecklist, MoveChecklistItem } from "../../redux/Creators";
-import { AppState } from "../../redux/Store";
+import { MoveChecklist, MoveChecklistItem } from "../../../redux/Creators";
+import { AppState } from "../../../redux/Store";
 
 function ChecklistsView({ cardId, state }: Props) {
   const dispatch = useDispatch();

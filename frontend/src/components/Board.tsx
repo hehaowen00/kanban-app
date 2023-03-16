@@ -1,17 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
-import AddListView from "./AddList";
-import CardPanel from "./CardPanel";
-import ListView from "./List";
+import AddListView from "./List/AddList";
+import CardPanel from "./CardPanel/CardPanel";
+import ListView from "./List/List";
 import Navbar from "./Navbar";
-import SettingsView from "./Settings";
+import SettingsView from "./Settings/Settings";
 
 import { List } from "../types/Kanban";
 import { CloseCardView, MoveCard, MoveList } from "../redux/Creators";
 import { AppState } from "../redux/Store";
 
-import "./styles/Board.css";
+import "../Styles/Board.css";
 
 function BoardView() {
   const dispatch = useDispatch();

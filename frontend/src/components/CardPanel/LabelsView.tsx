@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddLabel, NewLabel, RemoveLabel } from "../../redux/Creators";
 import { AppState } from "../../redux/Store";
 
-import "../styles/Labels.css";
+import "../../Styles/Labels.css";
 
 function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
   const dispatch = useDispatch();

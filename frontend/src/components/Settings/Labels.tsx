@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea/lib";
-import { Label } from "../types/Kanban";
-import { NewLabel } from "../redux/Creators";
+import { Label } from "../../types/Kanban";
+import { NewLabel } from "../../redux/Creators";
 import { useDispatch } from "react-redux";
 
 function Labels({ labels }: Props) {
