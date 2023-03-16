@@ -61,7 +61,7 @@ function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
       )}
       {selectLabels && (
         <>
-          <div className="font-85 font-600 flex flex-row w-100" >
+          <div className="font-85 font-600 flex flex-row w-100">
             <div className="labels-header inline-block no-select">
               Labels
             </div>

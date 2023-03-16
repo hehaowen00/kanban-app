@@ -1,6 +1,8 @@
-import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 import { Card } from "../../types/Kanban";
+import ReactMarkdown from 'react-markdown';
+import { AsIsRender, HrRender, LinkRender, QuoteRender } from "../../Utils/Markdown";
 
 import { MAX_DESCRIPTION_LENGTH } from "../../types/Limits";
 
@@ -13,15 +15,15 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
     desc: value,
   })
 
+  useEffect(() => {
+    if (focused) {
+      ref.current?.focus()
+    }
+  }, [focused]);
+
   const descriptionUpdate = () => {
     let value_ = value.trim();
     updateCard({ description: value_ });
-  };
-
-  const onBlur = () => {
-    descriptionUpdate();
-    setFocused(false);
-    ref.current?.blur();
   };
 
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -50,12 +52,30 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
   const saveDesc = () => {
     let desc = state.desc.trim()
     setState({ desc });
+    updateCard({ description: desc });
+    setFocused(false);
     setValue(desc)
+  };
+
+  const onClick = () => {
+    setFocused(true);
+    setState({ desc: description })
   };
 
   return (
     <div className="block">
-      <TextareaAutosize
+      {!focused &&
+        <div
+          className="bg-white mb-1 px-2 py-1 pb-2 whitespace-pre-wrap markdown rounded drop-shadow select-none cursor-pointer"
+          onClick={onClick}
+        >
+          <ReactMarkdown
+            children={state.desc.replaceAll('\n', '  \n')}
+            components={{ a: LinkRender, h1: 'p', h2: 'p', h3: 'p', hr: HrRender, blockquote: QuoteRender, }}
+          />
+        </div>
+      }
+      {focused && <TextareaAutosize
         ref={ref}
         className="description focus:drop-shadow default font-85"
         maxLength={MAX_DESCRIPTION_LENGTH}
@@ -64,11 +84,11 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
         spellCheck={focused}
         value={state.desc}
 
-        onBlur={onBlur}
+        // onBlur={onBlur}
         onChange={onChange}
         onFocus={onFocus}
         onKeyPress={onKeyPress}
-      />
+      />}
       {focused && (
         <div className="menu mt-5 spaced-right text-right">
           <button
@@ -79,7 +99,7 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
           </button>
           <button
             className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
-            onMouseDown={undefined}
+            onMouseDown={() => setFocused(false)}
           >
             Cancel
           </button>

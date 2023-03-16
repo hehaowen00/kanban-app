@@ -36,15 +36,8 @@ function ListView({ index, list }: Props): ReactElement {
       current.selectionEnd = length;
     }
     let rect = listRef.current?.getBoundingClientRect();
-    console.log(rect)
-    if (rect) {
-      let offset = rect.x + rect.width + 100;
-      console.log('scrollTo')
-      window.scrollRight({
-        right: offset,
-        behavior: 'smooth',
-      })
-    }
+    console.log(rect);
+    listRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [visible]);
 
   const handleAddItem = () => {

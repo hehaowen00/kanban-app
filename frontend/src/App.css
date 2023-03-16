@@ -15,9 +15,52 @@ button {
   border: none;
 }
 
+.markdown {
+  line-height: 10px;
+}
+
+.markdown>p {
+  margin: 0;
+  word-break: break-all;
+  white-space: normal;
+  padding: 0;
+  line-height: 16px;
+}
+
+.markdown>pre {
+  margin: 0;
+}
+
+.markdown>ul,
+ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.markdown>h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.markdown>pre>code {
+  font-family: 'Courier New', Courier, monospace !important;
+  word-wrap: break-word;
+  white-space: normal;
+  line-height: 16px;
+  white-space: pre-line;
+}
+
 *:focus {
   /* outline: 2px solid #0079bf; */
   /* border: 1px solid transparent; */
+}
+
+a {
+  color: blue;
 }
 
 input:focus {

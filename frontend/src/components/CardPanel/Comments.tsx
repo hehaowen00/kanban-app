@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 import { useDispatch } from "react-redux";
+import ReactMarkdown from 'react-markdown';
+import { HrRender, LinkRender, QuoteRender } from "../../Utils/Markdown";
 
 import { Comment } from "../../types/Kanban";
 
@@ -77,8 +79,11 @@ function Comments({ cardId, comments }: Props) {
                 {comment.timestamp}
               </span>
             </div>
-            <div className="body mt-1 flex font-85 bg-white px-2 py-1" style={{ whiteSpace: 'pre-line' }}>
-              {comment.text}
+            <div className="body mt-1 font-85 bg-white px-2 py-1 markdown drop-shadow" style={{ whiteSpace: 'pre-line' }}>
+              <ReactMarkdown
+                children={comment.text.replaceAll('\n', '  \n')}
+                components={{ a: LinkRender, h1: 'p', h2: 'p', h3: 'p', hr: HrRender, blockquote: QuoteRender, }}
+              />
             </div>
           </div>
         )}
