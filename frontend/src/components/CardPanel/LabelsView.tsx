@@ -52,7 +52,7 @@ function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
         assigned.map((id: string) => (
           <div
             key={id}
-            className="label-badge font-80 px-2 py-[2px] rounded drop-shadow bg-purple-500 font-600 bg-white inline-block no-select"
+            className="label-badge font-80 px-2 py-[2px] rounded drop-shadow bg-purple-500 bg-white inline-block no-select"
             onClick={() => removeLabel(id)}
           >
             {labelsObj[id].name}

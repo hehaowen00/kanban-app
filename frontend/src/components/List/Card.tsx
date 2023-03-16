@@ -10,14 +10,17 @@ import "../../Styles/Card.css"
 function CardView({ index, id, listId }: Props): ReactElement {
   const dispatch = useDispatch();
 
-  const { title, labels } = useSelector(({ board }: AppState) => {
-    const { title, labels } = board.cards[id];
+  const { title, labels, startDate, endDate } = useSelector(({ board }: AppState) => {
+    const { title, labels, startDate, endDate } = board.cards[id];
     let xs = labels.map((id: string) => {
       return { id, ...board.labels[id] };
     });
     return {
       title,
+      // description,
       labels: xs,
+      startDate,
+      endDate
     };
   });
 
@@ -32,6 +35,7 @@ function CardView({ index, id, listId }: Props): ReactElement {
     dispatch(ShowExistingCard(id, listId));
   };
 
+  // TODO: Show date in format of MMM DD, YYYY - MMM DD, YYYY
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -44,18 +48,29 @@ function CardView({ index, id, listId }: Props): ReactElement {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="card-title font-85 px-2 py-1">
+          <div className="card-title font-90 px-2 py-1">
             {title}
           </div>
+          {(startDate != "" || endDate != "") &&
+            <>
+              <div className="px-2 text-cyan-900">
+                {startDate != "" && startDate + " -"} {endDate}
+              </div>
+              <div className="pb-[4px]"></div>
+            </>
+          }
           {labels.length > 0 && (
-            <div className="card-labels mb-[4px]">
+            <div className="card-labels px-2 pb-[6px]">
               {labels.map(({ id, name }: any) =>
-                <div key={id} className="badge br-default br-3 font-75 font-600 inline-block no-select">
+                <div key={id} className="badge br-3 font-75 font-500 inline-block no-select bg-emerald-500 text-white">
                   {name}
                 </div>
               )}
             </div>
           )}
+          {/* <div className="px-2 py-1">
+            {description}
+          </div> */}
         </div>
       )}
     </Draggable>

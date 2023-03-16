@@ -121,7 +121,7 @@ function ListView({ index, list }: Props): ReactElement {
                       onKeyPress={onKeyPress}
                       value={listInput}
                     />
-                    <div className="menu mb-0 mt-[5px] inline spaced-right text-right float-right">
+                    <div className="menu mb-[5px] mt-[5px] inline spaced-right text-right float-right">
                       <button
                         className="text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
                         onClick={deleteList}

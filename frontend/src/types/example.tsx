@@ -8,7 +8,7 @@ function newExampleBoard() {
   let cards: any = {};
   cards[cardId] = {
     title: "Hello, World!",
-    description: "Edit me",
+    description: "I *support* **Markdown** !\n```\nprint('Hello, World!')\n```\n",
     labels: [],
     startDate: "",
     endDate: "",
