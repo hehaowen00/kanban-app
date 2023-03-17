@@ -7,7 +7,7 @@ import Outside from "../../Outside";
 import { NewChecklist } from "../../../redux/Creators";
 import { MAX_CHECKLIST_TITLE_LENGTH } from "../../../types/Limits";
 
-function AddChecklist({ cardId, close }: Props) {
+function AddChecklist({ cardId, active, close }: Props) {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
 
@@ -15,11 +15,11 @@ function AddChecklist({ cardId, close }: Props) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (inputRef.current !== null) {
+    if (active) {
       inputRef.current?.focus();
       containerRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, []);
+  }, [active]);
 
   const titleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     let { value } = event.target;
@@ -50,7 +50,10 @@ function AddChecklist({ cardId, close }: Props) {
 
   return (
     <Outside update={cancelClick}>
-      <div ref={containerRef} className="mt-2">
+      <div
+        ref={containerRef}
+        className="mt-2"
+      >
         <TextareaAutosize
           ref={inputRef}
           name="titleInput"
@@ -82,6 +85,7 @@ function AddChecklist({ cardId, close }: Props) {
 }
 
 type Props = {
+  active: boolean,
   cardId: string,
   close: () => void,
 };

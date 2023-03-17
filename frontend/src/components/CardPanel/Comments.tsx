@@ -67,13 +67,13 @@ function Comments({ cardId, comments }: Props) {
 
   return (
     <div className="comments block text-left">
-      <div className="font-90 font-600 no-select text-left">
+      <div className="font-90 font-500 no-select text-left">
         Comments
       </div>
-      <div className="comment-view mt-5">
+      <div className="comment-view">
         {comments_.map((comment: any, index: number) =>
           <div key={index} className="">
-            <div className="header font-85 px-1">
+            <div className="header font-85">
               {comment.userId}
               <span className="f-right text-slate-400">
                 {comment.timestamp}
@@ -90,7 +90,7 @@ function Comments({ cardId, comments }: Props) {
       </div>
       <div className="block">
         <TextareaAutosize
-          className="default font-85 font-500 shadow"
+          className="default font-85 font-500 drop-shadow"
           placeholder="Post Comment"
           maxLength={512}
           rows={visible ? 3 : 2}

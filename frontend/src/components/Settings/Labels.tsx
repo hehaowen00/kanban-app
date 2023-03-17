@@ -1,8 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import TextareaAutosize from "react-autosize-textarea/lib";
 import { Label } from "../../types/Kanban";
 import { NewLabel } from "../../redux/Creators";
-import { useDispatch } from "react-redux";
 
 function Labels({ labels }: Props) {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function Labels({ labels }: Props) {
 
   const addLabel = () => {
     const { name } = state;
-    dispatch(NewLabel(name));
+    dispatch(NewLabel(name, null));
   };
 
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {

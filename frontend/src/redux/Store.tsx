@@ -77,6 +77,15 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
         name: newLabel,
       };
 
+      // add new label to card if label was created using cardpanel
+      let card = action.card;
+
+      if (card !== null) {
+        let cards = { ...state.cards };
+        let labels = [...cards[card].labels];
+        cards[card].labels = [...labels, id];
+      }
+
       return { ...state, labels };
     }
     case "AddLabel": {

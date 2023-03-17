@@ -19,8 +19,8 @@ export function RenameBoard(name: string) {
   return { type: "RenameBoard", name };
 }
 
-export function NewLabel(name: string) {
-  return { type: "NewLabel", name };
+export function NewLabel(name: string, card: string | null) {
+  return { type: "NewLabel", name, card };
 }
 
 export function AddLabel(cardId: string, labelId: string) {

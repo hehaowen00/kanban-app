@@ -7,11 +7,10 @@ import ChecklistView from "./Checklist";
 import { MoveChecklist, MoveChecklistItem } from "../../../redux/Creators";
 import { AppState } from "../../../redux/Store";
 
-function ChecklistsView({ cardId, state }: Props) {
+function ChecklistsView({ cardId }: Props) {
   const dispatch = useDispatch();
 
   const { checklists } = useSelector(({ board }: AppState) => board.cards[cardId]);
-  const { active, setActive } = state;
 
   const handleDragEnd = (event: DropResult) => {
     const { source, destination } = event;
@@ -62,9 +61,6 @@ function ChecklistsView({ cardId, state }: Props) {
               <ChecklistView key={id} index={index} cardId={cardId} id={id} />
             ))}
             {provided.placeholder}
-            {active && (
-              <AddChecklistView cardId={cardId} close={() => setActive(false)} />
-            )}
           </div>
         )}
       </Droppable>
@@ -74,10 +70,6 @@ function ChecklistsView({ cardId, state }: Props) {
 
 type Props = {
   cardId: string,
-  state: {
-    active: boolean,
-    setActive: (value: boolean) => void,
-  },
 };
 
 export default ChecklistsView;

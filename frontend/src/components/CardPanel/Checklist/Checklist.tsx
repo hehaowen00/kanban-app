@@ -30,6 +30,8 @@ function ChecklistView({ cardId, id, index }: Props) {
     active: false,
   });
 
+  // console.log(state.active)
+
   const setActive = (value: boolean) => {
     setState({ ...state, active: value });
   };
@@ -100,7 +102,7 @@ function ChecklistView({ cardId, id, index }: Props) {
     if (newItem !== "") {
       let action = NewChecklistItem(id, newItem);
       dispatch(action);
-      setState({ ...state, active: false, itemInput: "", });
+      setState({ ...state, itemInput: "", });
     }
   };
 
@@ -116,11 +118,16 @@ function ChecklistView({ cardId, id, index }: Props) {
   };
 
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable
+      key={id}
+      draggableId={id}
+      index={index}
+      isDragDisabled={isEditing}
+    >
       {(provided: any, snapshot: any) => (
         <div
           key={id}
-          className={`checklist mt-2 bg-grey br-3 ${snapshot.isDragging && 'opacity-90'}`}
+          className={`checklist mt-1 bg-grey br-3 ${snapshot.isDragging && 'opacity-90'}`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           style={{ ...lockYAxis(provided.draggableProps.style) }}
@@ -128,10 +135,15 @@ function ChecklistView({ cardId, id, index }: Props) {
           <div className="header">
             {!isEditing && (
               <div
-                className="checklist-title rounded handle font-85 font-600 m-0"
+                className="checklist-title rounded handle font-85 font-500 m-0"
                 onClick={titleClick}
                 {...provided.dragHandleProps}
               >
+                <span className="w-[10px] spacer font-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
+                  </svg>
+                </span>
                 {state.titleInput}
               </div>
             )}
@@ -140,7 +152,7 @@ function ChecklistView({ cardId, id, index }: Props) {
                 <TextareaAutosize
                   ref={titleRef}
                   name="titleInput"
-                  className="checklist-title rounded default flex flex-col font-85 font-500 m-0 focus:drop-shadow"
+                  className="checklist-title default flex flex-col font-85 font-500 m-0 focus:drop-shadow"
                   maxLength={MAX_CHECKLIST_TITLE_LENGTH}
                   placeholder="Checklist"
                   value={state.titleInput}
@@ -153,10 +165,10 @@ function ChecklistView({ cardId, id, index }: Props) {
                 />
                 <div className="menu mt-5 spaced-right text-right">
                   <button
-                    className="text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
+                    className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
                     onMouseDown={deleteChecklist}
                   >
-                    Delete
+                    Delete Checklist
                   </button>
                 </div>
               </>
@@ -164,9 +176,15 @@ function ChecklistView({ cardId, id, index }: Props) {
           </div>
           <Droppable droppableId={id} type="droppableItems">
             {(provided) => (
-              <div className="block mt-5 relative" ref={provided.innerRef}>
+              <div className="block relative" ref={provided.innerRef}>
                 {items.map((item: ChecklistItem, index: number) => (
-                  <ChecklistItemView key={index} index={index} checklistId={id} item={item} />
+                  <ChecklistItemView
+                    allowed={isEditing}
+                    key={index}
+                    index={index}
+                    checklistId={id}
+                    item={item}
+                  />
                 ))}
                 {provided.placeholder}
                 {state.active && (
@@ -203,8 +221,8 @@ function ChecklistView({ cardId, id, index }: Props) {
                 {!state.active && (
                   <div className="menu mt-5">
                     <button
-                      className="text-slate-700 px-3 py-1 bg-slate-200 rounded hover:bg-slate-700 hover:text-white"
-                      onMouseDown={() => setActive(true)}
+                      className="w-full text-slate-700 px-3 py-1 bg-slate-200 rounded hover:bg-slate-700 hover:text-white"
+                      onClick={() => setActive(true)}
                     >
                       Add Item
                     </button>
@@ -213,9 +231,10 @@ function ChecklistView({ cardId, id, index }: Props) {
               </div>
             )}
           </Droppable>
-        </div>
-      )}
-    </Draggable>
+        </div >
+      )
+      }
+    </Draggable >
   );
 }
 

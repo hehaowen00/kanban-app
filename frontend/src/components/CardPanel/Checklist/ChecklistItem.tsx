@@ -11,7 +11,7 @@ import { MAX_CHECKLIST_ITEM_LENGTH } from "../../../types/Limits";
 import { lockYAxis } from "../../../Styles/util";
 import "../../../Styles/Checklist.css";
 
-function ChecklistItemView({ checklistId, index, item }: Props) {
+function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -87,8 +87,15 @@ function ChecklistItemView({ checklistId, index, item }: Props) {
 
   let key = `${checklistId}-${index}`;
 
+  // console.log(allowed, state.visible)
+
   return (
-    <Draggable draggableId={key} index={index}>
+    <Draggable
+      isDragDisabled={allowed || state.visible}
+      key={key}
+      draggableId={key}
+      index={index}
+    >
       {(provided, snapshot) => (
         <div
           key={key}
@@ -154,6 +161,7 @@ type Props = {
   checklistId: string,
   index: number,
   item: ChecklistItem,
+  allowed: boolean,
 };
 
 export default ChecklistItemView;

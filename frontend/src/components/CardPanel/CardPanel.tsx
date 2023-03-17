@@ -12,6 +12,7 @@ import { Card } from "../../types/Kanban";
 import { AppState } from "../../redux/Store";
 
 import "../../Styles/CardPanel.css";
+import AddChecklist from "./Checklist/AddChecklist";
 
 function CardPanel() {
   const dispatch = useDispatch();
@@ -46,7 +47,8 @@ function CardPanel() {
     endDate,
   });
 
-  const [active, setActive] = useState(false);
+  const [addChecklist, setAddChecklist] = useState(false);
+  // console.log(addChecklist)
   const [selectLabels, setSelectLabels] = useState(false);
 
   const setTitle = (value: string) => {
@@ -90,7 +92,7 @@ function CardPanel() {
           <div className="menu-bar spaced-right text-left text-center">
             <button
               className="bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
-              onMouseDown={() => setActive(true)}
+              onClick={() => setAddChecklist(true)}
             >
               Add Checklist
             </button>
@@ -114,14 +116,14 @@ function CardPanel() {
               close={() => setSelectLabels(false)}
             />
           )}
-          <div className="bg-grey-100 br-3 spaced pad-5 border-none flex flex-row">
-            <div className="">
-              <span className="date font-85 font-600 inline-block no-select">
+          <div className="bg-grey-100 br-3 border-none flex flex-row">
+            <div className="mr-2">
+              <span className="date mr-1 font-85 font-500 inline-block no-select">
                 {"Start Date "}
               </span>
               <input
                 name="startDate"
-                className="default px-2 py-1 border-none drop-shadow"
+                className="default px-2 py-1 border-none focus:drop-shadow"
                 type="date"
                 value={state.startDate}
 
@@ -129,12 +131,12 @@ function CardPanel() {
               />
             </div>
             <div className="ml-auto">
-              <span className="date py-1 font-85 font-600 inline-block no-select">
+              <span className="date mr-1 py-1 font-85 font-500 inline-block no-select">
                 {"Due Date "}
               </span>
               <input
                 name="endDate"
-                className="default mr-5 px-2 py-1 border-none drop-shadow"
+                className="default px-2 py-1 border-none focus:drop-shadow"
                 type="date"
                 value={state.endDate}
 
@@ -144,9 +146,18 @@ function CardPanel() {
           </div>
           <Checklists
             cardId={cardId}
-            state={{ active, setActive }}
           />
-          <Comments cardId={cardId} comments={comments} />
+          {addChecklist &&
+            <AddChecklist
+              active={addChecklist}
+              cardId={cardId}
+              close={() => setAddChecklist(false)}
+            />
+          }
+          <Comments
+            cardId={cardId}
+            comments={comments}
+          />
         </div>
       </div>
     </>

@@ -8,7 +8,7 @@ export type RenameBoard = {
 export type NewLabel = {
   type: "NewLabel",
   name: string,
-  description: string,
+  card: string | null,
 };
 
 export type DeleteLabel = {

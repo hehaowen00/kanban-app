@@ -39,9 +39,9 @@ function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
 
   const handleKey = (e: any) => {
     const key = e.key;
-    console.log('key', key)
+    // console.log('key', key)
     if (key === "Enter") {
-      dispatch(NewLabel(newLabel))
+      dispatch(NewLabel(newLabel, cardId))
       setNewLabel('')
     }
   }
@@ -88,13 +88,13 @@ function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
           <div className="labels-body flex flex-col relative w-100">
             {labelsArr.map((label: any) => (
               <div key={label.key} className="flex flex-col">
-                <div className="card-label-item rounded bg-gray-100">
-                  <div className="px-2 label-description font-85 no-select bg-white">
+                <div className="card-label-item rounded bg-white">
+                  <div className="px-2 py-1 label-description no-select">
                     {label.name}
                   </div>
                   <input
                     type="checkbox"
-                    className="label-select check accent-blue-700"
+                    className="label-select check accent-blue-700 mr-2"
                     onClick={toggleLabel(label.key)}
                     checked={assigned.includes(label.key)}
                   />

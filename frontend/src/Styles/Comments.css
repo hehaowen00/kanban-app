@@ -2,19 +2,19 @@
   margin-bottom: 0 !important;
 }
 
-.comments > .menu {
+.comments>.menu {
   margin-top: 8px;
 }
 
 .comment-view {
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
-.comment-view > * {
-  margin-bottom: 8px; 
+.comment-view>* {
+  margin-bottom: 8px;
 }
 
-.comment-view > * + * {
+.comment-view>*+* {
   margin-top: 8px;
 }
 
@@ -22,16 +22,14 @@
   border: 1px solid black;
 }
 
-.comment > .header {
+.comment>.header {
   border-bottom: 1px solid black;
-  padding: 4px;
 }
 
-.comment > .body {
+.comment>.body {
   max-width: 100%;
   padding: 4px;
   white-space: pre-wrap;
   word-break: break-word;
   word-wrap: break-word;
 }
-

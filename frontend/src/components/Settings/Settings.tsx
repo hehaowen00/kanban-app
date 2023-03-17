@@ -13,7 +13,7 @@ function Settings({ labels }: Props) {
   const dispatch = useDispatch();
 
   const { board } = useSelector((e: any) => e);
-  console.log(JSON.stringify(board));
+  // console.log(JSON.stringify(board));
 
   return (
     <div className="settings bg-grey flex flex-col drop-shadow rounded mr-3">

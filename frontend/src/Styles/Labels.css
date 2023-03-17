@@ -13,11 +13,11 @@
   max-width: 100%;
   display: flex;
   flex-wrap: wrap;
-  padding: 5px 5px 0px 5px;
+  /* padding: 5px 5px 0px 5px; */
 }
 
 .show {
-  padding: 5px 5px 0px 5px;
+  /* padding: 5px 5px 0px 5px; */
   text-align: justify;
   text-align-last: left;
   word-wrap: break-word;
@@ -36,18 +36,17 @@
 }
 
 .label-description {
-  max-width: inherit;
-  vertical-align: middle !important;
+  /* max-width: inherit; */
+  /* vertical-align: middle !important; */
   white-space: pre-wrap;
   width: 100%;
   word-break: break-all;
 }
 
-.label-select {
+/* .label-select {
   max-width: 20px;
   height: 20px !important;
-  margin-top: -1px;
-}
+} */
 
 .card-label-item {
   box-sizing: border-box;

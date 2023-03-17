@@ -83,7 +83,7 @@ function BoardView() {
                       <ListView key={list.id} index={index} list={list} />
                       {listId === list.id && (
                         <>
-                          <div className="card-view-cover bg-none"></div>
+                          {/* <div className="card-view-cover bg-none"></div> */}
                           <CardPanel />
                         </>
                       )}

@@ -21,10 +21,11 @@ function AddListView(): ReactElement {
   const [name, setName] = useState("");
 
   let containerRef = useRef<HTMLDivElement>(null);
-  dispatch({ type: "setRef", payload: containerRef });
   let inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
+    dispatch({ type: "setRef", payload: containerRef });
+
     if (toggle) {
       containerRef.current?.scrollIntoView({ behavior: "smooth" });
       inputRef.current?.focus();

@@ -13,13 +13,13 @@ function AddCard({ listId, close }: Props) {
 
   const [title, setTitle_] = useState("");
   const titleRef = useRef<HTMLTextAreaElement>(null);
-  const containerRef = useSelector(({ ui }: any) => { return ui.end; });
+  // const containerRef = useSelector(({ ui }: any) => { return ui.end; });
 
   useEffect(() => {
     // console.log(containerRef);
-    containerRef.current?.scrollIntoView({ behavior: "auto" });
-    titleRef.current?.focus();
-    titleRef.current?.scrollIntoView({ behavior: "smooth" });
+    // containerRef.current?.scrollIntoView({ behavior: "auto" });
+    // titleRef.current?.scrollIntoView({ behavior: "smooth" });
+    // titleRef.current?.focus();
   }, []);
 
   const addCard = () => {
@@ -55,8 +55,9 @@ function AddCard({ listId, close }: Props) {
 
   return (
     <>
-      <div className="card-view-cover" onClick={onClose}></div>
-      <div className="card no-pad bg-white br-3 flex flex-1 flex-col shadow z-2">
+      <div className="card-view-cover" onClick={onClose}>
+      </div>
+      <div className="card mt-[5px] no-pad bg-white br-3 flex flex-1 flex-col shadow z-2">
         <TextareaAutosize
           ref={titleRef}
           rows={5}
@@ -69,7 +70,7 @@ function AddCard({ listId, close }: Props) {
           value={title}
         />
       </div>
-      <div className="menu inline spaced-right text-right z-2">
+      <div className="inline mt-1 spaced-right text-right z-2">
         <button
           className="text-white bg-sky-600 hover:bg-sky-700 rounded px-3 py-1"
           onClick={addCard}

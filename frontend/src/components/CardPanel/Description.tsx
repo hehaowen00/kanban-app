@@ -66,7 +66,7 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
     <div className="block">
       {!focused &&
         <div
-          className="bg-white mb-1 px-2 py-1 whitespace-pre-wrap markdown rounded drop-shadow select-none cursor-pointer"
+          className="bg-white mb-1 px-2 py-1 whitespace-pre-wrap markdown rounded focus:drop-shadow select-none cursor-pointer"
           onClick={onClick}
         >
           <ReactMarkdown

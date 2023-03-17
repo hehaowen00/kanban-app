@@ -11,6 +11,7 @@
 
 .checklist {
   /* padding: 5px 5px 2px 5px; */
+  padding-left: 2px;
 }
 
 .checklist-title {
@@ -19,9 +20,14 @@
   box-sizing: border-box;
   display: block;
   margin-bottom: 4px;
-  padding: 4px 8px 4.5px 8px;
+  padding: 4px 8px 0px 0px;
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+textarea.checklist-title {
+  padding-left: 8px;
+  padding-bottom: 4px;
 }
 
 .checked {
@@ -32,7 +38,7 @@
 }
 
 .item {
-  padding: 0px 0px 0px 1px;
+  padding: 0;
 }
 
 .item-row {
@@ -44,8 +50,8 @@
 .item-row>.check {
   margin-top: 3px;
   margin-bottom: 2px;
-  margin-left: 2px;
   min-width: 20px;
+  translate: -2px;
 }
 
 .item-row>.item-desc {
@@ -63,4 +69,14 @@
   word-wrap: break-word;
   padding: 4px 8px;
   max-width: inherit;
+}
+
+.spacer {
+  width: 10px;
+  display: inline-block;
+  min-width: 10px;
+  max-width: 10px;
+  /* margin-left: -2px; */
+  padding-bottom: 4px;
+  margin-right: 4px;
 }
