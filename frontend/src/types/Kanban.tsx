@@ -24,6 +24,10 @@ export type List = {
 export type Card = {
   title: string;
   description: string;
+  // dates: {
+  //   startDate: string,
+  //   endDate: string
+  // } | null;
   startDate: string,
   endDate: string,
   labels: string[],

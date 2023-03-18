@@ -145,13 +145,13 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
       }
 
       let list = lists[idx];
-      let res = list.cardIds.findIndex((id: string) => id === cardId);
+      let res = list.cardIds.indexOf(cardId);
 
       if (res === -1) {
         return state;
       }
 
-      list.cardIds.splice(res,);
+      list.cardIds.splice(res, 1);
 
       return { ...state, cards, lists };
     }

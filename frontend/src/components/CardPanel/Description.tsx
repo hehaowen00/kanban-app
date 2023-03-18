@@ -64,8 +64,8 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
 
   return (
     <div className="block">
-      {!focused &&
-        <div
+      {!focused && state.desc !== "" &&
+        < div
           className="bg-white mb-1 px-2 py-1 whitespace-pre-wrap markdown rounded focus:drop-shadow select-none cursor-pointer"
           onClick={onClick}
         >
@@ -75,37 +75,41 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
           />
         </div>
       }
-      {focused && <TextareaAutosize
-        ref={ref}
-        className="description focus:drop-shadow default font-85"
-        maxLength={MAX_DESCRIPTION_LENGTH}
-        placeholder="Description"
-        rows={3}
-        spellCheck={focused}
-        value={state.desc}
+      {
+        (focused || state.desc == "") && <TextareaAutosize
+          ref={ref}
+          className="description focus:drop-shadow default font-85"
+          maxLength={MAX_DESCRIPTION_LENGTH}
+          placeholder="Description"
+          rows={3}
+          spellCheck={focused}
+          value={state.desc}
 
-        // onBlur={onBlur}
-        onChange={onChange}
-        onFocus={onFocus}
-        onKeyPress={onKeyPress}
-      />}
-      {focused && (
-        <div className="menu mt-5 spaced-right text-right">
-          <button
-            className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
-            onMouseDown={saveDesc}
-          >
-            Save
-          </button>
-          <button
-            className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
-            onMouseDown={() => setFocused(false)}
-          >
-            Cancel
-          </button>
-        </div>
-      )}
-    </div>
+          // onBlur={onBlur}
+          onChange={onChange}
+          onFocus={onFocus}
+          onKeyPress={onKeyPress}
+        />
+      }
+      {
+        focused && (
+          <div className="menu mt-5 spaced-right text-right">
+            <button
+              className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
+              onMouseDown={saveDesc}
+            >
+              Save
+            </button>
+            <button
+              className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
+              onMouseDown={() => setFocused(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        )
+      }
+    </div >
   );
 }
 

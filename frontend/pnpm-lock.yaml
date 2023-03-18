@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@hello-pangea/dnd': ^16.2.0
   '@types/react': ^18.0.27
   '@types/react-beautiful-dnd': ^13.1.3
   '@types/react-dom': ^18.0.10
@@ -23,6 +24,7 @@ specifiers:
   web-vitals: ^3.3.0
 
 dependencies:
+  '@hello-pangea/dnd': 16.2.0_3xleytyzprlgycb2ded54tx72i
   react: 18.2.0
   react-autosize-textarea: 7.1.0_biqbaboplfbrettd7655fr4n2y
   react-beautiful-dnd: 13.1.1_biqbaboplfbrettd7655fr4n2y
@@ -480,6 +482,27 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@hello-pangea/dnd/16.2.0_3xleytyzprlgycb2ded54tx72i:
+    resolution: {integrity: sha512-inACvMcvvLr34CG0P6+G/3bprVKhwswxjcsFUSJ+fpOGjhvDj9caiA9X3clby0lgJ6/ILIJjyedHZYECB7GAgA==}
+    peerDependencies:
+      react: ^16.8.5 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.5 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.21.0
+      css-box-model: 1.2.1
+      memoize-one: 6.0.0
+      raf-schd: 4.0.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-redux: 8.0.5_ctrls2ti7t7iutxbwkm5ipogyy
+      redux: 4.2.1
+      use-memo-one: 1.1.3_react@18.2.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+      - react-native
+    dev: false
 
   /@jridgewell/gen-mapping/0.1.1:
     resolution: {integrity: sha512-sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w==}
@@ -1125,6 +1148,10 @@ packages:
 
   /memoize-one/5.2.1:
     resolution: {integrity: sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==}
+    dev: false
+
+  /memoize-one/6.0.0:
+    resolution: {integrity: sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw==}
     dev: false
 
   /merge2/1.4.1:

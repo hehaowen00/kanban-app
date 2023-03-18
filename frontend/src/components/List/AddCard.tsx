@@ -18,8 +18,8 @@ function AddCard({ listId, close }: Props) {
   useEffect(() => {
     // console.log(containerRef);
     // containerRef.current?.scrollIntoView({ behavior: "auto" });
-    // titleRef.current?.scrollIntoView({ behavior: "smooth" });
-    // titleRef.current?.focus();
+    titleRef.current?.scrollIntoView({ behavior: "smooth" });
+    titleRef.current?.focus();
   }, []);
 
   const addCard = () => {
@@ -27,7 +27,6 @@ function AddCard({ listId, close }: Props) {
       let action = NewCard(listId, title.trim());
       dispatch(action);
       setTitle_("");
-      close();
     }
   };
 
@@ -57,7 +56,7 @@ function AddCard({ listId, close }: Props) {
     <>
       <div className="card-view-cover" onClick={onClose}>
       </div>
-      <div className="card mt-[5px] no-pad bg-white br-3 flex flex-1 flex-col shadow z-2">
+      <div className="card mx-2 no-pad bg-white br-3 flex flex-1 flex-col shadow z-2">
         <TextareaAutosize
           ref={titleRef}
           rows={5}
@@ -70,7 +69,7 @@ function AddCard({ listId, close }: Props) {
           value={title}
         />
       </div>
-      <div className="inline mt-1 spaced-right text-right z-2">
+      <div className="inline mt-1 mx-2 mb-1 spaced-right text-right z-2">
         <button
           className="text-white bg-sky-600 hover:bg-sky-700 rounded px-3 py-1"
           onClick={addCard}

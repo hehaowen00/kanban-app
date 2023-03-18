@@ -1,4 +1,4 @@
-export function LinkRender({ children, href }) {
+export function LinkRender({ children, href }: any) {
   return (
     <a href={href} target="_blank" rel="noreferrer">
       {children}
@@ -6,13 +6,13 @@ export function LinkRender({ children, href }) {
   )
 }
 
-export function AsIsRender({ children }) {
+export function AsIsRender({ children }: any) {
   return (
     <p>{children}</p>
   )
 }
 
-export function QuoteRender({ children }) {
+export function QuoteRender({ children }: any) {
   return (
     <>{children}</>
   )

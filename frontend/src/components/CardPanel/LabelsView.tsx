@@ -67,7 +67,7 @@ function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
             </div>
             <div className="inline-block ml-auto">
               <button
-                className="default labels-cancel"
+                className="default labels-cancel text-slate-700 hover:bg-slate-700 hover:text-white"
                 onClick={close}
               >
                 Close

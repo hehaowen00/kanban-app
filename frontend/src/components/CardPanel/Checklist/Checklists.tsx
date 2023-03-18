@@ -1,4 +1,4 @@
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 import { useDispatch, useSelector } from "react-redux";
 
 import AddChecklistView from "./AddChecklist";

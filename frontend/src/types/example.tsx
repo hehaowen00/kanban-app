@@ -8,10 +8,10 @@ function newExampleBoard() {
   let cards: any = {};
   cards[cardId] = {
     title: "Hello, World!",
-    description: "I *support* **Markdown** !\n```\nprint('Hello, World!')\n```\n![Image](../vite.svg)",
+    description: "I *support* **Markdown** !\n```\nprint('Hello, World!')\n```\n![Image](vite.svg)",
     labels: [],
-    startDate: "",
-    endDate: "",
+    startDate: "2023-03-01",
+    endDate: "2023-03-31",
     attachments: [] as any[],
     checklists: [checklistId, checklist2],
     comments: [] as any[],

@@ -1,9 +1,11 @@
 import { ReactElement } from "react";
-import { Draggable } from "react-beautiful-dnd";
+import { Draggable } from "@hello-pangea/dnd";
 import { useDispatch, useSelector } from "react-redux";
 import { ShowExistingCard } from "../../redux/Creators";
 
 import { AppState } from "../../redux/Store";
+
+import moment from 'moment'
 
 import "../../Styles/Card.css"
 
@@ -35,6 +37,21 @@ function CardView({ index, id, listId }: Props): ReactElement {
     dispatch(ShowExistingCard(id, listId));
   };
 
+
+  if (startDate !== "") {
+    let date = new Date(startDate);
+    let s = date.toLocaleDateString('en-GB', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  const formatDate = (dateString: string) => {
+    if (dateString === "") {
+      return "";
+    }
+    let date = new Date(dateString);
+    let s = date.toLocaleDateString('en-GB', { month: 'short', day: 'numeric', year: 'numeric' });
+    return s;
+  }
+
   // TODO: Show date in format of MMM DD, YYYY - MMM DD, YYYY
   return (
     <Draggable draggableId={id} index={index}>
@@ -54,7 +71,7 @@ function CardView({ index, id, listId }: Props): ReactElement {
           {(startDate != "" || endDate != "") &&
             <>
               <div className="px-2 text-cyan-900">
-                {startDate != "" && startDate + " -"} {endDate}
+                {startDate != "" && formatDate(startDate) + " - "}{formatDate(endDate)}
               </div>
               <div className="pb-[4px]"></div>
             </>

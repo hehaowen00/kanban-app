@@ -6,8 +6,8 @@
   margin-top: 8px;
 }
 
-.comment-view {
-  /* margin-bottom: 10px; */
+.comment-view:empty {
+  margin-bottom: 10px;
 }
 
 .comment-view>* {

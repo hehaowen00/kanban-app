@@ -9,11 +9,15 @@
   z-index: 2;
 }
 
+.card-panel-container {
+  max-height: calc(90vh - 20px) !important;
+  pointer-events: none;
+}
+
 .card-view {
   /* height: calc(90vh - 25px); */
   margin: 0 auto;
   margin-right: 10px;
-  max-height: calc(90vh - 25px);
   max-width: 27rem;
   min-width: 27rem;
   overflow-y: auto;
@@ -21,6 +25,7 @@
   /* padding-bottom: 20px; */
   width: 25%;
   overflow-x: hidden;
+  pointer-events: auto;
 }
 
 .slide-in {
@@ -29,11 +34,11 @@
 }
 
 .card-view>* {
-  margin-bottom: 5px;
+  margin-bottom: 0.75rem;
 }
 
 .menu-bar {
-  margin: 10px 0px 10px 0px;
+  /* margin: 10px 0px 10px 0px; */
 }
 
 .date {

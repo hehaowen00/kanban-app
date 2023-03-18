@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, ReactElement, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea/lib";
-import { Droppable, Draggable } from "react-beautiful-dnd";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
 import { useDispatch, useSelector } from "react-redux";
 
 import AddCard from "./AddCard";
@@ -142,15 +142,15 @@ function ListView({ index, list }: Props): ReactElement {
                       <CardView key={cardId} index={index} id={cardId} listId={id} />
                     ))}
                     {provided.placeholder}
-                    {newCard && (
-                      <AddCard
-                        listId={id}
-                        close={() => setNewCard(false)}
-                      />
-                    )}
                   </div>
                 )}
               </Droppable>
+              {newCard && (
+                <AddCard
+                  listId={id}
+                  close={() => setNewCard(false)}
+                />
+              )}
               {!newCard && (
                 <div className="list-footer br-3 flex flex-col font-80 font-600 no-select">
                   <button

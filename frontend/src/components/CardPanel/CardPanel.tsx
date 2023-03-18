@@ -22,7 +22,7 @@ function CardPanel() {
   });
 
   const { title, description, startDate, endDate, labels, comments } = useSelector(({ board }: AppState) => {
-    return { ...board.cards[cardId] };
+    return { ...board.cards[cardId], };
   });
 
   const deleteCard = () => {
@@ -72,7 +72,7 @@ function CardPanel() {
   return (
     <>
       <div className="card-view-cover" onClick={close}></div>
-      <div ref={containerRef} className="padded z-2">
+      <div ref={containerRef} className="padded z-2 pb-[20px] card-panel-container">
         <div
           className="list card-view br-3 bg-grey block font-85 shadow text-left"
         >
@@ -89,15 +89,20 @@ function CardPanel() {
             setValue={setDescription}
             updateCard={updateCard}
           />
-          <div className="menu-bar spaced-right text-left text-center">
+          <div className="menu-bar spaced-right text-left text-center flex flex-row">
             <button
-              className="bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
+              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
               onClick={() => setAddChecklist(true)}
             >
               Add Checklist
             </button>
+            {/* <button
+              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
+            >
+              Add Date
+            </button> */}
             <button
-              className="bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
+              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
               onClick={() => setSelectLabels(true)}
             >
               Add Label
@@ -117,29 +122,27 @@ function CardPanel() {
             />
           )}
           <div className="bg-grey-100 br-3 border-none flex flex-row">
-            <div className="mr-2">
+            <div className="w-1/2">
               <span className="date mr-1 font-85 font-500 inline-block no-select">
-                {"Start Date "}
+                Start Date
               </span>
               <input
                 name="startDate"
-                className="default px-2 py-1 border-none focus:drop-shadow"
+                className="default ml-auto px-2 py-1 border-none focus:drop-shadow"
                 type="date"
                 value={state.startDate}
-
                 onChange={updateState}
               />
             </div>
-            <div className="ml-auto">
-              <span className="date mr-1 py-1 font-85 font-500 inline-block no-select">
-                {"Due Date "}
+            <div className="w-1/2 flex items-center">
+              <span className="ml-1 date float-left font-85 inline-block no-select">
+                Due Date
               </span>
               <input
                 name="endDate"
-                className="default px-2 py-1 border-none focus:drop-shadow"
+                className="default ml-auto px-2 py-1 border-none focus:drop-shadow"
                 type="date"
                 value={state.endDate}
-
                 onChange={updateState}
               />
             </div>
