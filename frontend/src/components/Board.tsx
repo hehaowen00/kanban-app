@@ -3,6 +3,7 @@ import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 
 import AddListView from "./List/AddList";
 import CardPanel from "./CardPanel/CardPanel";
+import LabelModal from "./Labels/LabelModal";
 import ListView from "./List/List";
 import Navbar from "./Navbar";
 import SettingsView from "./Settings/Settings";
@@ -17,6 +18,9 @@ function BoardView() {
   const dispatch = useDispatch();
 
   const { lists, labels, name } = useSelector(({ board }: AppState) => board);
+  const showModal = useSelector(({ ui }: any) => {
+    return ui.showLabelModal;
+  });
 
   const handleDragEnd = (event: DropResult) => {
     const { source, destination } = event;
@@ -60,45 +64,48 @@ function BoardView() {
   const { listId, showMenu } = useSelector((state: AppState) => state.panel);
 
   return (
-    <div className="board-view bg-sky-700">
-      <Navbar name={name} />
-      <div className="board flex flex-1 flex-col">
-        <div className="content flex flex-row">
-          <DragDropContext
-            onDragStart={dragStart}
-            onDragEnd={handleDragEnd}
-          >
-            <Droppable
-              droppableId="lists"
-              type="lists"
-              direction="horizontal"
+    <>
+      {showModal && <LabelModal />}
+      <div className="board-view bg-sky-700">
+        <Navbar name={name} />
+        <div className="board flex flex-1 flex-col">
+          <div className="content flex flex-row">
+            <DragDropContext
+              onDragStart={dragStart}
+              onDragEnd={handleDragEnd}
             >
-              {(provided) => (
-                <div
-                  className="lists flex flex-row flex-1-1"
-                  ref={provided.innerRef}
-                >
-                  {lists.map((list: List, index: number) => (
-                    <>
-                      <ListView key={list.id} index={index} list={list} />
-                      {listId === list.id && (
-                        <>
-                          {/* <div className="card-view-cover bg-none"></div> */}
-                          <CardPanel />
-                        </>
-                      )}
-                    </>
-                  ))}
-                  {provided.placeholder}
-                  <AddListView />
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
-          {showMenu && <SettingsView labels={labels} />}
+              <Droppable
+                droppableId="lists"
+                type="lists"
+                direction="horizontal"
+              >
+                {(provided) => (
+                  <div
+                    className="lists flex flex-row flex-1-1"
+                    ref={provided.innerRef}
+                  >
+                    {lists.map((list: List, index: number) => (
+                      <>
+                        <ListView key={list.id} index={index} list={list} />
+                        {listId === list.id && (
+                          <>
+                            {/* <div className="card-view-cover bg-none"></div> */}
+                            <CardPanel />
+                          </>
+                        )}
+                      </>
+                    ))}
+                    {provided.placeholder}
+                    <AddListView />
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+            {showMenu && <SettingsView labels={labels} />}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -24,11 +24,11 @@ function AddListView(): ReactElement {
   let inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    dispatch({ type: "setRef", payload: containerRef });
-
     if (toggle) {
       containerRef.current?.scrollIntoView({ behavior: "smooth" });
-      inputRef.current?.focus();
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 300)
     }
   });
 
@@ -87,7 +87,7 @@ function AddListView(): ReactElement {
           onClick={toggle ? undefined : onClick}
         >
           {!toggle && (
-            <div className="flat mb-0 font-85 no-select">
+            <div className="flat mb-0 font-85 font-500 no-select">
               Add List
             </div>
           )}

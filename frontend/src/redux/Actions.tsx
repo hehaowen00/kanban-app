@@ -144,6 +144,12 @@ export type NewComment = {
   text: string,
 };
 
+// Labels
+
+export type NewLabelModal = {
+  type: 'NewLabelModal'
+}
+
 type BoardAction = RenameBoard
   | NewLabel
   | AddLabel
@@ -176,6 +182,7 @@ type Action = BoardAction
   | CardAction
   | ChecklistAction
   | ChecklistItemAction
-  | CommentAction;
+  | CommentAction
+  | NewLabelModal;
 
 export default Action;

@@ -118,3 +118,7 @@ export function DeleteChecklistItem(checklistId: string, index: number) {
 export function NewComment(userId: string, cardId: string, text: string) {
   return { type: "NewComment", userId, cardId, text };
 }
+
+export function ShowLabelModal(cardId: string | null) {
+  return { type: "ShowLabelModal", payload: cardId }
+}

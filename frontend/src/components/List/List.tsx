@@ -14,8 +14,8 @@ import "../../Styles/List.css";
 
 function ListView({ index, list }: Props): ReactElement {
   const dispatch = useDispatch();
-  let listRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const listRef = useRef<any>(null);
 
   const { id, name, cardIds } = list;
   const [visible, setVisible] = useState(false);
@@ -35,9 +35,9 @@ function ListView({ index, list }: Props): ReactElement {
       current.selectionStart = length;
       current.selectionEnd = length;
     }
-    let rect = listRef.current?.getBoundingClientRect();
-    console.log(rect);
-    listRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+    // let rect = listRef.current?.getBoundingClientRect();
+    // listRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [visible]);
 
   const handleAddItem = () => {
@@ -142,15 +142,16 @@ function ListView({ index, list }: Props): ReactElement {
                       <CardView key={cardId} index={index} id={cardId} listId={id} />
                     ))}
                     {provided.placeholder}
+                    {newCard && (
+                      <AddCard
+                        listId={id}
+                        close={() => setNewCard(false)}
+                        listRef={listRef}
+                      />
+                    )}
                   </div>
                 )}
               </Droppable>
-              {newCard && (
-                <AddCard
-                  listId={id}
-                  close={() => setNewCard(false)}
-                />
-              )}
               {!newCard && (
                 <div className="list-footer br-3 flex flex-col font-80 font-600 no-select">
                   <button

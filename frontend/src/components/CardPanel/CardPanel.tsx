@@ -1,4 +1,9 @@
-import { ChangeEvent, useEffect, useState, useRef } from "react";
+import {
+  ChangeEvent,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Checklists from "./Checklist/Checklists";
@@ -7,7 +12,12 @@ import DescriptionView from "./Description";
 import LabelView from "./LabelsView";
 import TitleView from "./Title";
 
-import { CloseCardView, DeleteCard, UpdateCard } from "../../redux/Creators";
+import {
+  CloseCardView,
+  DeleteCard,
+  ShowLabelModal,
+  UpdateCard,
+} from "../../redux/Creators";
 import { Card } from "../../types/Kanban";
 import { AppState } from "../../redux/Store";
 
@@ -65,6 +75,10 @@ function CardPanel() {
     updateCard({ [name]: value })
   };
 
+  const addLabel = () => {
+    dispatch(ShowLabelModal(cardId));
+  }
+
   const close = () => {
     dispatch(CloseCardView());
   };
@@ -96,14 +110,14 @@ function CardPanel() {
             >
               Add Checklist
             </button>
-            {/* <button
+            <button
               className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
             >
               Add Date
-            </button> */}
+            </button>
             <button
               className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
-              onClick={() => setSelectLabels(true)}
+              onClick={addLabel}
             >
               Add Label
             </button>
@@ -121,11 +135,11 @@ function CardPanel() {
               close={() => setSelectLabels(false)}
             />
           )}
-          <div className="bg-grey-100 br-3 border-none flex flex-row">
-            <div className="w-1/2">
-              <span className="date mr-1 font-85 font-500 inline-block no-select">
+          <div className="bg-grey-100 br-3 border-none flex flex-row items-center">
+            <div className="w-1/2 flex mr-0.5">
+              <div className="date items-center font-85 font-500 flex no-select">
                 Start Date
-              </span>
+              </div>
               <input
                 name="startDate"
                 className="default ml-auto px-2 py-1 border-none focus:drop-shadow"
@@ -134,10 +148,10 @@ function CardPanel() {
                 onChange={updateState}
               />
             </div>
-            <div className="w-1/2 flex items-center">
-              <span className="ml-1 date float-left font-85 inline-block no-select">
+            <div className="ml-0.5 w-1/2 flex">
+              <div className="ml-1 date items-center float-left font-85 flex no-select">
                 Due Date
-              </span>
+              </div>
               <input
                 name="endDate"
                 className="default ml-auto px-2 py-1 border-none focus:drop-shadow"

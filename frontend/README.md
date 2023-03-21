@@ -1,3 +1,7 @@
+# Kanban App
+
+[Online Demo](https://hehaowen00.github.io/kanban)
+
 # Notes
 
 - onBlur is executed before onClick

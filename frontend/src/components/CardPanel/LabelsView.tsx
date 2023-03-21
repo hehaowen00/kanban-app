@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddLabel, NewLabel, RemoveLabel } from "../../redux/Creators";
 import { AppState } from "../../redux/Store";
+import LabelModal from "../Labels/LabelModal";
 
 import "../../Styles/Labels.css";
 
@@ -44,7 +45,7 @@ function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
       dispatch(NewLabel(newLabel, cardId))
       setNewLabel('')
     }
-  }
+  };
 
   return (
     <div className={`labels ${selectLabels ? "show" : ""} br-3 spaced`}>
@@ -58,51 +59,6 @@ function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
             {labelsObj[id].name}
           </div>
         ))
-      )}
-      {selectLabels && (
-        <>
-          <div className="font-85 font-600 flex flex-row w-100">
-            <div className="labels-header inline-block no-select">
-              Labels
-            </div>
-            <div className="inline-block ml-auto">
-              <button
-                className="default labels-cancel text-slate-700 hover:bg-slate-700 hover:text-white"
-                onClick={close}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-          <input type="text"
-            className="flex-1 bg-white drop-shadow px-2 py-1 mb-1 rounded w-full"
-            style={{
-              border: 'none',
-            }}
-            maxLength={48}
-            placeholder="Add Label"
-            value={newLabel}
-            onChange={e => setNewLabel(e.target.value)}
-            onKeyDown={handleKey}
-          />
-          <div className="labels-body flex flex-col relative w-100">
-            {labelsArr.map((label: any) => (
-              <div key={label.key} className="flex flex-col">
-                <div className="card-label-item rounded bg-white">
-                  <div className="px-2 py-1 label-description no-select">
-                    {label.name}
-                  </div>
-                  <input
-                    type="checkbox"
-                    className="label-select check accent-blue-700 mr-2"
-                    onClick={toggleLabel(label.key)}
-                    checked={assigned.includes(label.key)}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </>
       )}
     </div>
   );

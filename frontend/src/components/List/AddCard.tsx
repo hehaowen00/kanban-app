@@ -8,18 +8,26 @@ import { NewCard } from "../../redux/Creators";
 
 import "../../Styles/AddCard.css";
 
-function AddCard({ listId, close }: Props) {
+function AddCard({ listId, close, listRef }: Props) {
   const dispatch = useDispatch();
 
   const [title, setTitle_] = useState("");
   const titleRef = useRef<HTMLTextAreaElement>(null);
-  // const containerRef = useSelector(({ ui }: any) => { return ui.end; });
+
+  const scrollTo = () => {
+    setTimeout(() => {
+      titleRef.current?.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        titleRef.current?.focus();
+      }, 300)
+    })
+  };
 
   useEffect(() => {
-    // console.log(containerRef);
-    // containerRef.current?.scrollIntoView({ behavior: "auto" });
-    titleRef.current?.scrollIntoView({ behavior: "smooth" });
-    titleRef.current?.focus();
+    if (listRef) {
+      listRef.current?.scrollIntoView({});
+      scrollTo();
+    }
   }, []);
 
   const addCard = () => {
@@ -45,10 +53,14 @@ function AddCard({ listId, close }: Props) {
     setTitle_(value);
   };
 
-  const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  const titleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
       addCard();
+      scrollTo();
+    }
+    if (event.key === "Escape") {
+      close();
     }
   };
 
@@ -56,7 +68,7 @@ function AddCard({ listId, close }: Props) {
     <>
       <div className="card-view-cover" onClick={onClose}>
       </div>
-      <div className="card mx-2 no-pad bg-white br-3 flex flex-1 flex-col shadow z-2">
+      <div className="card mt-1 no-pad bg-white br-3 flex flex-1 flex-col shadow z-2">
         <TextareaAutosize
           ref={titleRef}
           rows={5}
@@ -64,12 +76,12 @@ function AddCard({ listId, close }: Props) {
           maxLength={MAX_TITLE_LENGTH}
           onBlur={titleBlur}
           onChange={titleChange}
-          onKeyPress={titleKeyPress}
+          onKeyUp={titleKeyDown}
           placeholder="New Card"
           value={title}
         />
       </div>
-      <div className="inline mt-1 mx-2 mb-1 spaced-right text-right z-2">
+      <div className="inline mt-1 ml-2 spaced-right text-right z-2">
         <button
           className="text-white bg-sky-600 hover:bg-sky-700 rounded px-3 py-1"
           onClick={addCard}
@@ -90,6 +102,7 @@ function AddCard({ listId, close }: Props) {
 type Props = {
   listId: string,
   close: () => void,
+  listRef: any,
 };
 
 export default AddCard;

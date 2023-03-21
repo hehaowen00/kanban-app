@@ -25,6 +25,10 @@ const DefaultCardViewState = {
   showMenu: false,
 };
 
+const UIState = {
+  showLabelModal: false,
+};
+
 function CardViewReducer(state: CardViewState = DefaultCardViewState, action: CardPanelAction) {
   switch (action.type) {
     case "CloseCardView": {
@@ -347,10 +351,14 @@ function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
   }
 }
 
-function UIReducer(state: any = { end: null }, action: any) {
+function UIReducer(state: any = UIState, action: any) {
   switch (action.type) {
-    case "setRef": {
-      return { end: action.payload };
+    case "ShowLabelModal": {
+      const cardId = action.payload;
+      return { ...state, showLabelModal: true, cardId };
+    }
+    case "HideLabelModal": {
+      return { ...state, showLabelModal: false };
     }
     default: {
       return state;

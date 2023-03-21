@@ -26,22 +26,22 @@ function CardView({ index, id, listId }: Props): ReactElement {
     };
   });
 
-  const sorted = labels.sort((a: any, b: any) => {
-    if (a.name > b.name) {
-      return 1;
-    }
-    return -1;
-  });
+  // const sorted = labels.sort((a: any, b: any) => {
+  //   if (a.name > b.name) {
+  //     return 1;
+  //   }
+  //   return -1;
+  // });
 
   const handleClick = () => {
     dispatch(ShowExistingCard(id, listId));
   };
 
 
-  if (startDate !== "") {
-    let date = new Date(startDate);
-    let s = date.toLocaleDateString('en-GB', { month: 'short', day: 'numeric', year: 'numeric' });
-  }
+  // if (startDate !== "") {
+  //   let date = new Date(startDate);
+  //   let s = date.toLocaleDateString('en-GB', { month: 'short', day: 'numeric', year: 'numeric' });
+  // }
 
   const formatDate = (dateString: string) => {
     if (dateString === "") {
@@ -71,7 +71,7 @@ function CardView({ index, id, listId }: Props): ReactElement {
           {(startDate != "" || endDate != "") &&
             <>
               <div className="px-2 text-cyan-900">
-                {startDate != "" && formatDate(startDate) + " - "}{formatDate(endDate)}
+                {startDate != "" && formatDate(startDate) + " "}- {formatDate(endDate)}
               </div>
               <div className="pb-[4px]"></div>
             </>
@@ -79,15 +79,12 @@ function CardView({ index, id, listId }: Props): ReactElement {
           {labels.length > 0 && (
             <div className="card-labels px-2 pb-[6px]">
               {labels.map(({ id, name }: any) =>
-                <div key={id} className="badge br-3 font-75 font-500 inline-block no-select bg-emerald-500 text-white">
+                <div key={id} className="badge br-3 font-75 font-500 inline-block no-select bg-green-600 text-white">
                   {name}
                 </div>
               )}
             </div>
           )}
-          {/* <div className="px-2 py-1">
-            {description}
-          </div> */}
         </div>
       )}
     </Draggable>
