@@ -1,16 +1,30 @@
 import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
+import { useSelector } from "react-redux";
+import { AppState } from "../../redux/Store";
 
 import { Card } from "../../types/Kanban";
 import { MAX_TITLE_LENGTH } from "../../types/Limits";
 
-function TitleView({ title, value, setValue, updateCard, deleteCard }: Props) {
+function TitleView({ cardId, updateCard, deleteCard }: Props) {
   const ref = useRef<HTMLTextAreaElement>(null);
   const [focused, setFocused] = useState(false);
+
+  const { title } = useSelector(({ board }: AppState) => {
+    return {
+      title: board.cards[cardId].title,
+    };
+  });
+
+  const [value, setValue] = useState(title);
 
   const titleUpdate = () => {
     let value_ = value.trim();
     if (value_.length > 0) {
+      value_ = value_.replaceAll('\n', ' ');
+      value_ = value_.substring(0, MAX_TITLE_LENGTH);
+
+      setValue(value_);
       updateCard({ title: value_ });
     } else {
       setValue(title);
@@ -85,9 +99,10 @@ function TitleView({ title, value, setValue, updateCard, deleteCard }: Props) {
 }
 
 type Props = {
-  title: string,
-  value: string,
-  setValue: (value: string) => void,
+  // title: string,
+  // value: string,
+  // setValue: (value: string) => void,
+  cardId: string,
   updateCard: (partial: Partial<Card>) => void,
   deleteCard: () => void,
 };

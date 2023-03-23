@@ -6,9 +6,10 @@ import {
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import AddChecklist from "./Checklist/AddChecklist";
+import DescriptionView from "./Description";
 import Checklists from "./Checklist/Checklists";
 import Comments from "./Comments";
-import DescriptionView from "./Description";
 import LabelView from "./LabelsView";
 import TitleView from "./Title";
 
@@ -22,16 +23,21 @@ import { Card } from "../../types/Kanban";
 import { AppState } from "../../redux/Store";
 
 import "../../Styles/CardPanel.css";
-import AddChecklist from "./Checklist/AddChecklist";
 
 function CardPanel() {
   const dispatch = useDispatch();
+  let containerRef = useRef<HTMLDivElement>(null);
 
   const { cardId, listId } = useSelector(({ panel }: AppState) => {
     return { ...panel };
   });
 
-  const { title, description, startDate, endDate, labels, comments } = useSelector(({ board }: AppState) => {
+  const {
+    startDate,
+    endDate,
+    labels,
+    comments
+  } = useSelector(({ board }: AppState) => {
     return { ...board.cards[cardId], };
   });
 
@@ -44,30 +50,17 @@ function CardPanel() {
     dispatch(UpdateCard(cardId, patch));
   };
 
-  let containerRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    containerRef.current?.scrollIntoView();
+    containerRef.current?.scrollIntoView({ behavior: 'auto' });
   });
 
   const [state, setState] = useState({
-    title,
-    description,
     startDate,
     endDate,
   });
 
   const [addChecklist, setAddChecklist] = useState(false);
-  // console.log(addChecklist)
   const [selectLabels, setSelectLabels] = useState(false);
-
-  const setTitle = (value: string) => {
-    setState({ ...state, title: value });
-  };
-
-  const setDescription = (value: string) => {
-    setState({ ...state, description: value });
-  };
 
   const updateState = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     let { name, value } = event.target;
@@ -91,32 +84,31 @@ function CardPanel() {
           className="list card-view br-3 bg-grey block font-85 shadow text-left"
         >
           <TitleView
-            title={title}
-            value={state.title}
-            setValue={setTitle}
+            cardId={cardId}
             updateCard={updateCard}
             deleteCard={deleteCard}
           />
           <DescriptionView
-            description={description}
-            value={state.description}
-            setValue={setDescription}
+            cardId={cardId}
             updateCard={updateCard}
           />
           <div className="menu-bar spaced-right text-left text-center flex flex-row">
             <button
-              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
+              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 roundea
+              d hover:bg-slate-700 hover:text-white"
               onClick={() => setAddChecklist(true)}
             >
               Add Checklist
             </button>
-            <button
-              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
+            {/* <button
+              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded
+              d hover:bg-slate-700 hover:text-white"
             >
               Add Date
-            </button>
+            </button> */}
             <button
-              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
+              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded
+               hover:bg-slate-700 hover:text-white"
               onClick={addLabel}
             >
               Add Label
@@ -127,14 +119,12 @@ function CardPanel() {
               Add Date
             </button> */}
           </div>
-          {(labels.length > 0 || selectLabels) && (
-            <LabelView
-              cardId={cardId}
-              assigned={labels}
-              selectLabels={selectLabels}
-              close={() => setSelectLabels(false)}
-            />
-          )}
+          <LabelView
+            cardId={cardId}
+            assigned={labels}
+            selectLabels={selectLabels}
+            close={() => setSelectLabels(false)}
+          />
           <div className="bg-grey-100 br-3 border-none flex flex-row items-center">
             <div className="w-1/2 flex mr-0.5">
               <div className="date items-center font-85 font-500 flex no-select">

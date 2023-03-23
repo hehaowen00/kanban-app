@@ -32,7 +32,8 @@ function AddCard({ listId, close, listRef }: Props) {
 
   const addCard = () => {
     if (title.trim() !== "") {
-      let action = NewCard(listId, title.trim());
+      let value = title.trim().replaceAll('\n', ' ').substring(0, MAX_TITLE_LENGTH);
+      let action = NewCard(listId, value);
       dispatch(action);
       setTitle_("");
     }

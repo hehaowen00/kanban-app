@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddLabel, NewLabel, RemoveLabel } from "../../redux/Creators";
 import { AppState } from "../../redux/Store";
-import LabelModal from "../Labels/LabelModal";
+import LabelModal from "../Labels/AddLabelModal";
 
 import "../../Styles/Labels.css";
 
@@ -48,18 +48,32 @@ function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
   };
 
   return (
-    <div className={`labels ${selectLabels ? "show" : ""} br-3 spaced`}>
-      {!selectLabels && (
-        assigned.map((id: string) => (
-          <div
-            key={id}
-            className="label-badge font-80 px-2 py-[2px] rounded drop-shadow bg-purple-500 bg-white inline-block no-select"
-            onClick={() => removeLabel(id)}
-          >
-            {labelsObj[id].name}
-          </div>
-        ))
-      )}
+    <div className="labels br-3 spaced">
+      <div className="w-full flex flex-row">
+        <div className="flex-1">Labels</div>
+        <button
+          className="text-slate-700 float-right mr-1 bg-slate-200 rounded hover:bg-slate-700 hover:text-white"
+        >
+          ...
+        </button>
+      </div>
+      <div className="w-full flex flex-wrap">
+        {!selectLabels && (
+          assigned.map((id: string) => (
+            <div
+              key={id}
+              className="px-2 py-1 mb-1 font-80 rounded drop-shadow
+            bg-purple-500 text-white inline-block no-select mr-1 break-all"
+              style={{
+                backgroundColor: "",
+              }}
+            // onClick={() => removeLabel(id)}
+            >
+              {labelsObj[id].name}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }

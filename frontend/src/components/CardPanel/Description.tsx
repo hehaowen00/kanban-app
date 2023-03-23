@@ -5,15 +5,17 @@ import ReactMarkdown from 'react-markdown';
 import { AsIsRender, HrRender, LinkRender, QuoteRender } from "../../Utils/Markdown";
 
 import { MAX_DESCRIPTION_LENGTH } from "../../types/Limits";
+import { useSelector } from "react-redux";
+import { AppState } from "../../redux/Store";
 
-function DescriptionView({ description, value, setValue, updateCard }: Props) {
+function DescriptionView({ cardId, updateCard }: Props) {
+  const description = useSelector(({ board }: AppState) => {
+    return board.cards[cardId].description;
+  });
+
   const [focused, setFocused] = useState(false);
-
+  const [value, setValue] = useState(description);
   const ref = useRef<HTMLTextAreaElement>(null);
-
-  const [state, setState] = useState({
-    desc: value,
-  })
 
   useEffect(() => {
     if (focused) {
@@ -28,7 +30,7 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
 
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     let { value } = event.target;
-    setState({ desc: value });
+    setValue(value);
   };
 
   const onFocus = () => {
@@ -39,7 +41,7 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
     switch (event.key) {
       case "Escape": {
         event.preventDefault();
-        setState({ desc: description });
+        setValue(description);
         setFocused(false);
         ref.current?.blur();
         break;
@@ -50,40 +52,43 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
   };
 
   const saveDesc = () => {
-    let desc = state.desc.trim()
-    setState({ desc });
-    updateCard({ description: desc });
+    let value_ = value.trim()
+    updateCard({ description: value_ });
     setFocused(false);
-    setValue(desc)
+    setValue(value_)
   };
 
   const onClick = () => {
     setFocused(true);
-    setState({ desc: description })
+    // setState({ desc: description })
+    setValue(description);
   };
 
   return (
     <div className="block">
-      {!focused && state.desc !== "" &&
+      {!focused && value !== "" &&
         < div
           className="bg-white mb-1 px-2 py-1 whitespace-pre-wrap markdown rounded focus:drop-shadow select-none cursor-pointer"
           onClick={onClick}
         >
           <ReactMarkdown
-            children={state.desc.replaceAll('\n', '  \n')}
-            components={{ a: LinkRender, h1: 'p', h2: 'p', h3: 'p', hr: HrRender, blockquote: QuoteRender, }}
+            children={value.replaceAll('\n', '  \n')}
+            components={{
+              a: LinkRender, h1: 'p', h2: 'p', h3: 'p',
+              hr: HrRender, blockquote: QuoteRender,
+            }}
           />
         </div>
       }
-      {
-        (focused || state.desc == "") && <TextareaAutosize
+      {(focused || value == "") &&
+        <TextareaAutosize
           ref={ref}
           className="description focus:drop-shadow default font-85"
           maxLength={MAX_DESCRIPTION_LENGTH}
           placeholder="Description"
           rows={3}
           spellCheck={focused}
-          value={state.desc}
+          value={value}
 
           // onBlur={onBlur}
           onChange={onChange}
@@ -100,7 +105,8 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
             Save
           </button>
           <button
-            className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
+            className="text-slate-700 px-3 py-1 bg-slate-300 rounded
+             hover:bg-slate-700 hover:text-white"
             onMouseDown={() => setFocused(false)}
           >
             Cancel
@@ -112,9 +118,7 @@ function DescriptionView({ description, value, setValue, updateCard }: Props) {
 }
 
 type Props = {
-  description: string,
-  value: string,
-  setValue: (v: string) => void,
+  cardId: string,
   updateCard: (payload: Partial<Card>) => void,
 };
 

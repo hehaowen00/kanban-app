@@ -17,11 +17,12 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  display: block;
+  /* display: block; */
   margin-bottom: 4px;
   padding: 4px 8px 0px 0px;
   white-space: pre-wrap;
   word-wrap: break-word;
+  word-break: break-all;
 }
 
 textarea.checklist-title {

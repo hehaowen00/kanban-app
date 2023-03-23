@@ -6,4 +6,4 @@ export const MAX_CHECKLIST_ITEM_LENGTH = 512;
 
 export const MAX_LIST_TITLE_LENGTH = 128;
 
-export const MAX_LABEL_TITLE_LENGTH = 16;
+export const MAX_LABEL_TITLE_LENGTH = 40;

@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 
 import AddListView from "./List/AddList";
 import CardPanel from "./CardPanel/CardPanel";
-import LabelModal from "./Labels/LabelModal";
+import LabelModal from "./Labels/AddLabelModal";
 import ListView from "./List/List";
 import Navbar from "./Navbar";
 import SettingsView from "./Settings/Settings";

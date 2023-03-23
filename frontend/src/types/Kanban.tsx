@@ -38,6 +38,7 @@ export type Card = {
 
 export type Label = {
   name: string,
+  color: string,
 };
 
 export type Checklist = {
