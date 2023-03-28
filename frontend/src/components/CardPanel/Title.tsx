@@ -3,8 +3,8 @@ import TextareaAutosize from "react-autosize-textarea";
 import { useSelector } from "react-redux";
 import { AppState } from "../../redux/Store";
 
-import { Card } from "../../types/Kanban";
-import { MAX_TITLE_LENGTH } from "../../types/Limits";
+import { Card } from "../../Types/Kanban";
+import { MAX_CARD_TITLE_LENGTH } from "../../Types/Limits";
 
 function TitleView({ cardId, updateCard, deleteCard }: Props) {
   const ref = useRef<HTMLTextAreaElement>(null);
@@ -22,7 +22,7 @@ function TitleView({ cardId, updateCard, deleteCard }: Props) {
     let value_ = value.trim();
     if (value_.length > 0) {
       value_ = value_.replaceAll('\n', ' ');
-      value_ = value_.substring(0, MAX_TITLE_LENGTH);
+      value_ = value_.substring(0, MAX_CARD_TITLE_LENGTH);
 
       setValue(value_);
       updateCard({ title: value_ });
@@ -74,7 +74,7 @@ function TitleView({ cardId, updateCard, deleteCard }: Props) {
       <TextareaAutosize
         ref={ref}
         className="default font-90 font-500 focus:drop-shadow"
-        maxLength={MAX_TITLE_LENGTH}
+        maxLength={MAX_CARD_TITLE_LENGTH}
         placeholder="Title"
         spellCheck={focused}
         value={value}

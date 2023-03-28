@@ -1,0 +1,61 @@
+.list-view {
+  margin-right: 10px;
+  height: fit-content;
+}
+
+.list-view:last-child {
+  height: 100%;
+}
+
+.list-col {
+  /* figure out how to make this list not shrink when scroll bar is visible */
+  max-height: 90vh !important;
+  max-width: 18rem;
+  min-width: 18rem;
+  padding-bottom: 10px;
+  scroll-margin-right: 100px !important;
+}
+
+.list {
+  max-height: 100%;
+  white-space: nowrap;
+}
+
+.list-header {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+  flex-shrink: 0;
+  padding: 3px;
+  padding-bottom: 0;
+  white-space: break-spaces;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+.edit {
+  padding: 5px;
+}
+
+.list-body:empty {
+  box-shadow: none;
+  padding-top: 1px;
+}
+
+.list-body:not(empty) {
+  overflow-y: auto;
+  padding: 0px 5px 5px 5px;
+}
+
+.list-footer {
+  flex-shrink: 1;
+  /* margin-top: 5px; */
+  padding: 0;
+}
+
+.title {
+  padding: 5px 10px;
+}
+
+.title:first-child {
+  cursor: pointer;
+}

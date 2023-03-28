@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { TwitterPicker } from 'react-color';
 import { useDispatch, useSelector } from "react-redux";
 import { NewLabel } from "../../redux/Creators";
-import { MAX_LABEL_TITLE_LENGTH } from "../../types/Limits";
+import { MAX_LABEL_TITLE_LENGTH } from "../../Types/Limits";
 
 function LabelModal() {
   const dispatch = useDispatch();

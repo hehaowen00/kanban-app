@@ -1,7 +1,7 @@
 import { ChangeEvent, ReactElement, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import "../Styles/Navbar.css"
+import "../styles/Navbar.css"
 
 function Navbar({ name }: Props): ReactElement {
   const [title, setTitle] = useState(name);

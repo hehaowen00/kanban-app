@@ -5,16 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import ChecklistItemView from "./ChecklistItem";
 import TextareaAutosize from "react-autosize-textarea";
 
-import { NewChecklistItem, DeleteChecklist } from "../../../redux/Creators";
-import { AppState } from "../../../redux/Store";
-import { ChecklistItem } from "../../../types/Kanban";
+import { NewChecklistItem, DeleteChecklist } from "../../../Redux/Creators";
+import { AppState } from "../../../Redux/Store";
+import { ChecklistItem } from "../../../Types/Kanban";
 import {
-  MAX_CHECKLIST_TITLE_LENGTH,
   MAX_CHECKLIST_ITEM_LENGTH,
-} from "../../../types/Limits";
+  MAX_CHECKLIST_TITLE_LENGTH,
+} from "../../../Types/Limits";
 
-import { lockYAxis } from "../../../Styles/util";
-import "../../../Styles/Checklist.css";
+import { lockYAxis } from "../../../Utils/Dnd";
+import "../../../styles/Checklist.css";
 
 function ChecklistView({ cardId, id, index }: Props) {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import "../Styles/Dashboard.css";
+import "../styles/Dashboard.css";
 
 function Dashboard(): ReactElement {
   return (

@@ -1,19 +1,14 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-
-import TextareaAutosize from "react-autosize-textarea/lib";
-
 import Labels from "./Labels";
 
-import { Label } from "../../types/Kanban";
-import "../../Styles/Settings.css";
+import { Label } from "../../Types/Kanban";
+import "../../styles/Settings.css";
 import { useSelector } from "react-redux";
 
 function Settings({ labels }: Props) {
   const dispatch = useDispatch();
 
   const { board } = useSelector((e: any) => e);
-  // console.log(JSON.stringify(board));
 
   return (
     <div className="settings bg-grey flex flex-col drop-shadow rounded mr-3">

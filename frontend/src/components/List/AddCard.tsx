@@ -1,12 +1,12 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
 
-import { MAX_TITLE_LENGTH } from "../../types/Limits";
+import { MAX_CARD_TITLE_LENGTH } from "../../Types/Limits";
 import { NewCard } from "../../redux/Creators";
 
-import "../../Styles/AddCard.css";
+import "../../styles/AddCard.css";
 
 function AddCard({ listId, close, listRef }: Props) {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ function AddCard({ listId, close, listRef }: Props) {
 
   const addCard = () => {
     if (title.trim() !== "") {
-      let value = title.trim().replaceAll('\n', ' ').substring(0, MAX_TITLE_LENGTH);
+      let value = title.trim().replaceAll('\n', ' ').substring(0, MAX_CARD_TITLE_LENGTH);
       let action = NewCard(listId, value);
       dispatch(action);
       setTitle_("");
@@ -74,7 +74,7 @@ function AddCard({ listId, close, listRef }: Props) {
           ref={titleRef}
           rows={5}
           className="default no-bdr font-85 px-2 py-1"
-          maxLength={MAX_TITLE_LENGTH}
+          maxLength={MAX_CARD_TITLE_LENGTH}
           onBlur={titleBlur}
           onChange={titleChange}
           onKeyUp={titleKeyDown}

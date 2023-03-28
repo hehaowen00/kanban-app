@@ -12,7 +12,7 @@ import { List } from "../types/Kanban";
 import { CloseCardView, MoveCard, MoveList } from "../redux/Creators";
 import { AppState } from "../redux/Store";
 
-import "../Styles/Board.css";
+import "../styles/Board.css"
 
 function BoardView() {
   const dispatch = useDispatch();
@@ -61,7 +61,9 @@ function BoardView() {
     dispatch(CloseCardView());
   };
 
-  const { listId, showMenu } = useSelector((state: AppState) => state.panel);
+  const { listId, showMenu } = useSelector((state: AppState) => {
+    return state.ui;
+  });
 
   return (
     <>

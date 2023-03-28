@@ -12,8 +12,19 @@ type ShowMenu = {
   type: "ShowMenu",
 };
 
+type ShowLabelModal = {
+  type: "ShowLabelModal",
+  payload: {}
+};
+
+type HideLabelModal = {
+  type: "HideLabelModal",
+};
+
 type Action = CloseCardView
   | ShowExistingCard
-  | ShowMenu;
+  | ShowMenu
+  | ShowLabelModal
+  | HideLabelModal;
 
 export default Action;

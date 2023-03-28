@@ -1,8 +1,6 @@
-import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import TextareaAutosize from "react-autosize-textarea/lib";
-import { Label } from "../../types/Kanban";
-import { NewLabel, ShowLabelModal } from "../../redux/Creators";
+import { Label } from "../../Types/Kanban";
+import { ShowLabelModal } from "../../redux/Creators";
 
 function Labels({ labels }: Props) {
   const dispatch = useDispatch();
@@ -21,7 +19,9 @@ function Labels({ labels }: Props) {
   return (
     <div className="flex flex-col">
       <div className="font-90 m-0">
-        <div className="labels-title inline-block no-select">Labels</div>
+        <div className="labels-title inline-block no-select">
+          Labels
+        </div>
         <button
           className="default font-80 shadow-5 f-right"
           onClick={addLabel}
@@ -34,7 +34,8 @@ function Labels({ labels }: Props) {
           {xs.map(({ id, name }: any) => (
             <div
               key={id}
-              className="label-item mt-5 pad-5 br-default bg-white no-select br-3 flex flex-col font-85 shadow-5"
+              className="label-item mt-5 pad-5 br-default bg-white no-select
+               br-3 flex flex-col font-85 shadow-5"
             >
               <span className="font-600">{name}</span>
             </div>

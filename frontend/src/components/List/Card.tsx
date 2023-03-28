@@ -7,7 +7,7 @@ import { AppState } from "../../redux/Store";
 
 import moment from 'moment'
 
-import "../../Styles/Card.css"
+import "../../styles/Card.css"
 
 function CardView({ index, id, listId }: Props): ReactElement {
   const dispatch = useDispatch();

@@ -4,7 +4,7 @@ import { AddLabel, NewLabel, RemoveLabel } from "../../redux/Creators";
 import { AppState } from "../../redux/Store";
 import LabelModal from "../Labels/AddLabelModal";
 
-import "../../Styles/Labels.css";
+import "../../styles/Labels.css";
 
 function LabelsView({ cardId, assigned, selectLabels, close }: Props) {
   const dispatch = useDispatch();

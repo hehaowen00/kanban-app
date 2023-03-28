@@ -1,4 +1,4 @@
-import { Card, Checklist, ChecklistItem, List } from "../types/Kanban";
+import { Card, Checklist, ChecklistItem, List } from "../Types/Kanban";
 
 // Card Panel
 

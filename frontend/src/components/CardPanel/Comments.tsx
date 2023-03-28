@@ -2,13 +2,13 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 import { useDispatch } from "react-redux";
 import ReactMarkdown from 'react-markdown';
-import { HrRender, LinkRender, QuoteRender } from "../../Utils/Markdown";
+import { HrRender, LinkRender, QuoteRender } from "../../utils/Markdown";
 
-import { Comment } from "../../types/Kanban";
+import { Comment } from "../../Types/Kanban";
 
 import { NewComment } from "../../redux/Creators";
 
-import "../../Styles/Comments.css";
+import "../../styles/Comments.css";
 
 function Comments({ cardId, comments }: Props) {
   const dispatch = useDispatch();

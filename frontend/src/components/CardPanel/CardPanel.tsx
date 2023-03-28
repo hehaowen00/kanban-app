@@ -19,17 +19,17 @@ import {
   ShowLabelModal,
   UpdateCard,
 } from "../../redux/Creators";
-import { Card } from "../../types/Kanban";
+import { Card } from "../../Types/Kanban";
 import { AppState } from "../../redux/Store";
 
-import "../../Styles/CardPanel.css";
+import "../../styles/CardPanel.css";
 
 function CardPanel() {
   const dispatch = useDispatch();
   let containerRef = useRef<HTMLDivElement>(null);
 
-  const { cardId, listId } = useSelector(({ panel }: AppState) => {
-    return { ...panel };
+  const { cardId, listId } = useSelector(({ ui }: AppState) => {
+    return ui;
   });
 
   const {

@@ -1,4 +1,4 @@
-import { Card, Checklist, ChecklistItem, List } from "../types/Kanban";
+import { Card, Checklist, ChecklistItem, List } from "../Types/Kanban";
 
 export type RenameBoard = {
   type: "RenameBoard",
@@ -8,6 +8,7 @@ export type RenameBoard = {
 export type NewLabel = {
   type: "NewLabel",
   name: string,
+  color: string,
   card: string | null,
 };
 
@@ -147,7 +148,7 @@ export type NewComment = {
 // Labels
 
 export type NewLabelModal = {
-  type: 'NewLabelModal'
+  type: "NewLabelModal"
 }
 
 type BoardAction = RenameBoard

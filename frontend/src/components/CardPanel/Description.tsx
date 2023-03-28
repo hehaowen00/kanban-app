@@ -1,10 +1,10 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
-import { Card } from "../../types/Kanban";
+import { Card } from "../../Types/Kanban";
 import ReactMarkdown from 'react-markdown';
-import { AsIsRender, HrRender, LinkRender, QuoteRender } from "../../Utils/Markdown";
+import { AsIsRender, HrRender, LinkRender, QuoteRender } from "../../utils/Markdown";
 
-import { MAX_DESCRIPTION_LENGTH } from "../../types/Limits";
+import { MAX_DESCRIPTION_LENGTH } from "../../Types/Limits";
 import { useSelector } from "react-redux";
 import { AppState } from "../../redux/Store";
 

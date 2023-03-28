@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { TwitterPicker } from 'react-color';
 import { useDispatch, useSelector } from "react-redux";
 import { NewLabel } from "../../redux/Creators";
-import { MAX_LABEL_TITLE_LENGTH } from "../../types/Limits";
+import { MAX_LABEL_TITLE_LENGTH } from "../../Types/Limits";
 
 function LabelModal() {
   const dispatch = useDispatch();
@@ -15,6 +15,8 @@ function LabelModal() {
   const [state, setState] = useState({
     label: "",
     color: "",
+    exists: false,
+    empty: false,
   });
 
   const onChange = (e: any) => {
@@ -26,7 +28,12 @@ function LabelModal() {
   };
 
   const addLabel = () => {
-    dispatch(NewLabel(state.label, cardId));
+    if (state.label.trim() !== "") {
+      dispatch(NewLabel(state.label.trim(), cardId));
+      dispatch({ type: 'HideLabelModal' });
+      return;
+    }
+    setState({ ...state, empty: true });
   };
 
   useEffect(() => {
@@ -54,6 +61,7 @@ function LabelModal() {
                   name="label"
                   onChange={onChange}
                   value={state.label}
+                  required
                 />
                 {/* <button className="bg-none hover:bg-slate-700 hover:text-white rounded">Close</button> */}
               </div>
@@ -63,7 +71,25 @@ function LabelModal() {
                   triangle='hide'
                 />
               </div>
-              <div className="flex flex-row-reverse mt-1 px-2 py-1">
+              {state.exists &&
+                <div
+                  className="text-center text-xs border border-red-600
+               border-solid bg-white text-red-600 mx-2 my-1 px-2 py-1 rounded
+               select-none"
+                >
+                  A label with that name already exists
+                </div>
+              }
+              {state.empty &&
+                <div
+                  className="text-center text-xs border border-red-600
+               border-solid bg-white text-red-600 mx-2 my-1 px-2 py-1 rounded
+                select-none hidden"
+                >
+                  Label name cannot be empty
+                </div>
+              }
+              <div className="flex flex-row-reverse px-2 py-1">
                 <button
                   className="border border-solid border-blue-600 text-blue-700
                    bg-none hover:bg-blue-700 hover:text-white px-2 py-1 rounded"

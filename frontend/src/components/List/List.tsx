@@ -7,10 +7,10 @@ import AddCard from "./AddCard";
 import CardView from "./Card";
 
 import { DeleteList, UpdateList } from "../../redux/Creators";
-import { List } from "../../types/Kanban";
+import { List } from "../../Types/Kanban";
 
-import { MAX_LIST_TITLE_LENGTH } from "../../types/Limits";
-import "../../Styles/List.css";
+import { MAX_LIST_TITLE_LENGTH } from "../../Types/Limits";
+import "../../styles/List.css";
 
 function ListView({ index, list }: Props): ReactElement {
   const dispatch = useDispatch();

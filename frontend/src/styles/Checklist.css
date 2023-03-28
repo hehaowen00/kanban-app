@@ -1,0 +1,82 @@
+.add-checklist {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+.checklists {}
+
+.checklists>* {}
+
+.checklist {
+  /* padding: 5px 5px 2px 5px; */
+  padding-left: 2px;
+  margin-bottom: 0.75rem;
+}
+
+.checklist-title {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /* display: block; */
+  margin-bottom: 4px;
+  padding: 4px 8px 0px 0px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+textarea.checklist-title {
+  padding-left: 8px;
+  padding-bottom: 4px;
+}
+
+.checked {
+  opacity: 0.6;
+  /* text-decoration: line-through;
+  text-decoration-thickness: 0.1rem !important;
+  text-decoration-color: black !important; */
+}
+
+.item {
+  padding: 0;
+}
+
+.item-row {
+  max-width: 100%;
+  width: 100%;
+  padding: 5px 5px 5px 0px;
+}
+
+.item-row>.check {
+  margin-top: 3px;
+  margin-bottom: 2px;
+  min-width: 20px;
+  translate: -2px;
+}
+
+.item-row>.item-desc {
+  flex-grow: 100;
+  margin-left: 5px;
+}
+
+.item-row>div.default {
+  margin-left: 5px;
+
+  min-width: calc(100% - 45px);
+  max-width: calc(100% - 45px);
+
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 4px 8px;
+  max-width: inherit;
+}
+
+.spacer {
+  width: 10px;
+  display: inline-block;
+  min-width: 10px;
+  max-width: 10px;
+  /* margin-left: -2px; */
+  padding-bottom: 4px;
+  margin-right: 4px;
+}
