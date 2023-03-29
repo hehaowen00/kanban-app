@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import Labels from "./Labels";
 
-import { Label } from "../../Types/Kanban";
+import { Label } from "../../types/Kanban";
 import "../../styles/Settings.css";
 import { useSelector } from "react-redux";
 

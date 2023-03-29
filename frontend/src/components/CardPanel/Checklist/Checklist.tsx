@@ -5,16 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import ChecklistItemView from "./ChecklistItem";
 import TextareaAutosize from "react-autosize-textarea";
 
-import { NewChecklistItem, DeleteChecklist } from "../../../Redux/Creators";
-import { AppState } from "../../../Redux/Store";
-import { ChecklistItem } from "../../../Types/Kanban";
+import { AppState } from "../../../redux/Store";
+import { ChecklistItem } from "../../../types/Kanban";
 import {
   MAX_CHECKLIST_ITEM_LENGTH,
   MAX_CHECKLIST_TITLE_LENGTH,
-} from "../../../Types/Limits";
+} from "../../../types/Limits";
 
-import { lockYAxis } from "../../../Utils/Dnd";
+import { lockYAxis } from "../../../utils/Dnd";
 import "../../../styles/Checklist.css";
+import { deleteChecklist, newChecklistItem } from "../../../redux/Reducers/Board";
 
 function ChecklistView({ cardId, id, index }: Props) {
   const dispatch = useDispatch();
@@ -29,8 +29,6 @@ function ChecklistView({ cardId, id, index }: Props) {
     itemInput: "",
     active: false,
   });
-
-  // console.log(state.active)
 
   const setActive = (value: boolean) => {
     setState({ ...state, active: value });
@@ -83,9 +81,9 @@ function ChecklistView({ cardId, id, index }: Props) {
     setEditing(true);
   };
 
-  const deleteChecklist = () => {
-    let action = DeleteChecklist(cardId, id);
-    dispatch(action);
+  const removeChecklist = () => {
+      /* let action = DeleteChecklist(cardId, id); */
+    dispatch(deleteChecklist({ cardId, checklistId: id }));
   };
 
   const itemRef = useRef<HTMLTextAreaElement>(null);
@@ -98,10 +96,11 @@ function ChecklistView({ cardId, id, index }: Props) {
   }, [state.active]);
 
   const addListItem = () => {
-    let newItem = state.itemInput.trim();
-    if (newItem !== "") {
-      let action = NewChecklistItem(id, newItem);
-      dispatch(action);
+    let item = state.itemInput.trim();
+    if (item !== "") {
+        /* let action = NewChecklistItem(id, newItem);
+  * dispatch(action); */
+      dispatch(newChecklistItem({ checklistId: id, description: item }));
       setState({ ...state, itemInput: "", });
     }
   };
@@ -168,7 +167,7 @@ function ChecklistView({ cardId, id, index }: Props) {
                 <div className="menu mt-5 spaced-right text-right">
                   <button
                     className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
-                    onMouseDown={deleteChecklist}
+                    onMouseDown={removeChecklist}
                   >
                     Delete Checklist
                   </button>

@@ -1,12 +1,13 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
-import TextareaAutosize from "react-autosize-textarea";
-import { Card } from "../../Types/Kanban";
-import ReactMarkdown from 'react-markdown';
-import { AsIsRender, HrRender, LinkRender, QuoteRender } from "../../utils/Markdown";
-
-import { MAX_DESCRIPTION_LENGTH } from "../../Types/Limits";
 import { useSelector } from "react-redux";
+
+import TextareaAutosize from "react-autosize-textarea";
+import ReactMarkdown from 'react-markdown';
+import { HrRender, LinkRender, QuoteRender } from "../../utils/Markdown";
+
 import { AppState } from "../../redux/Store";
+import { Card } from "../../types/Kanban";
+import { MAX_DESCRIPTION_LENGTH } from "../../types/Limits";
 
 function DescriptionView({ cardId, updateCard }: Props) {
   const description = useSelector(({ board }: AppState) => {
@@ -23,14 +24,8 @@ function DescriptionView({ cardId, updateCard }: Props) {
     }
   }, [focused]);
 
-  // const descriptionUpdate = () => {
-  //   let value_ = value.trim();
-  //   updateCard({ description: value_ });
-  // };
-
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    let { value } = event.target;
-    setValue(value);
+    setValue(event.target.value);
   };
 
   const onFocus = () => {
@@ -38,16 +33,11 @@ function DescriptionView({ cardId, updateCard }: Props) {
   };
 
   const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    switch (event.key) {
-      case "Escape": {
+    if (event.key === "Escape") {
         event.preventDefault();
         setValue(description);
         setFocused(false);
         ref.current?.blur();
-        break;
-      }
-      default: {
-      }
     }
   };
 
@@ -60,15 +50,15 @@ function DescriptionView({ cardId, updateCard }: Props) {
 
   const onClick = () => {
     setFocused(true);
-    // setState({ desc: description })
     setValue(description);
   };
 
   return (
     <div className="block">
       {!focused && value !== "" &&
-        < div
-          className="bg-white mb-1 px-2 py-1 whitespace-pre-wrap markdown rounded focus:drop-shadow select-none cursor-pointer"
+        <div
+          className="bg-white mb-1 px-2 py-1 whitespace-pre-wrap markdown rounded
+          focus:drop-shadow select-none cursor-pointer"
           onClick={onClick}
         >
           <ReactMarkdown
@@ -90,7 +80,6 @@ function DescriptionView({ cardId, updateCard }: Props) {
           spellCheck={focused}
           value={value}
 
-          // onBlur={onBlur}
           onChange={onChange}
           onFocus={onFocus}
           onKeyPress={onKeyPress}

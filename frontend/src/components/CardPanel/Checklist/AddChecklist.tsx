@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux";
 import TextareaAutosize from "react-autosize-textarea";
 import Outside from "../../Outside";
 
-import { NewChecklist } from "../../../redux/Creators";
-import { MAX_CHECKLIST_TITLE_LENGTH } from "../../../Types/Limits";
+import { MAX_CHECKLIST_TITLE_LENGTH } from "../../../types/Limits";
+import { newChecklist } from "../../../redux/Reducers/Board";
 
 function AddChecklist({ cardId, active, close }: Props) {
   const dispatch = useDispatch();
-  const [title, setTitle] = useState("");
+  const [name, setName] = useState("");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -24,7 +24,7 @@ function AddChecklist({ cardId, active, close }: Props) {
   const titleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     let { value } = event.target;
     if (value === "" || value.trim() !== "") {
-      setTitle(value);
+      setName(value);
     }
   };
 
@@ -36,15 +36,15 @@ function AddChecklist({ cardId, active, close }: Props) {
   };
 
   const addList = () => {
-    if (title.trim() !== "") {
-      dispatch(NewChecklist(cardId, title));
-      setTitle("");
+    if (name.trim() !== "") {
+      dispatch(newChecklist({ cardId, name }));
+      setName("");
       close();
     }
   };
 
   const cancelClick = () => {
-    setTitle("");
+    setName("");
     close();
   };
 
@@ -60,7 +60,7 @@ function AddChecklist({ cardId, active, close }: Props) {
           className="checklist-title rounded default flex flex-col font-85 font-500 m-0 focus:drop-shadow"
           maxLength={MAX_CHECKLIST_TITLE_LENGTH}
           placeholder="Checklist"
-          value={title}
+          value={name}
           spellCheck={false}
           onChange={titleChange}
           onKeyPress={titleKeyPress}

@@ -1,79 +1,61 @@
-import {
-  ChangeEvent,
-  useEffect,
-  useState,
-  useRef,
-} from "react";
+import { ChangeEvent, useEffect, useState, useRef, } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import AddChecklist from "./Checklist/AddChecklist";
-import DescriptionView from "./Description";
 import Checklists from "./Checklist/Checklists";
 import Comments from "./Comments";
-import LabelView from "./LabelsView";
+import DescriptionView from "./Description";
+import LabelsView from "./LabelsView";
 import TitleView from "./Title";
 
-import {
-  CloseCardView,
-  DeleteCard,
-  ShowLabelModal,
-  UpdateCard,
-} from "../../redux/Creators";
-import { Card } from "../../Types/Kanban";
+import { deleteCard, updateCard } from "../../redux/Reducers/Board";
+import { closeCardView, showLabelModal } from "../../redux/Reducers/UI";
 import { AppState } from "../../redux/Store";
+import { Card } from "../../types/Kanban";
 
 import "../../styles/CardPanel.css";
 
 function CardPanel() {
   const dispatch = useDispatch();
-  let containerRef = useRef<HTMLDivElement>(null);
-
-  const { cardId, listId } = useSelector(({ ui }: AppState) => {
-    return ui;
-  });
-
-  const {
-    startDate,
-    endDate,
-    labels,
-    comments
-  } = useSelector(({ board }: AppState) => {
-    return { ...board.cards[cardId], };
-  });
-
-  const deleteCard = () => {
-    dispatch(CloseCardView());
-    dispatch(DeleteCard(cardId, listId));
-  };
-
-  const updateCard = (patch: Partial<Card>) => {
-    dispatch(UpdateCard(cardId, patch));
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     containerRef.current?.scrollIntoView({ behavior: 'auto' });
   });
 
-  const [state, setState] = useState({
-    startDate,
-    endDate,
+  const { cardId, listId } = useSelector(({ ui }: AppState) => {
+    return ui;
   });
 
-  const [addChecklist, setAddChecklist] = useState(false);
-  const [selectLabels, setSelectLabels] = useState(false);
+  const card = useSelector(({ board }: AppState) => {
+    return board.cards[cardId];
+  });
 
-  const updateState = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    let { name, value } = event.target;
-    setState({ ...state, [name]: value });
-    updateCard({ [name]: value })
+  const { startDate, endDate, labels, comments } = card;
+  const [dates, setDates] = useState({ startDate, endDate });
+  const [addChecklist, setAddChecklist] = useState(false);
+
+  const close = () => {
+    dispatch(closeCardView());
+  };
+
+  const removeCard = () => {
+    dispatch(closeCardView());
+    dispatch(deleteCard({ listId, cardId, }));
+  };
+
+  const putCard = (card: Partial<Card>) => {
+    dispatch(updateCard({ id: cardId, card }));
   };
 
   const addLabel = () => {
-    dispatch(ShowLabelModal(cardId));
-  }
+    dispatch(showLabelModal());
+  };
 
-  const close = () => {
-    dispatch(CloseCardView());
+  const updateDate = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setDates({ ...dates, [name]: value });
+    putCard({ [name]: value });
   };
 
   return (
@@ -85,27 +67,18 @@ function CardPanel() {
         >
           <TitleView
             cardId={cardId}
-            updateCard={updateCard}
-            deleteCard={deleteCard}
+            updateCard={putCard}
+            deleteCard={removeCard}
           />
-          <DescriptionView
-            cardId={cardId}
-            updateCard={updateCard}
-          />
+          <DescriptionView cardId={cardId} updateCard={putCard} />
           <div className="menu-bar spaced-right text-left text-center flex flex-row">
             <button
-              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 roundea
-              d hover:bg-slate-700 hover:text-white"
+              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded
+              hover:bg-slate-700 hover:text-white"
               onClick={() => setAddChecklist(true)}
             >
               Add Checklist
             </button>
-            {/* <button
-              className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded
-              d hover:bg-slate-700 hover:text-white"
-            >
-              Add Date
-            </button> */}
             <button
               className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded
                hover:bg-slate-700 hover:text-white"
@@ -113,19 +86,11 @@ function CardPanel() {
             >
               Add Label
             </button>
-            {/* <button
-              className="text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
-            >
-              Add Date
-            </button> */}
           </div>
-          <LabelView
-            cardId={cardId}
-            assigned={labels}
-            selectLabels={selectLabels}
-            close={() => setSelectLabels(false)}
-          />
-          <div className="bg-grey-100 br-3 border-none flex flex-row items-center">
+          <LabelsView cardId={cardId} assigned={labels} />
+          <div
+            className="bg-grey-100 br-3 border-none flex flex-row items-center"
+          >
             <div className="w-1/2 flex mr-0.5">
               <div className="date items-center font-85 font-500 flex no-select">
                 Start Date
@@ -134,26 +99,26 @@ function CardPanel() {
                 name="startDate"
                 className="default ml-auto px-2 py-1 border-none focus:drop-shadow"
                 type="date"
-                value={state.startDate}
-                onChange={updateState}
+                value={dates.startDate}
+                onChange={updateDate}
               />
             </div>
             <div className="ml-0.5 w-1/2 flex">
-              <div className="ml-1 date items-center float-left font-85 flex no-select">
+              <div
+                className="ml-1 date items-center float-left font-85 flex no-select"
+              >
                 Due Date
               </div>
               <input
                 name="endDate"
                 className="default ml-auto px-2 py-1 border-none focus:drop-shadow"
                 type="date"
-                value={state.endDate}
-                onChange={updateState}
+                value={dates.endDate}
+                onChange={updateDate}
               />
             </div>
           </div>
-          <Checklists
-            cardId={cardId}
-          />
+          <Checklists cardId={cardId} />
           {addChecklist &&
             <AddChecklist
               active={addChecklist}
@@ -161,10 +126,7 @@ function CardPanel() {
               close={() => setAddChecklist(false)}
             />
           }
-          <Comments
-            cardId={cardId}
-            comments={comments}
-          />
+          <Comments cardId={cardId} comments={comments} />
         </div>
       </div>
     </>

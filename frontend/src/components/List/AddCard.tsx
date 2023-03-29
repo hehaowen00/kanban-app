@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
 
-import { MAX_CARD_TITLE_LENGTH } from "../../Types/Limits";
-import { NewCard } from "../../redux/Creators";
+import { MAX_CARD_TITLE_LENGTH } from "../../types/Limits";
 
 import "../../styles/AddCard.css";
+import { newCard } from "../../redux/Reducers/Board";
 
 function AddCard({ listId, close, listRef }: Props) {
   const dispatch = useDispatch();
@@ -32,9 +32,9 @@ function AddCard({ listId, close, listRef }: Props) {
 
   const addCard = () => {
     if (title.trim() !== "") {
-      let value = title.trim().replaceAll('\n', ' ').substring(0, MAX_CARD_TITLE_LENGTH);
-      let action = NewCard(listId, value);
-      dispatch(action);
+      let value = title.trim().replaceAll('\n', ' ')
+                       .substring(0, MAX_CARD_TITLE_LENGTH);
+      dispatch(newCard({ listId, title: value }));
       setTitle_("");
     }
   };

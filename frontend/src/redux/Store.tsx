@@ -1,5 +1,5 @@
-import { v4 as uuidV4 } from "uuid";
-import { createStore, combineReducers } from "redux";
+import { combineReducers } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 import BoardReducer from "./Reducers/Board";
 import UIReducer from "./Reducers/UI";
 
@@ -10,4 +10,6 @@ const appReducer = combineReducers({
 
 export type AppState = ReturnType<typeof appReducer>;
 
-export default createStore(appReducer);
+export default configureStore({
+  reducer: appReducer
+});

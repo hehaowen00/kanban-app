@@ -1,5 +1,5 @@
-import Board from "./Components/Board";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Board from "./Components/Board";
 
 import "./App.css";
 

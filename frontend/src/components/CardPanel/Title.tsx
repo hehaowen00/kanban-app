@@ -3,8 +3,8 @@ import TextareaAutosize from "react-autosize-textarea";
 import { useSelector } from "react-redux";
 import { AppState } from "../../redux/Store";
 
-import { Card } from "../../Types/Kanban";
-import { MAX_CARD_TITLE_LENGTH } from "../../Types/Limits";
+import { Card } from "../../types/Kanban";
+import { MAX_CARD_TITLE_LENGTH } from "../../types/Limits";
 
 function TitleView({ cardId, updateCard, deleteCard }: Props) {
   const ref = useRef<HTMLTextAreaElement>(null);
@@ -87,7 +87,8 @@ function TitleView({ cardId, updateCard, deleteCard }: Props) {
       {focused && (
         <div className="menu mt-5 text-right">
           <button
-            className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
+            className="text-slate-700 px-3 py-1 bg-slate-300 rounded
+             hover:bg-slate-700 hover:text-white"
             onMouseDown={onMouseDown}
           >
             Delete Card
@@ -99,9 +100,6 @@ function TitleView({ cardId, updateCard, deleteCard }: Props) {
 }
 
 type Props = {
-  // title: string,
-  // value: string,
-  // setValue: (value: string) => void,
   cardId: string,
   updateCard: (partial: Partial<Card>) => void,
   deleteCard: () => void,

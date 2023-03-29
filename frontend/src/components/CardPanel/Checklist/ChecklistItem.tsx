@@ -4,12 +4,12 @@ import TextareaAutosize from "react-autosize-textarea";
 
 import { useDispatch } from "react-redux";
 
-import { DeleteChecklistItem, UpdateChecklistItem } from "../../../redux/Creators";
-import { ChecklistItem } from "../../../Types/Kanban";
-import { MAX_CHECKLIST_ITEM_LENGTH } from "../../../Types/Limits";
+import { ChecklistItem } from "../../../types/Kanban";
+import { MAX_CHECKLIST_ITEM_LENGTH } from "../../../types/Limits";
 
 import { lockYAxis } from "../../../utils/Dnd";
 import "../../../styles/Checklist.css";
+import { deleteChecklistItem, updateChecklistItem } from "../../../redux/Reducers/Board";
 
 function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
   const dispatch = useDispatch();
@@ -29,20 +29,23 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
   }, [state.visible]);
 
   const deleteItem = () => {
-    let action = DeleteChecklistItem(checklistId, index);
-    dispatch(action);
+      /* let action = DeleteChecklistItem(checklistId, index);
+  * dispatch(action); */
+    dispatch(deleteChecklistItem({ checklistId, index }));
   };
 
   const toggleStatus = () => {
-    let action = UpdateChecklistItem(checklistId, index, { status: !status });
-    dispatch(action);
+      /* let action = UpdateChecklistItem(checklistId, index, { status: !status });
+  * dispatch(action); */
+    dispatch(updateChecklistItem({ checklistId, index, item: { status: !status } }));
   };
 
   const updateDescription = () => {
     let description = state.desc.trim();
     if (description.length !== 0) {
-      let action = UpdateChecklistItem(checklistId, index, { description });
-      dispatch(action);
+        /* let action = UpdateChecklistItem(checklistId, index, { description });
+  * dispatch(action); */
+      dispatch(updateChecklistItem({ checklistId, index, item: { description } }));
     }
   };
 
@@ -79,15 +82,16 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
     }
   };
 
-  let classes = ["block", "rounded", "bg-white", "default", "font-85"];
+  // let classes = ["block", "rounded", "bg-white", "default", "font-85"];
 
-  if (status && !state.visible) {
-    classes.push("checked");
-  }
+  // if (status && !state.visible) {
+  //   classes.push("checked");
+  // }
 
+  let isDragging = (check: boolean) => check ? "bg-gray-100 drop-shadow" : "";
+
+  let checked = (status && !state.visible) ? "checked" : "";
   let key = `${checklistId}-${index}`;
-
-  // console.log(allowed, state.visible)
 
   return (
     <Draggable
@@ -100,7 +104,7 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
         <div
           key={key}
           ref={provided.innerRef}
-          className={`item br-3 flex flex-col mb-0 ${snapshot.isDragging && 'bg-gray-100 drop-shadow'}`}
+          className={`item br-3 flex flex-col mb-0 ${isDragging(snapshot.isDragging)}`}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           style={lockYAxis(provided.draggableProps.style || {})}
@@ -134,7 +138,7 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
             )}
             {!state.visible && (
               <div
-                className={classes.join(" ")}
+                className={`block rounded bg-white default font-85 ${checked}`}
                 onClick={onClick}
               >
                 {description}
@@ -144,7 +148,8 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
           {state.visible && (
             <div className="menu text-right">
               <button
-                className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
+                className="text-slate-700 px-3 py-1 bg-slate-300 rounded
+                 hover:bg-slate-700 hover:text-white"
                 onMouseDown={deleteItem}
               >
                 Delete Item

@@ -1,9 +1,11 @@
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidV4 } from "uuid";
-import ExampleBoard from "../../types/example";
-import BoardAction from "../Actions";
-import { Board, List } from "../../Types/Kanban";
+
+import { Board, Card, Checklist, ChecklistItem, List } from "../../types/Kanban";
+import ExampleBoard from "../../types/Example";
 
 const EmptyCard = {
+  id: "",
   title: "",
   description: "",
   startDate: "",
@@ -14,299 +16,339 @@ const EmptyCard = {
   comments: [],
 };
 
-function BoardReducer(state: Board = ExampleBoard, action: BoardAction) {
-  switch (action.type) {
-    case "RenameBoard": {
-      const { name } = action;
-      return { ...state, name };
-    }
-    case "NewLabel": {
-      let id = uuidV4();
-      let newLabel = action.name;
-      let labels = { ...state.labels };
+const EmptyBoard: (id: string) => Board = (id: string) => {
+  return {
+    id,
+    name: "",
+    lists: [],
+    cards: {},
+    labels: {},
+    attachments: {},
+    checklists: {}
+  };
+};
 
-      for (const key in labels) {
-        let { name } = labels[key];
-        if (name === newLabel) {
-          return state;
+interface RenameBoard {
+  name: string,
+}
+
+interface NewList {
+  name: string,
+}
+
+interface MoveList {
+  srcIdx: number,
+  destIdx: number,
+}
+
+interface UpdateList {
+  id: string,
+  partial: Partial<List>,
+}
+
+interface DeleteList {
+  id: string,
+}
+
+interface NewCard {
+  listId: string,
+  title: string,
+}
+
+interface MoveCard {
+  srcId: string,
+  destId: string,
+  srcIdx: number,
+  destIdx: number,
+}
+
+interface UpdateCard {
+  id: string,
+  card: Partial<Card>,
+}
+
+interface DeleteCard {
+  listId: string,
+  cardId: string,
+}
+
+interface NewLabel {
+  cardId: string,
+  name: string,
+  color: string,
+}
+
+interface DeleteLabel {
+  id: string,
+}
+
+interface AddLabel {
+  cardId: string,
+  labelId: string,
+}
+
+interface RemoveLabel {
+  cardId: string,
+  labelId: string,
+}
+
+interface NewChecklist {
+  cardId: string,
+  name: string,
+}
+
+interface MoveChecklist {
+  cardId: string,
+  srcIdx: number,
+  destIdx: number,
+}
+
+interface DeleteChecklist {
+  cardId: string,
+  checklistId: string,
+}
+
+interface UpdateChecklist {
+  id: string,
+  checklist: Partial<Checklist>,
+}
+
+interface NewChecklistItem {
+  checklistId: string,
+  description: string,
+}
+
+interface MoveChecklistItem {
+  srcId: string,
+  srcIdx: number,
+  destId: string,
+  destIdx: number,
+}
+
+interface UpdateChecklistItem {
+  checklistId: string,
+  index: number,
+  item: Partial<ChecklistItem>,
+}
+
+interface DeleteChecklistItem {
+  checklistId: string,
+  index: number,
+}
+
+interface NewComment {
+  userId: string,
+  cardId: string,
+  comment: string,
+}
+
+const boardSlice = createSlice({
+  name: "Board",
+  initialState: ExampleBoard as Board,
+  reducers: {
+    renameBoard: (state, action: PayloadAction<RenameBoard>) => {
+      const name = action.payload.name;
+      state.name = name;
+    },
+
+    newList: (state, action: PayloadAction<NewList>) => {
+      const id = uuidV4();
+      const name = action.payload.name;
+
+      let list = { id, name, cardIds: [] };
+      state.lists.push(list);
+    },
+    moveList: (state, action: PayloadAction<MoveList>) => {
+      const { srcIdx, destIdx } = action.payload;
+      state.lists = reorder(state.lists, srcIdx, destIdx);
+    },
+    updateList: (state, action: PayloadAction<UpdateList>) => {
+      const { id, partial } = action.payload;
+
+      const idx = state.lists.findIndex((list) => list.id === id);
+      if (idx !== -1) {
+        state.lists[idx] = { ...state.lists[idx], ...partial };
+      }
+    },
+    deleteList: (state, action: PayloadAction<DeleteList>) => {
+      const { id } = action.payload;
+
+      let idx = state.lists.findIndex((list) => list.id === id);
+      if (idx !== -1) {
+        let deleted = state.lists.splice(idx, 1);
+        let cardIds = deleted[0].cardIds;
+
+        for (let cardId in cardIds) {
+          delete state.cards[cardId];
         }
       }
+    },
 
-      labels[id] = {
-        name: newLabel,
-      };
-
-      // add new label to card if label was created using cardpanel
-      let card = action.card;
-
-      if (card !== null) {
-        let cards = { ...state.cards };
-        let labels = [...cards[card].labels];
-        cards[card].labels = [...labels, id];
-      }
-
-      return { ...state, labels };
-    }
-    case "AddLabel": {
-      const { cardId, labelId } = action;
-      let cards = { ...state.cards };
-      let labels = [...cards[cardId].labels];
-      if (labels.includes(labelId)) {
-        return state;
-      }
-      cards[cardId].labels = [...labels, labelId];
-      return { ...state, cards };
-    }
-    case "RemoveLabel": {
-      const { cardId, labelId } = action;
-      let cards = { ...state.cards };
-      let labels = cards[cardId].labels.filter((id: string) => id !== labelId);
-      cards[cardId].labels = [...labels];
-      return { ...state, cards };
-    }
-    case "NewCard": {
-      const { listId, title } = action;
-
-      let lists = [...state.lists];
-      let cards = { ...state.cards };
-      let list = lists.find((list: List) => list.id === listId);
+    newCard: (state, action: PayloadAction<NewCard>) => {
+      const { listId, title } = action.payload;
+      let list = findById(state.lists, listId);
 
       if (list !== undefined) {
-        let cardId = uuidV4();
-        cards[cardId] = {
-          ...EmptyCard,
-          title,
-        };
-        list.cardIds = [...list.cardIds, cardId];
+        const id = uuidV4();
+        state.cards[id] = { ...EmptyCard, id, title, };
+        list.cardIds.push(id);
       }
+    },
+    moveCard: (state, action: PayloadAction<MoveCard>) => {
+      const { srcId, srcIdx, destId, destIdx } = action.payload;
 
-      return { ...state, cards, lists };
-    }
-    case "UpdateCard": {
-      const { id, delta } = action;
-
-      let cards = { ...state.cards };
-      cards[id] = { ...cards[id], ...delta };
-
-      return { ...state, cards: { ...cards } };
-    }
-    case "DeleteCard": {
-      const { cardId, listId } = action;
-
-      let cards = { ...state.cards };
-      delete cards[cardId];
-
-      let lists = [...state.lists];
-      let idx = lists.findIndex((list: List) => list.id === listId);
-
-      if (idx === -1) {
-        return state;
-      }
-
-      let list = lists[idx];
-      let res = list.cardIds.indexOf(cardId);
-
-      if (res === -1) {
-        return state;
-      }
-
-      list.cardIds.splice(res, 1);
-
-      return { ...state, cards, lists };
-    }
-    case "NewList": {
-      const { name } = action;
-      let lists = [...state.lists, { id: uuidV4(), name, cardIds: [] }];
-      return { ...state, lists };
-    }
-    case "MoveCard": {
-      const { srcId, srcIdx, destId, destIdx } = action;
-      let lists = [...state.lists];
-
-      const srcListIdx = lists.findIndex((list: List) => list.id === srcId);
-
+      const srcListIdx = findIndexById(state.lists, srcId);
       if (srcListIdx === -1) {
-        return state;
+        return;
       }
 
       if (srcId === destId) {
-        let cards = reorder(lists[srcListIdx].cardIds, srcIdx, destIdx);
-        lists[srcListIdx].cardIds = cards;
+        state.lists[srcListIdx].cardIds = reorder(
+          state.lists[srcListIdx].cardIds, srcIdx, destIdx
+        );
+      } else {
+        const destListIdx = findIndexById(state.lists, destId);
+        if (destListIdx === -1) {
+          return;
+        }
 
-        return { ...state, lists };
+        const card = state.lists[srcListIdx].cardIds.splice(srcIdx, 1);
+        state.lists[destListIdx].cardIds.splice(destIdx, 0, card[0]);
+      }
+    },
+    updateCard: (state, action: PayloadAction<UpdateCard>) => {
+      const { id, card } = action.payload;
+      state.cards[id] = { ...state.cards[id], ...card };
+    },
+    deleteCard: (state, action: PayloadAction<DeleteCard>) => {
+      const { listId, cardId } = action.payload;
+
+      for (let labelId in state.cards[cardId].labels) {
+        state.labels[labelId].index.delete(cardId);
       }
 
-      const destListIdx = lists.findIndex((list: List) => list.id === destId);
-      if (destListIdx === -1) {
-        return state;
+      delete state.cards[cardId];
+
+      const listIdx = findIndexById(state.lists, listId);
+      if (listIdx === -1) {
+        return;
       }
 
-      const card = lists[srcListIdx].cardIds.splice(srcIdx, 1);
-      const destCards = insert(lists[destListIdx].cardIds, destIdx, card[0]);
-
-      const modifiedSrcList = { ...lists[srcListIdx] };
-      const modifiedDestList = { ...lists[destListIdx], cardIds: destCards };
-
-      lists[srcListIdx] = modifiedSrcList;
-      lists[destListIdx] = modifiedDestList;
-
-      return { ...state, lists };
-    }
-    case "MoveList": {
-      const { srcIdx, destIdx } = action;
-      let lists = reorder(state.lists, srcIdx, destIdx);
-      return { ...state, lists };
-    }
-    case "UpdateList": {
-      const { id, delta } = action;
-      let lists = [...state.lists];
-      let idx = lists.findIndex((list) => list.id === id);
-
-      if (idx !== -1) {
-        lists[idx] = { ...lists[idx], ...delta };
-        return { ...state, lists };
+      const idx = state.lists[listIdx].cardIds.indexOf(cardId);
+      if (idx === -1) {
+        return;
       }
 
-      return state;
-    }
-    case "DeleteList": {
-      const { id } = action;
+      state.lists[listIdx].cardIds.splice(idx, 1);
+    },
 
-      let lists = [...state.lists];
-      let idx = lists.findIndex((list) => list.id === id);
-      let deleted = lists.splice(idx, 1);
-      let { cardIds } = deleted[0];
-
-      let cards = { ...state.cards };
-      for (let cardId in cardIds) {
-        delete cards[cardId];
-      }
-
-      return { ...state, cards, lists };
-    }
-    case "NewChecklist": {
-      const { cardId, title } = action;
-
-      let checklists = { ...state.checklists };
+    newLabel: (state, action: PayloadAction<NewLabel>) => {
+      const { name, color } = action.payload;
       const id = uuidV4();
-      checklists[id] = {
-        title,
-        items: [],
-      };
 
-      let cards = { ...state.cards };
-      let existing = [...cards[cardId].checklists, id];
-      cards[cardId].checklists = existing;
-
-      return { ...state, cards, checklists, };
-    }
-    case "DeleteChecklist": {
-      const { cardId, checklistId } = action;
-      let cards = { ...state.cards };
-      let checklistsArr = [...cards[cardId].checklists];
-      let idx = checklistsArr.findIndex((id: string) => id === checklistId);
-      if (idx !== -1) {
-        checklistsArr.splice(idx, 1);
-        cards[cardId].checklists = checklistsArr;
-
-        let checklists = { ...state.checklists };
-        delete checklists[checklistId];
-
-        return { ...state, ...cards, checklists };
+      for (const key in state.labels) {
+        if (state.labels[key].name === name) {
+          return;
+        }
       }
-      return state;
-    }
-    case "MoveChecklist": {
-      const { cardId, srcIdx, destIdx } = action;
 
-      let card = { ...state.cards[cardId] };
-      let checklists = reorder(card.checklists, srcIdx, destIdx);
-      card.checklists = checklists;
+      state.labels[id] = { id, name, color, index: new Set(), };
 
-      let cards = { ...state.cards };
-      cards[cardId] = card;
+      const cardId = action.payload.cardId;
+      if (cardId) {
+        state.cards[cardId].labels.push(id);
+        state.labels[id].index.add(cardId);
+      }
+    },
+    deleteLabel: (state, action: PayloadAction<DeleteLabel>) => {
+      const { id } = action.payload;
+      const label = state.labels[id];
 
-      return { ...state, cards, };
-    }
-    case "UpdateChecklist": {
-      const { checklistId, delta } = action;
-      let checklist = { ...state.checklists[checklistId], ...delta };
+      for (let cardId in label.index) {
+        state.cards[cardId].labels.delete(id);
+      }
+    },
+    addLabel: (state, action: PayloadAction<AddLabel>) => {
+      const { cardId, labelId } = action.payload;
+      state.cards[cardId].labels.push(labelId);
+      state.labels[labelId].index.add(cardId);
+    },
+    removeLabel: (state, action: PayloadAction<RemoveLabel>) => {
+      const { cardId, labelId } = action.payload;
+      const exists = state.cards[cardId].labels.has(labelId);
 
-      let checklists = { ...state.checklists };
-      checklists[checklistId] = checklist;
+      if (exists) {
+        state.cards[cardId].labels.delete(labelId);
+        state.labels[labelId].index.delete(cardId);
+      }
+    },
 
-      return { ...state, checklists, };
-    }
-    case "NewChecklistItem": {
-      const { checklistId, item } = action;
-      let newItem = {
+    newChecklist: (state, action: PayloadAction<NewChecklist>) => {
+      const { cardId, name } = action.payload;
+      const id = uuidV4();
+
+      state.checklists[id] = { id, title: name, items: [], };
+      state.cards[cardId].checklists.push(id);
+    },
+    moveChecklist: (state, action: PayloadAction<MoveChecklist>) => {
+      const { cardId, srcIdx, destIdx } = action.payload;
+
+      let card = state.cards[cardId];
+      card.checklists = reorder(card.checklists, srcIdx, destIdx);
+    },
+    updateChecklist: (state, action: PayloadAction<UpdateChecklist>) => {
+      const { id, checklist } = action.payload;
+      state.checklists[id] = Object.assign(state.checklists[id], checklist);
+    },
+    deleteChecklist: (state, action: PayloadAction<DeleteChecklist>) => {
+      const { cardId, checklistId } = action.payload;
+      const idx = state.cards[cardId].checklists.indexOf(checklistId);
+
+      if (idx !== -1) {
+        state.cards[cardId].checklists.splice(idx, 1);
+        delete state.checklists[checklistId];
+      }
+    },
+
+    newChecklistItem: (state, action: PayloadAction<NewChecklistItem>) => {
+      const { checklistId, description } = action.payload;
+      const item = {
         status: false,
-        description: item,
+        description,
       };
-      let checklists = { ...state.checklists };
-      let checklist = checklists[checklistId];
 
-      checklist.items.push(newItem);
-      checklists[checklistId] = checklist;
+      state.checklists[checklistId].items.push(item);
+    },
+    moveChecklistItem: (state, action: PayloadAction<MoveChecklistItem>) => {
+      const { srcId, srcIdx, destId, destIdx } = action.payload;
+      const el = state.checklists[srcId].items.splice(srcIdx, 1);
+      state.checklists[destId].items.splice(destIdx, 0, el[0]);
+    },
+    updateChecklistItem: (state, action: PayloadAction<UpdateChecklistItem>) => {
+      const { checklistId, index, item } = action.payload;
+        state.checklists[checklistId].items[index] = Object.assign(
+        state.checklists[checklistId].items[index],
+        item
+      );
+    },
+    deleteChecklistItem: (state, action: PayloadAction<DeleteChecklistItem>) => {
+      const { checklistId, index } = action.payload;
+      state.checklists[checklistId].items.splice(index, 1);
+    },
 
-      return { ...state, checklists };
-    }
-    case "MoveChecklistItem": {
-      const { srcId, srcIdx, destId, destIdx } = action;
-      let checklists = { ...state.checklists };
+    newComment: (state, action: PayloadAction<NewComment>) => {
+      const { userId, cardId, comment } = action.payload;
 
-      let items = [...checklists[srcId].items];
-      let el = items.splice(srcIdx, 1);
-      checklists[srcId].items = items;
-
-      items = [...checklists[destId].items];
-      items = insert(items, destIdx, el[0]);
-      checklists[destId].items = items;
-
-      return { ...state, checklists };
-    }
-    case "DeleteChecklistItem": {
-      const { checklistId, index } = action;
-      let checklists = { ...state.checklists };
-      let checklist = checklists[checklistId];
-
-      let items = [...checklist.items];
-      items.splice(index);
-
-      checklist.items = [...items];
-      checklists[checklistId] = { ...checklist };
-
-      return { ...state, checklists };
-    }
-    case "UpdateChecklistItem": {
-      const { checklistId, index, delta } = action;
-
-      let checklists = { ...state.checklists };
-      let checklist = checklists[checklistId];
-      let items = [...checklist.items];
-
-      items[index] = { ...items[index], ...delta };
-      checklists[checklistId].items = items;
-
-      return { ...state, checklists };
-    }
-    case "NewComment": {
-      const { userId, cardId, text } = action;
-      let cards = { ...state.cards };
-      let comment_ = { userId, timestamp: Date.now(), text };
-
-      let comments = [...cards[cardId].comments, comment_];
-      cards[cardId].comments = comments;
-
-      return { ...state, cards };
-    }
-    default: {
-      return state;
-    }
+      state.cards[cardId].comments.push({
+        userId,
+        timestamp: Date.now(),
+        text: comment,
+      });
+    },
   }
-}
+});
 
-function reorder<Type>(list: Type[], startIdx: number, endIdx: number): Type[] {
+function reorder<T>(list: T[], startIdx: number, endIdx: number): T[] {
   const arr = Array.from(list);
   const [removed] = arr.splice(startIdx, 1);
 
@@ -314,11 +356,49 @@ function reorder<Type>(list: Type[], startIdx: number, endIdx: number): Type[] {
   return arr;
 }
 
-function insert<Type>(arr: Type[], idx: number, element: Type): Type[] {
-  if (idx === 0) {
-    return [element, ...arr];
-  }
-  return [...arr.slice(0, idx), element, ...arr.slice(idx)];
+interface HasId {
+  id: string,
 }
 
-export default BoardReducer;
+function findById<T extends HasId>(arr: T[], id: string): T | undefined {
+  return arr.find((el: T) => el.id === id);
+}
+
+function findIndexById<T extends HasId>(arr: T[], id: string): number {
+  return arr.findIndex((el: T) => el.id === id);
+}
+
+const { actions, reducer } = boardSlice;
+
+export const {
+  renameBoard,
+
+  newList,
+  moveList,
+  updateList,
+  deleteList,
+
+  newCard,
+  moveCard,
+  updateCard,
+  deleteCard,
+
+  newLabel,
+  deleteLabel,
+  addLabel,
+  removeLabel,
+
+  newChecklist,
+  moveChecklist,
+  updateChecklist,
+  deleteChecklist,
+
+  newChecklistItem,
+  moveChecklistItem,
+  updateChecklistItem,
+  deleteChecklistItem,
+
+  newComment,
+} = actions;
+
+export default reducer;

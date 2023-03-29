@@ -8,11 +8,11 @@ import {
   useState,
 } from "react";
 import TextareaAutosize from "react-autosize-textarea";
-import { useDispatch, useSelector } from "react-redux";
-import { NewList } from "../../redux/Creators";
-import { MAX_LIST_TITLE_LENGTH } from "../../Types/Limits";
+import { useDispatch } from "react-redux";
+import { MAX_LIST_TITLE_LENGTH } from "../../types/Limits";
 
 import "../../styles/AddList.css";
+import { newList } from "../../redux/Reducers/Board";
 
 function AddListView(): ReactElement {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ function AddListView(): ReactElement {
       containerRef.current?.scrollIntoView({ behavior: "smooth" });
       setTimeout(() => {
         inputRef.current?.focus();
-      }, 300)
+      }, 300);
     }
   });
 
@@ -47,15 +47,15 @@ function AddListView(): ReactElement {
 
   const addList = () => {
     if (name !== "") {
-      dispatch(NewList(name));
+      dispatch(newList({ name }));
       setName("");
     }
-  }
+  };
 
   const cancelNewList = () => {
     setName("");
     setToggle(false);
-  }
+  };
 
   const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Escape") {
@@ -113,7 +113,8 @@ function AddListView(): ReactElement {
                   Add List
                 </button>
                 <button
-                  className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
+                  className="text-slate-700 px-3 py-1 bg-slate-300 rounded
+                  hover:bg-slate-700 hover:text-white"
                   onClick={cancelNewList}
                 >
                   Cancel

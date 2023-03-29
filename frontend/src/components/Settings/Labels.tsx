@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { Label } from "../../Types/Kanban";
-import { ShowLabelModal } from "../../redux/Creators";
+import { showLabelModal } from "../../redux/Reducers/UI";
+import { Label } from "../../types/Kanban";
 
 function Labels({ labels }: Props) {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ function Labels({ labels }: Props) {
   xs = xs.sort((a: any, b: any) => a.name > b.name ? 1 : -1);
 
   const addLabel = () => {
-    dispatch(ShowLabelModal(null));
+    dispatch(showLabelModal());
   };
 
   return (

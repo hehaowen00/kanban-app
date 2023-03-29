@@ -1,10 +1,9 @@
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 import { useDispatch, useSelector } from "react-redux";
 
-import AddChecklistView from "./AddChecklist";
 import ChecklistView from "./Checklist";
 
-import { MoveChecklist, MoveChecklistItem } from "../../../redux/Creators";
+import { moveChecklist, moveChecklistItem } from "../../../redux/Reducers/Board";
 import { AppState } from "../../../redux/Store";
 
 function ChecklistsView({ cardId }: Props) {
@@ -28,11 +27,11 @@ function ChecklistsView({ cardId }: Props) {
 
     switch (event.type) {
       case "droppableChecklists": {
-        action = MoveChecklist(cardId, srcIdx, destIdx);
+        action = moveChecklist({ cardId, srcIdx, destIdx });
         break;
       }
       case "droppableItems": {
-        action = MoveChecklistItem(srcId, srcIdx, destId, destIdx);
+        action = moveChecklistItem({ srcId, srcIdx, destId, destIdx });
         break;
       }
       default: {

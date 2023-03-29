@@ -1,12 +1,12 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import TextareaAutosize from "react-autosize-textarea";
 import { useDispatch } from "react-redux";
+
 import ReactMarkdown from 'react-markdown';
+import TextareaAutosize from "react-autosize-textarea";
 import { HrRender, LinkRender, QuoteRender } from "../../utils/Markdown";
 
-import { Comment } from "../../Types/Kanban";
-
-import { NewComment } from "../../redux/Creators";
+import { newComment } from "../../redux/Reducers/Board";
+import { Comment } from "../../types/Kanban";
 
 import "../../styles/Comments.css";
 
@@ -25,8 +25,7 @@ function Comments({ cardId, comments }: Props) {
   });
 
   const addComment = () => {
-    let action = NewComment("Testing", cardId, comment);
-    dispatch(action);
+    dispatch(newComment({ userId: "Testing", cardId, comment }));
   };
 
   const onBlur = () => {

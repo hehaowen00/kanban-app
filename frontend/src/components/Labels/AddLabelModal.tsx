@@ -1,46 +1,57 @@
 import { useEffect, useRef, useState } from "react";
-import { TwitterPicker } from 'react-color';
 import { useDispatch, useSelector } from "react-redux";
-import { NewLabel } from "../../redux/Creators";
-import { MAX_LABEL_TITLE_LENGTH } from "../../Types/Limits";
+import { TwitterPicker } from 'react-color';
+
+import { newLabel } from "../../redux/Reducers/Board";
+import { hideLabelModal } from "../../redux/Reducers/UI";
+import { AppState } from "../../redux/Store";
+
+import { MAX_LABEL_TITLE_LENGTH } from "../../types/Limits";
 
 function LabelModal() {
   const dispatch = useDispatch();
   const inputRef = useRef<any>(null);
 
-  const cardId = useSelector(({ ui }: any) => {
-    return ui.cardId;
+  useEffect(() => {
+    if (inputRef) {
+      inputRef.current?.focus();
+    }
+  }, [inputRef]);
+
+  const { cardId } = useSelector(({ ui }: AppState) => {
+    return ui;
   });
 
   const [state, setState] = useState({
     label: "",
-    color: "",
+    color: {},
     exists: false,
     empty: false,
   });
+
+  const swatches = ["#dc2626", "#2563eb"];
+
+  const close = () => {
+    dispatch(hideLabelModal());
+  };
 
   const onChange = (e: any) => {
     setState({ ...state, label: e.target.value });
   };
 
-  const close = () => {
-    dispatch({ type: "HideLabelModal" });
+  const onColorChange = (color: any, event: any) => {
+    setState({ ...state, color, });
   };
 
   const addLabel = () => {
-    if (state.label.trim() !== "") {
-      dispatch(NewLabel(state.label.trim(), cardId));
-      dispatch({ type: 'HideLabelModal' });
-      return;
+    const name = state.label.trim();
+    if (name !== "") {
+      dispatch(newLabel({ cardId, name, color: state.color.hex }));
+      dispatch(hideLabelModal());
+    } else {
+      setState({ ...state, empty: true });
     }
-    setState({ ...state, empty: true });
   };
-
-  useEffect(() => {
-    if (inputRef) {
-      inputRef.current?.focus();
-    }
-  }, []);
 
   return (
     <>
@@ -63,12 +74,15 @@ function LabelModal() {
                   value={state.label}
                   required
                 />
-                {/* <button className="bg-none hover:bg-slate-700 hover:text-white rounded">Close</button> */}
               </div>
               <div className="mt-1 rounded flex px-2 py-1">
                 <TwitterPicker
+                  name="color"
                   width='100%'
                   triangle='hide'
+                  color={state.color}
+                  colors={swatches}
+                  onChangeComplete={onColorChange}
                 />
               </div>
               {state.exists &&
@@ -91,14 +105,14 @@ function LabelModal() {
               }
               <div className="flex flex-row-reverse px-2 py-1">
                 <button
-                  className="border border-solid border-blue-600 text-blue-700
-                   bg-none hover:bg-blue-700 hover:text-white px-2 py-1 rounded"
+                  className="bg-slate-300 text-slate-700
+                   hover:bg-slate-700 hover:text-white px-2 py-1 rounded"
                   onClick={close}
                 >
                   Cancel
                 </button>
                 <button
-                  className="border border-solid border-blue-600 bg-blue-600
+                  className="bg-blue-600
                    hover:bg-blue-700 text-white px-2 py-1 mr-1 rounded"
                   onClick={addLabel}
                 >

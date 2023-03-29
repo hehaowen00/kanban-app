@@ -1,13 +1,11 @@
 import { ReactElement } from "react";
 import { Draggable } from "@hello-pangea/dnd";
 import { useDispatch, useSelector } from "react-redux";
-import { ShowExistingCard } from "../../redux/Creators";
 
 import { AppState } from "../../redux/Store";
 
-import moment from 'moment'
-
 import "../../styles/Card.css"
+import { showExistingCard } from "../../redux/Reducers/UI";
 
 function CardView({ index, id, listId }: Props): ReactElement {
   const dispatch = useDispatch();
@@ -15,40 +13,32 @@ function CardView({ index, id, listId }: Props): ReactElement {
   const { title, labels, startDate, endDate } = useSelector(({ board }: AppState) => {
     const { title, labels, startDate, endDate } = board.cards[id];
     let xs = labels.map((id: string) => {
-      return { id, ...board.labels[id] };
+      return { ...board.labels[id], id };
     });
     return {
       title,
-      // description,
       labels: xs,
       startDate,
       endDate
     };
   });
 
-  // const sorted = labels.sort((a: any, b: any) => {
-  //   if (a.name > b.name) {
-  //     return 1;
-  //   }
-  //   return -1;
-  // });
-
   const handleClick = () => {
-    dispatch(ShowExistingCard(id, listId));
+    dispatch(showExistingCard({ cardId: id, listId }));
   };
-
-
-  // if (startDate !== "") {
-  //   let date = new Date(startDate);
-  //   let s = date.toLocaleDateString('en-GB', { month: 'short', day: 'numeric', year: 'numeric' });
-  // }
 
   const formatDate = (dateString: string) => {
     if (dateString === "") {
       return "";
     }
+
     let date = new Date(dateString);
-    let s = date.toLocaleDateString('en-GB', { month: 'short', day: 'numeric', year: 'numeric' });
+    let s = date.toLocaleDateString('en-GB', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+
     return s;
   }
 
@@ -78,8 +68,15 @@ function CardView({ index, id, listId }: Props): ReactElement {
           }
           {labels.length > 0 && (
             <div className="card-labels px-2 pb-[6px]">
-              {labels.map(({ id, name }: any) =>
-                <div key={id} className="badge br-3 font-75 font-500 inline-block no-select bg-green-600 text-white">
+              {labels.map(({ id, name, color }: any) =>
+                <div
+                  key={id}
+                  className="badge br-3 font-75 font-500 inline-block no-select
+                   text-white"
+                  style={{
+                    backgroundColor: color,
+                  }}
+                >
                   {name}
                 </div>
               )}

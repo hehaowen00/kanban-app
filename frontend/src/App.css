@@ -15,14 +15,14 @@ button {
   border: none;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 .markdown {
   line-height: 10px;
   min-height: calc(4 * 0.85rem);
 }
-
-/* .markdown:empty {
-  height: calc(0.85rem *4);
-} */
 
 .markdown>p {
   margin: 0;

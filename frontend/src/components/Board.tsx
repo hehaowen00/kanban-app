@@ -8,9 +8,10 @@ import ListView from "./List/List";
 import Navbar from "./Navbar";
 import SettingsView from "./Settings/Settings";
 
-import { List } from "../types/Kanban";
-import { CloseCardView, MoveCard, MoveList } from "../redux/Creators";
+import { moveCard, moveList } from "../redux/Reducers/Board";
+import { closeCardView } from "../redux/Reducers/UI";
 import { AppState } from "../redux/Store";
+import { List } from "../types/Kanban";
 
 import "../styles/Board.css"
 
@@ -21,6 +22,9 @@ function BoardView() {
   const showModal = useSelector(({ ui }: any) => {
     return ui.showLabelModal;
   });
+
+  const ui = useSelector((state: AppState) => state.ui);
+  const { listId, showSettings } = ui;
 
   const handleDragEnd = (event: DropResult) => {
     const { source, destination } = event;
@@ -42,11 +46,11 @@ function BoardView() {
 
     switch (event.type) {
       case "cards": {
-        action = MoveCard(srcId, destId, srcIdx, destIdx);
+        action = moveCard({ srcId, destId, srcIdx, destIdx });
         break;
       }
       case "lists": {
-        action = MoveList(srcIdx, destIdx);
+        action = moveList({ srcIdx, destIdx });
         break;
       }
       default: {
@@ -58,12 +62,8 @@ function BoardView() {
   };
 
   const dragStart = () => {
-    dispatch(CloseCardView());
+    dispatch(closeCardView());
   };
-
-  const { listId, showMenu } = useSelector((state: AppState) => {
-    return state.ui;
-  });
 
   return (
     <>
@@ -103,7 +103,7 @@ function BoardView() {
                 )}
               </Droppable>
             </DragDropContext>
-            {showMenu && <SettingsView labels={labels} />}
+            {showSettings && <SettingsView labels={labels} />}
           </div>
         </div>
       </div>

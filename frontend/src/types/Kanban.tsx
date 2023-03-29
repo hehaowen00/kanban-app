@@ -1,8 +1,11 @@
-export type CardViewState = {
+// object for storing the UI state
+// if cardId is not set, then labelModal has been opened outside of a card
+export type UIState = {
   cardId: string,
   listId: string,
   showCard: boolean,
-  showMenu: boolean,
+  showLabelModal: boolean,
+  showSettings: boolean,
 };
 
 export type Board = {
@@ -22,26 +25,26 @@ export type List = {
 };
 
 export type Card = {
-  title: string;
-  description: string;
-  // dates: {
-  //   startDate: string,
-  //   endDate: string
-  // } | null;
+  id: string,
+  title: string,
+  description: string,
   startDate: string,
   endDate: string,
   labels: string[],
-  checklists: string[];
-  attachments: string[];
-  comments: Comment[];
+  checklists: string[],
+  attachments: string[],
+  comments: Comment[],
 };
 
 export type Label = {
+  id: string,
   name: string,
   color: string,
+  index: Set<string>, // reverse lookup containing every card that uses this label
 };
 
 export type Checklist = {
+  id: string,
   title: string,
   items: ChecklistItem[],
 };
@@ -79,4 +82,4 @@ export enum Actions {
   DeleteChecklist,
   MoveChecklist,
   UpdateChecklist,
-}; 
+};
