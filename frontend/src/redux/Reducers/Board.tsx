@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidV4 } from "uuid";
 
-import { Board, Card, Checklist, ChecklistItem, List } from "../../types/Kanban";
+import { Board, Card, Checklist, ChecklistItem, Label, List } from "../../types/Kanban";
 import ExampleBoard from "../../types/Example";
 
 const EmptyBoard: (id: string) => Board = (id: string) => {
@@ -76,6 +76,11 @@ interface NewLabel {
   cardId: string,
   name: string,
   color: string,
+}
+
+interface UpdateLabel {
+  id: string,
+  label: Partial<Label>,
 }
 
 interface DeleteLabel {
@@ -224,7 +229,11 @@ const boardSlice = createSlice({
       const { listId, cardId } = action.payload;
 
       for (let labelId in state.cards[cardId].labels) {
-        state.labels[labelId].index.delete(cardId);
+          /* state.labels[labelId].index.(cardId); */
+        const idx = state.labels[labelId].index.indexOf(cardId);
+        if (idx !== -1) {
+          state.labels[labelId].index.splice(idx, 1);
+        }
       }
 
       delete state.cards[cardId];
@@ -259,6 +268,10 @@ const boardSlice = createSlice({
         state.cards[cardId].labels.push(id);
         state.labels[id].index.push(cardId);
       }
+    },
+    updateLabel: (state, action: PayloadAction<UpdateLabel>) => {
+      const { id, label } = action.payload;
+      state.labels[id] = Object.assign(state.labels[id], label);
     },
     deleteLabel: (state, action: PayloadAction<DeleteLabel>) => {
       const { id } = action.payload;
@@ -393,6 +406,7 @@ export const {
   deleteCard,
 
   newLabel,
+  updateLabel,
   deleteLabel,
   addLabel,
   removeLabel,

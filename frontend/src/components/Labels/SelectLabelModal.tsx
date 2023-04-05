@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLabel, removeLabel } from "../../redux/Reducers/Board";
-import { hideSelectLabelModal } from "../../Redux/Reducers/UI";
+import { hideSelectLabelModal, showEditLabelModal } from "../../Redux/Reducers/UI";
 import { AppState } from "../../redux/Store";
 import { Label } from "../../types/Kanban";
 
@@ -43,6 +42,12 @@ function SelectLabelModal() {
     }
   };
 
+  const editLabel = (id: string) => {
+    return function () {
+      dispatch(showEditLabelModal({ labelId: id }));
+    }
+  };
+
   return (
     <>
       <div className="card-view-cover label-cover" onClick={close}></div>
@@ -78,6 +83,7 @@ function SelectLabelModal() {
                       </div>
                       <div
                         className="flex-1 text-white font-80 px-2 py-1 rounded select-none hover:cursor-pointer drop-shadow"
+                        onClick={editLabel(label.id)}
                         style={{
                           backgroundColor: label.color,
                         }}

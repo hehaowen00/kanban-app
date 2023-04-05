@@ -6,13 +6,20 @@ const DefaultUIState: UIState = {
   listId: "",
   showCard: false,
   showSettings: false,
-  showLabelModal: false,
+  showAddLabel: false,
   showSelectLabel: false,
+  showEditLabel: false,
+  editLabel: "",
+  history: undefined,
 };
 
 interface ShowExistingCard {
   cardId: string,
   listId: string,
+}
+
+interface ShowEditLabel {
+  labelId: string,
 }
 
 const uiSlice = createSlice({
@@ -34,10 +41,10 @@ const uiSlice = createSlice({
       state.showSettings = false;
     },
     showLabelModal: (state) => {
-      state.showLabelModal = true;
+      state.showAddLabel = true;
     },
     hideLabelModal: (state) => {
-      state.showLabelModal = false;
+      state.showAddLabel = false;
     },
     showSelectLabelModal: (state) => {
       state.showSelectLabel = true;
@@ -45,6 +52,23 @@ const uiSlice = createSlice({
     hideSelectLabelModal: (state) => {
       state.showSelectLabel = false;
     },
+    showEditLabelModal: (state, action: PayloadAction<ShowEditLabel>) => {
+      state.showEditLabel = true;
+      state.editLabel = action.payload.labelId;
+      if (state.showAddLabel) {
+        state.showAddLabel = false;
+      }
+      if (state.showSelectLabel) {
+        state.showSelectLabel = false;
+        state.history = {
+          showSelectLabel: true,
+        };
+      }
+    },
+    closeEditLabelModal: (state) => {
+      state.showEditLabel = false;
+      Object.assign(state, state.history);
+    }
   }
 });
 
@@ -58,6 +82,8 @@ export const {
   hideLabelModal,
   showSelectLabelModal,
   hideSelectLabelModal,
+  showEditLabelModal,
+  closeEditLabelModal,
 } = actions;
 
 export default reducer;

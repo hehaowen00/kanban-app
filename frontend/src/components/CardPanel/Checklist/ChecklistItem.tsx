@@ -60,7 +60,7 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
     setState({ ...state, desc: value, });
   };
 
-  const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  const onKeyUp = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Escape") {
       event.preventDefault();
       inputRef.current?.blur();
@@ -123,8 +123,8 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
 
                   onBlur={onBlur}
                   onChange={onChange}
-                  onKeyDown={onKeyDown}
-                  onKeyUp={onKeyPress}
+                  onKeyUp={onKeyUp}
+                  onKeyPress={onKeyPress}
                 />
               </div>
             )}

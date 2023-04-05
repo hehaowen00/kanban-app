@@ -1,18 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { removeLabel } from "../../redux/Reducers/Board";
 import { showSelectLabelModal } from "../../Redux/Reducers/UI";
 import { AppState } from "../../redux/Store";
 
 import "../../styles/Labels.css";
 
-function LabelsView({ cardId, assigned }: Props) {
+function LabelsView({ assigned }: Props) {
   const dispatch = useDispatch();
   const labelsObj = useSelector(({ board }: AppState) => board.labels);
-
-  const unselectLabel = (id: string) => {
-    dispatch(removeLabel({ cardId, labelId: id }));
-  };
 
   const manageLabels = () => {
     dispatch(showSelectLabelModal());
@@ -40,7 +35,6 @@ function LabelsView({ cardId, assigned }: Props) {
               style={{
                 backgroundColor: labelsObj[id].color,
               }}
-              onClick={() => unselectLabel(id)}
             >
               {labelsObj[id].name}
             </div>

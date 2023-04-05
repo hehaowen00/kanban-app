@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,7 +10,7 @@ import { AppState } from "../../redux/Store";
 
 import { MAX_LABEL_TITLE_LENGTH } from "../../types/Limits";
 
-function LabelModal() {
+function NewLabelModal() {
   const dispatch = useDispatch();
   const inputRef = useRef<any>(null);
 
@@ -63,6 +64,9 @@ function LabelModal() {
         <div className="w-[25em] rounded drop-shadow modal">
           <div className="flex flex-col px-2 py-1 rounded">
             <div className="card-label-item rounded flex flex-col py-1 bg-gray-100">
+              <div className="flex flex-row px-2 py-1 text-sm ml-auto mr-auto select-none">
+                <p>Add New Label</p>
+              </div>
               <div className="flex flex-row px-2 py-1">
                 <input type="text"
                   ref={inputRef}
@@ -114,4 +118,4 @@ function LabelModal() {
   );
 }
 
-export default LabelModal;
+export default NewLabelModal;
