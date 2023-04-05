@@ -68,11 +68,19 @@
   pointer-events: none;
 }
 
+/* .modal-container:first-child { */
+/*   margin-top: -25%; */
+/* } */
+
 .modal {
-  margin-top: -15%;
+  margin-top: -25%;
   pointer-events: auto;
 }
 
 .label-cover {
   z-index: 3 !important;
+}
+
+.label-item + .label-item {
+  margin-top: 0.5rem;
 }

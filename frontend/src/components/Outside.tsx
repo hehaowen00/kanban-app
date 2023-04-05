@@ -4,7 +4,7 @@ import { RefObject, useEffect, useRef } from "react";
 function useOutsideRef(ref: RefObject<HTMLDivElement>, update: () => void) {
   useEffect(() => {
     const handleClick = (event: any) => {
-      const { current }= ref;
+      const { current } = ref;
       let node = event.target;
 
       if (!current || !node || node === current) {
@@ -57,13 +57,13 @@ function Outside({ children, className, style, update, onMouseDown, onClick }: P
   );
 }
 
-type Props = {
+interface Props {
   children: React.ReactNode,
-  update: () => void,
   className?: string,
   style?: React.CSSProperties,
+  update: () => void,
   onMouseDown?: () => void,
   onClick?: () => void,
-};
+}
 
 export default Outside;

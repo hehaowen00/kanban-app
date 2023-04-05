@@ -29,23 +29,21 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
   }, [state.visible]);
 
   const deleteItem = () => {
-      /* let action = DeleteChecklistItem(checklistId, index);
-  * dispatch(action); */
     dispatch(deleteChecklistItem({ checklistId, index }));
   };
 
   const toggleStatus = () => {
-      /* let action = UpdateChecklistItem(checklistId, index, { status: !status });
-  * dispatch(action); */
-    dispatch(updateChecklistItem({ checklistId, index, item: { status: !status } }));
+    dispatch(updateChecklistItem({
+      checklistId, index, item: { status: !status }
+    }));
   };
 
   const updateDescription = () => {
     let description = state.desc.trim();
     if (description.length !== 0) {
-        /* let action = UpdateChecklistItem(checklistId, index, { description });
-  * dispatch(action); */
-      dispatch(updateChecklistItem({ checklistId, index, item: { description } }));
+      dispatch(updateChecklistItem({
+        checklistId, index, item: { description }
+      }));
     }
   };
 
@@ -82,12 +80,6 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
     }
   };
 
-  // let classes = ["block", "rounded", "bg-white", "default", "font-85"];
-
-  // if (status && !state.visible) {
-  //   classes.push("checked");
-  // }
-
   let isDragging = (check: boolean) => check ? "bg-gray-100 drop-shadow" : "";
 
   let checked = (status && !state.visible) ? "checked" : "";
@@ -123,7 +115,7 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
                 <TextareaAutosize
                   ref={inputRef}
                   name="desc"
-                  className="default font-85 focus:drop-shadow"
+                  className="default text-sm focus:drop-shadow"
                   maxLength={MAX_CHECKLIST_ITEM_LENGTH}
                   placeholder="Item"
                   spellCheck={state.visible}
@@ -132,13 +124,13 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
                   onBlur={onBlur}
                   onChange={onChange}
                   onKeyDown={onKeyDown}
-                  onKeyPress={onKeyPress}
+                  onKeyUp={onKeyPress}
                 />
               </div>
             )}
             {!state.visible && (
               <div
-                className={`block rounded bg-white default font-85 ${checked}`}
+                className={`block rounded bg-white default text-sm ${checked}`}
                 onClick={onClick}
               >
                 {description}
@@ -149,7 +141,7 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
             <div className="menu text-right">
               <button
                 className="text-slate-700 px-3 py-1 bg-slate-300 rounded
-                 hover:bg-slate-700 hover:text-white"
+                 hover:bg-slate-700 hover:text-white text-sm"
                 onMouseDown={deleteItem}
               >
                 Delete Item
@@ -162,11 +154,11 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
   );
 }
 
-type Props = {
+interface Props {
   checklistId: string,
   index: number,
   item: ChecklistItem,
   allowed: boolean,
-};
+}
 
 export default ChecklistItemView;

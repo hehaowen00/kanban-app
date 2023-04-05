@@ -120,9 +120,9 @@ function Comments({ cardId, comments }: Props) {
   );
 }
 
-export type Props = {
+interface Props {
   cardId: string,
   comments: Comment[],
-};
+}
 
 export default Comments;

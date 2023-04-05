@@ -1,19 +1,13 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
 import ReactMarkdown from 'react-markdown';
 import { HrRender, LinkRender, QuoteRender } from "../../utils/Markdown";
 
-import { AppState } from "../../redux/Store";
 import { Card } from "../../types/Kanban";
 import { MAX_DESCRIPTION_LENGTH } from "../../types/Limits";
 
-function DescriptionView({ cardId, updateCard }: Props) {
-  const description = useSelector(({ board }: AppState) => {
-    return board.cards[cardId].description;
-  });
-
+function DescriptionView({ description, updateCard }: Props) {
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState(description);
   const ref = useRef<HTMLTextAreaElement>(null);
@@ -34,10 +28,10 @@ function DescriptionView({ cardId, updateCard }: Props) {
 
   const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Escape") {
-        event.preventDefault();
-        setValue(description);
-        setFocused(false);
-        ref.current?.blur();
+      event.preventDefault();
+      setValue(description);
+      setFocused(false);
+      ref.current?.blur();
     }
   };
 
@@ -82,7 +76,7 @@ function DescriptionView({ cardId, updateCard }: Props) {
 
           onChange={onChange}
           onFocus={onFocus}
-          onKeyPress={onKeyPress}
+          onKeyUp={onKeyPress}
         />
       }
       {focused &&
@@ -106,9 +100,9 @@ function DescriptionView({ cardId, updateCard }: Props) {
   );
 }
 
-type Props = {
-  cardId: string,
+interface Props {
+  description: string,
   updateCard: (payload: Partial<Card>) => void,
-};
+}
 
 export default DescriptionView;

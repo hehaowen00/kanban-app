@@ -71,8 +71,8 @@ function CardView({ index, id, listId }: Props): ReactElement {
               {labels.map(({ id, name, color }: any) =>
                 <div
                   key={id}
-                  className="badge br-3 font-75 font-500 inline-block no-select
-                   text-white"
+                  className="badge br-3 font-500 inline-block no-select
+                   text-white text-xs"
                   style={{
                     backgroundColor: color,
                   }}
@@ -88,11 +88,11 @@ function CardView({ index, id, listId }: Props): ReactElement {
   );
 }
 
-type Props = {
+interface Props {
   key: string;
   index: number;
   id: string;
   listId: string,
-};
+}
 
 export default CardView;

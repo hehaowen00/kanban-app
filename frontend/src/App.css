@@ -36,6 +36,10 @@ button:hover {
   margin: 0;
 }
 
+p {
+margin: 0;
+}
+
 .markdown>ul,
 ol {
   margin: 0;
@@ -93,7 +97,6 @@ textarea:focus {
 }
 
 button.default {
-  /* border: 1px solid black; */
   border-radius: 3px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -109,40 +112,17 @@ input[type=text].default {
   padding: 1px 4px;
 }
 
-input[type=date].default {
-  /* border: 1px solid black; */
-  border-radius: 3px;
-}
-
-input[type=datetime-local].default {
-  /* border: 1px solid black; */
-  border-radius: 3px;
-}
-
-input[type=time].default {
-  /* border: 1px solid black; */
-  border-radius: 3px;
-}
-
-input[type=text].default:focus {
-  outline: 1px solid #0079bf;
-}
-
 select.default {
   background: white;
 }
 
-option {}
-
 textarea.default {
-  /* border: 1px solid black; */
   border: none;
   border-radius: 3px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   display: block;
-  /* padding: 4px 8px; */
   resize: none;
   width: 100%;
   word-break: break-word;

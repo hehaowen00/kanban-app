@@ -66,11 +66,14 @@ function CardPanel() {
           className="list card-view br-3 bg-grey block font-85 shadow text-left"
         >
           <TitleView
-            cardId={cardId}
+            title={card.title}
             updateCard={putCard}
             deleteCard={removeCard}
           />
-          <DescriptionView cardId={cardId} updateCard={putCard} />
+          <DescriptionView
+            description={card.description}
+            updateCard={putCard}
+          />
           <div className="menu-bar spaced-right text-left text-center flex flex-row">
             <button
               className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded
@@ -118,7 +121,7 @@ function CardPanel() {
               />
             </div>
           </div>
-          <Checklists cardId={cardId} />
+          <Checklists cardId={cardId} checklists={card.checklists} />
           {addChecklist &&
             <AddChecklist
               active={addChecklist}

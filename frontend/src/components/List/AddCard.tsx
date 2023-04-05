@@ -90,7 +90,7 @@ function AddCard({ listId, close, listRef }: Props) {
           Save
         </button>
         <button
-          className="text-slate-700 px-3 py-1 rounded hover:bg-slate-700 hover:text-white"
+          className="text-slate-700 px-3 py-1 rounded bg-slate-300 hover:bg-slate-700 hover:text-white"
           onClick={onClose}
         >
           Cancel
@@ -100,10 +100,10 @@ function AddCard({ listId, close, listRef }: Props) {
   );
 }
 
-type Props = {
+interface Props {
   listId: string,
   close: () => void,
   listRef: any,
-};
+}
 
 export default AddCard;

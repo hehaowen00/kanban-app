@@ -4,18 +4,6 @@ import { v4 as uuidV4 } from "uuid";
 import { Board, Card, Checklist, ChecklistItem, List } from "../../types/Kanban";
 import ExampleBoard from "../../types/Example";
 
-const EmptyCard = {
-  id: "",
-  title: "",
-  description: "",
-  startDate: "",
-  endDate: "",
-  labels: [],
-  attachments: [],
-  checklists: [],
-  comments: [],
-};
-
 const EmptyBoard: (id: string) => Board = (id: string) => {
   return {
     id,
@@ -26,6 +14,18 @@ const EmptyBoard: (id: string) => Board = (id: string) => {
     attachments: {},
     checklists: {}
   };
+};
+
+const EmptyCard = {
+  id: "",
+  title: "",
+  description: "",
+  startDate: "",
+  endDate: "",
+  labels: [],
+  attachments: [],
+  checklists: [],
+  comments: [],
 };
 
 interface RenameBoard {
@@ -252,12 +252,12 @@ const boardSlice = createSlice({
         }
       }
 
-      state.labels[id] = { id, name, color, index: new Set(), };
+      state.labels[id] = { id, name, color, index: [], };
 
       const cardId = action.payload.cardId;
       if (cardId) {
         state.cards[cardId].labels.push(id);
-        state.labels[id].index.add(cardId);
+        state.labels[id].index.push(cardId);
       }
     },
     deleteLabel: (state, action: PayloadAction<DeleteLabel>) => {
@@ -265,22 +265,31 @@ const boardSlice = createSlice({
       const label = state.labels[id];
 
       for (let cardId in label.index) {
-        state.cards[cardId].labels.delete(id);
+        const idx = state.cards[cardId].labels.indexOf(id);
+        if (idx !== -1) {
+          state.cards[cardId].labels.splice(idx, 1);
+        }
       }
     },
     addLabel: (state, action: PayloadAction<AddLabel>) => {
       const { cardId, labelId } = action.payload;
-      state.cards[cardId].labels.push(labelId);
-      state.labels[labelId].index.add(cardId);
+      if (!state.cards[cardId].labels.includes(labelId)) {
+        state.cards[cardId].labels.push(labelId);
+      }
+      if (!state.labels[labelId].index.includes(cardId)) {
+        state.labels[labelId].index.push(cardId);
+      }
     },
     removeLabel: (state, action: PayloadAction<RemoveLabel>) => {
       const { cardId, labelId } = action.payload;
-      const exists = state.cards[cardId].labels.has(labelId);
+        /* const exists = state.cards[cardId].labels.has(labelId); */
+      const idx = state.cards[cardId].labels.indexOf(labelId);
 
-      if (exists) {
-        state.cards[cardId].labels.delete(labelId);
-        state.labels[labelId].index.delete(cardId);
+      if (idx !== -1) {
+        state.cards[cardId].labels.splice(idx, 1);
       }
+
+      state.labels[labelId].index.indexOf(cardId);
     },
 
     newChecklist: (state, action: PayloadAction<NewChecklist>) => {

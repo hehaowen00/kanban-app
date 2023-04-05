@@ -54,6 +54,7 @@ function ChecklistView({ cardId, id, index }: Props) {
 
   const titleBlur = () => {
     setEditing(false);
+    // TODO: discard new changes when cancelled or blurred
   };
 
   const titleClick = () => {
@@ -67,6 +68,9 @@ function ChecklistView({ cardId, id, index }: Props) {
       titleRef.current?.blur();
       saveTitle();
       setEditing(false);
+    }
+    if (event.key === "Escape") {
+      // TODO: implement
     }
   };
 
@@ -82,7 +86,6 @@ function ChecklistView({ cardId, id, index }: Props) {
   };
 
   const removeChecklist = () => {
-      /* let action = DeleteChecklist(cardId, id); */
     dispatch(deleteChecklist({ cardId, checklistId: id }));
   };
 
@@ -98,8 +101,6 @@ function ChecklistView({ cardId, id, index }: Props) {
   const addListItem = () => {
     let item = state.itemInput.trim();
     if (item !== "") {
-        /* let action = NewChecklistItem(id, newItem);
-  * dispatch(action); */
       dispatch(newChecklistItem({ checklistId: id, description: item }));
       setState({ ...state, itemInput: "", });
     }
@@ -109,10 +110,13 @@ function ChecklistView({ cardId, id, index }: Props) {
     setState({ ...state, active: false, itemInput: "" });
   };
 
-  const itemKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  const onKeyUp = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
       addListItem();
+    }
+    if (event.key === "Escape") {
+      cancelAddItem();
     }
   };
 
@@ -129,6 +133,7 @@ function ChecklistView({ cardId, id, index }: Props) {
           className={`checklist mt-1 bg-grey br-3 ${snapshot.isDragging && 'opacity-90'}`}
           ref={provided.innerRef}
           {...provided.draggableProps}
+          {...provided.dragHandleProps}
           style={{ ...lockYAxis(provided.draggableProps.style) }}
         >
           <div className="header">
@@ -140,9 +145,8 @@ function ChecklistView({ cardId, id, index }: Props) {
                   </svg>
                 </div>
                 <div
-                  className="checklist-title rounded handle font-85 font-500 m-0 flex flex-1"
+                  className="checklist-title rounded handle text-sm font-500 m-0 flex flex-1"
                   onClick={titleClick}
-                  {...provided.dragHandleProps}
                 >
                   {state.titleInput}
                 </div>
@@ -153,7 +157,7 @@ function ChecklistView({ cardId, id, index }: Props) {
                 <TextareaAutosize
                   ref={titleRef}
                   name="titleInput"
-                  className="checklist-title default flex flex-col font-85 font-500 m-0 focus:drop-shadow"
+                  className="checklist-title default flex flex-col text-sm font-500 m-0 focus:drop-shadow"
                   maxLength={MAX_CHECKLIST_TITLE_LENGTH}
                   placeholder="Checklist"
                   value={state.titleInput}
@@ -162,7 +166,7 @@ function ChecklistView({ cardId, id, index }: Props) {
                   onBlur={titleBlur}
                   onChange={updateState}
                   onFocus={titleClick}
-                  onKeyPress={titleKeyPress}
+                  onKeyUp={titleKeyPress}
                 />
                 <div className="menu mt-5 spaced-right text-right">
                   <button
@@ -201,7 +205,7 @@ function ChecklistView({ cardId, id, index }: Props) {
 
                       onBlur={cancelAddItem}
                       onChange={updateState}
-                      onKeyPress={itemKeyPress}
+                      onKeyUp={onKeyUp}
                     />
                     <div className="menu mt-5 spaced-right text-right">
                       <button
@@ -239,10 +243,10 @@ function ChecklistView({ cardId, id, index }: Props) {
   );
 }
 
-type Props = {
+interface Props {
   cardId: string,
   id: string,
   index: number,
-};
+}
 
 export default ChecklistView;

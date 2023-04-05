@@ -19,9 +19,9 @@ function Dropdown({ title, items, accessor, onChange }: Props) {
               className="dropdown-item"
               key={item.key}
               onClick={() => onSelect(item.key)}
-             >
-               {item[access]}
-             </div>
+            >
+              {item[access]}
+            </div>
           ))}
         </div>
       </div>
@@ -29,11 +29,11 @@ function Dropdown({ title, items, accessor, onChange }: Props) {
   );
 }
 
-type Props = {
+interface Props {
   title?: string,
   items: any[],
   onChange?: any,
   accessor?: string,
-};
+}
 
 export default Dropdown;

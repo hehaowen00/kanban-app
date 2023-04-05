@@ -1,37 +1,51 @@
 import { v4 as uuidV4 } from "uuid";
+import { Card, Checklist, Label } from "./Kanban";
 
 function newExampleBoard() {
   let cardId = uuidV4();
-  let checklistId = uuidV4();
+  let checklist1 = uuidV4();
   let checklist2 = uuidV4();
+  let labelId = uuidV4();
 
-  let cards: any = {};
+  let cards: Record<string, Card> = {};
+
   cards[cardId] = {
+    id: cardId,
     title: "Hello, World!",
     description: "I *support* **Markdown** !\n```\nprint('Hello, World!')\n```\n![Image](vite.svg)",
-    labels: [],
+    labels: [labelId],
     startDate: "2023-03-01",
     endDate: "2023-03-31",
     attachments: [] as any[],
-    checklists: [checklistId, checklist2],
+    checklists: [checklist1, checklist2],
     comments: [] as any[],
   };
 
-  let checklists: any = {};
-  checklists[checklistId] = {
+  let checklists: Record<string, Checklist> = {};
+
+  checklists[checklist1] = {
+    id: checklist1,
     title: "Checklist 1 (Click me!)",
     items: [
       { status: false, description: "Edit checklist name", },
     ]
   };
+
   checklists[checklist2] = {
+    id: checklist2,
     title: "Checklist 2",
     items: [
       { status: false, description: "Drag and drop checklist 1 below", },
     ]
   };
 
-  let labels: any = {
+  let labels: Record<string, Label> = {
+    [labelId]: {
+      id: labelId,
+      name: "Hello World!",
+      color: "#a855f7",
+      index: [],
+    }
   };
 
   return {

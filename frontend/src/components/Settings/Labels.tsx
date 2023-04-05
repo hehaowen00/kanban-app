@@ -7,7 +7,7 @@ function Labels({ labels }: Props) {
   let xs: any[] = [];
 
   for (const id in labels) {
-    xs.push({ id, ...labels[id] });
+    xs.push({ ...labels[id], id });
   }
 
   xs = xs.sort((a: any, b: any) => a.name > b.name ? 1 : -1);
@@ -23,7 +23,7 @@ function Labels({ labels }: Props) {
           Labels
         </div>
         <button
-          className="default font-80 shadow-5 f-right"
+          className="default shadow-5 f-right"
           onClick={addLabel}
         >
           Add Label
@@ -46,8 +46,8 @@ function Labels({ labels }: Props) {
   );
 }
 
-type Props = {
+interface Props {
   labels: Record<string, Label>,
-};
+}
 
 export default Labels;

@@ -46,7 +46,7 @@ function Navbar({ name }: Props): ReactElement {
       </div>
       <div className="text-right flex-1">
         <button
-          className="ml-auto px-3 py-1 bg-slate-300 rounded hover:bg-slate-600
+          className="ml-auto px-3 py-1 bg-slate-300 rounded hover:bg-slate-700
           hover:text-white"
           onClick={toggleMenu}
         >
@@ -57,8 +57,8 @@ function Navbar({ name }: Props): ReactElement {
   );
 }
 
-type Props = {
+interface Props {
   name: string
-};
+}
 
 export default Navbar;

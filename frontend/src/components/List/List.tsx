@@ -38,17 +38,19 @@ function ListView({ index, list }: Props): ReactElement {
     }
   }, [visible]);
 
-  const handleAddItem = () => {
+  const showAddCard = () => {
     setNewCard(true);
+    listRef.current?.scrollIntoView({ behavior: "auto" });
   };
 
   const removeList = () => {
-    dispatch(deleteList({ id  }));
+    dispatch(deleteList({ id }));
   };
 
   const onClick = () => {
     setListInput(name);
     setVisible(true);
+    listRef.current?.scrollIntoView({ behavior: "auto" });
   }
 
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -111,7 +113,7 @@ function ListView({ index, list }: Props): ReactElement {
                       onChange={onChange}
                       onBlur={() => setVisible(false)}
                       onKeyDown={onKeyDown}
-                      onKeyPress={onKeyPress}
+                      onKeyUp={onKeyPress}
                       value={listInput}
                     />
                     <div
@@ -156,12 +158,12 @@ function ListView({ index, list }: Props): ReactElement {
               </Droppable>
               {!newCard && (
                 <div
-                  className="list-footer br-3 flex flex-col font-80 font-600 no-select"
+                  className="list-footer br-3 flex flex-col font-600 no-select"
                 >
                   <button
                     className="add-card-btn bg-none hover:bg-gray-300 mx-[5px]
                      default mb-[5px] px-[3px] py-[0px] hover:cursor-pointer"
-                    onClick={handleAddItem}
+                    onClick={showAddCard}
                   >
                     Add Card
                   </button>
@@ -175,10 +177,10 @@ function ListView({ index, list }: Props): ReactElement {
   );
 }
 
-type Props = {
+interface Props {
   key: string;
   index: number;
   list: List,
-};
+}
 
 export default ListView;

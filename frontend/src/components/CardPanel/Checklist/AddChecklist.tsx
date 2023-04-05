@@ -28,10 +28,13 @@ function AddChecklist({ cardId, active, close }: Props) {
     }
   };
 
-  const titleKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  const titleKeyUp = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
       addList();
+    }
+    if (event.key === "Escape") {
+      cancelClick();
     }
   };
 
@@ -63,7 +66,7 @@ function AddChecklist({ cardId, active, close }: Props) {
           value={name}
           spellCheck={false}
           onChange={titleChange}
-          onKeyPress={titleKeyPress}
+          onKeyUp={titleKeyUp}
         />
         <div className="menu mb-0 mt-5 spaced-right text-right">
           <button
@@ -84,10 +87,10 @@ function AddChecklist({ cardId, active, close }: Props) {
   );
 }
 
-type Props = {
+interface Props {
   active: boolean,
   cardId: string,
   close: () => void,
-};
+}
 
 export default AddChecklist;

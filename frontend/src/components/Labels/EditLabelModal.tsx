@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { TwitterPicker } from 'react-color';
 import { useDispatch, useSelector } from "react-redux";
-import { NewLabel } from "../../redux/Creators";
 import { MAX_LABEL_TITLE_LENGTH } from "../../types/Limits";
 
 function LabelModal() {
@@ -26,7 +25,6 @@ function LabelModal() {
   };
 
   const addLabel = () => {
-    dispatch(NewLabel(state.label, cardId));
   };
 
   useEffect(() => {

@@ -6,6 +6,7 @@ export type UIState = {
   showCard: boolean,
   showLabelModal: boolean,
   showSettings: boolean,
+  showSelectLabel: boolean,
 };
 
 export type Board = {
@@ -40,7 +41,7 @@ export type Label = {
   id: string,
   name: string,
   color: string,
-  index: Set<string>, // reverse lookup containing every card that uses this label
+  index: string[],
 };
 
 export type Checklist = {
