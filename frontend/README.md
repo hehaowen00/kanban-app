@@ -6,7 +6,7 @@
 
 - onBlur is executed before onClick
 
-- onMouseDown is exected before onBlur
+- onMouseDown is executed before onBlur
 
 - muted colors for interactive elements
 
