@@ -26,13 +26,16 @@ function DescriptionView({ description, updateCard }: Props) {
     setFocused(true);
   };
 
-  const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  const onKeyUp = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Escape") {
       event.preventDefault();
       setValue(description);
       setFocused(false);
       ref.current?.blur();
     }
+  };
+
+  const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
   };
 
   const saveDesc = () => {
@@ -76,7 +79,8 @@ function DescriptionView({ description, updateCard }: Props) {
 
           onChange={onChange}
           onFocus={onFocus}
-          onKeyUp={onKeyPress}
+          onKeyUp={onKeyUp}
+          onKeyPress={onKeyPress}
         />
       }
       {focused &&

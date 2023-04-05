@@ -55,13 +55,16 @@ function AddCard({ listId, close, listRef }: Props) {
   };
 
   const titleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Escape") {
+      close();
+    }
+  };
+
+  const titleKeyPress = (event: any) => {
     if (event.key === "Enter") {
       event.preventDefault();
       addCard();
       scrollTo();
-    }
-    if (event.key === "Escape") {
-      close();
     }
   };
 
@@ -77,9 +80,10 @@ function AddCard({ listId, close, listRef }: Props) {
           maxLength={MAX_CARD_TITLE_LENGTH}
           onBlur={titleBlur}
           onChange={titleChange}
-          onKeyUp={titleKeyDown}
+          onKeyDown={titleKeyDown}
           placeholder="New Card"
           value={title}
+          onKeyPress={titleKeyPress}
         />
       </div>
       <div className="inline mt-1 ml-2 spaced-right text-right z-2">

@@ -39,14 +39,17 @@ function TitleView({ title, updateCard, deleteCard }: Props) {
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      titleUpdate();
-      ref.current?.blur();
-    }
     if (event.key === "Escape") {
       event.preventDefault();
       setValue(title);
+      ref.current?.blur();
+    }
+  };
+
+  const onKeyPress = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      titleUpdate();
       ref.current?.blur();
     }
   };
@@ -69,6 +72,7 @@ function TitleView({ title, updateCard, deleteCard }: Props) {
         onChange={onChange}
         onFocus={onFocus}
         onKeyDown={onKeyDown}
+        onKeyPress={onKeyPress}
       />
       {focused && (
         <div className="menu mt-5 text-right">

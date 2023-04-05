@@ -58,6 +58,9 @@ function ListView({ index, list }: Props): ReactElement {
     setListInput(value);
   };
 
+    /* const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  * }; */
+
   const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -71,7 +74,7 @@ function ListView({ index, list }: Props): ReactElement {
     }
   };
 
-  const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  const onKeyDown = (event: any) => {
     if (event.key === "Escape") {
       setListInput(name);
       setVisible(false);
@@ -93,6 +96,7 @@ function ListView({ index, list }: Props): ReactElement {
             key={index}
             ref={listRef}
             {...provided.dragHandleProps}
+            onMouseOver={() => listRef.current?.scrollIntoView({ behavior: 'smooth' })}
           >
             <div className="list br-3 bg-gray-100 flex flex-1-1 flex-col shadow slide-in">
               <div className={headerClasses}>
@@ -112,8 +116,8 @@ function ListView({ index, list }: Props): ReactElement {
                       maxLength={MAX_LIST_TITLE_LENGTH}
                       onChange={onChange}
                       onBlur={() => setVisible(false)}
+                      onKeyPress={onKeyPress}
                       onKeyDown={onKeyDown}
-                      onKeyUp={onKeyPress}
                       value={listInput}
                     />
                     <div

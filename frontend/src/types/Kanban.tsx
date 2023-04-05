@@ -4,9 +4,13 @@ export type UIState = {
   cardId: string,
   listId: string,
   showCard: boolean,
-  showLabelModal: boolean,
   showSettings: boolean,
+
+  showAddLabel: boolean,
   showSelectLabel: boolean,
+  showEditLabel: boolean,
+  editLabel: string,
+  history: Partial<UIState> | undefined,
 };
 
 export type Board = {

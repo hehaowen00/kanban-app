@@ -3,14 +3,16 @@ import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 
 import AddListView from "./List/AddList";
 import CardPanel from "./CardPanel/CardPanel";
-import LabelModal from "./Labels/AddLabelModal";
 import ListView from "./List/List";
 import Navbar from "./Navbar";
 import SettingsView from "./Settings/Settings";
-import SelectLabel from "./Labels/SelectLabelModal";
+
+import NewLabelModal from "./Labels/AddLabelModal";
+import EditLabelModal from "./Labels/EditLabelModal";
+import SelectLabelModal from "./Labels/SelectLabelModal";
 
 import { moveCard, moveList } from "../redux/Reducers/Board";
-import { closeCardView, hideSelectLabelModal } from "../redux/Reducers/UI";
+import { closeCardView } from "../redux/Reducers/UI";
 import { AppState } from "../redux/Store";
 import { List } from "../types/Kanban";
 
@@ -20,7 +22,7 @@ function BoardView() {
   const dispatch = useDispatch();
 
   const { lists, labels, name } = useSelector(({ board }: AppState) => board);
-  const {listId, showLabelModal, showSelectLabel, showSettings} =
+  const { listId, showAddLabel, showEditLabel, showSelectLabel, showSettings } =
     useSelector(({ ui }: AppState) => ui);
 
   const handleDragEnd = (event: DropResult) => {
@@ -52,8 +54,9 @@ function BoardView() {
 
   return (
     <>
-      {showLabelModal && <LabelModal />}
-      {showSelectLabel && <SelectLabel />}
+      {showAddLabel && <NewLabelModal />}
+      {showSelectLabel && <SelectLabelModal />}
+      {showEditLabel && <EditLabelModal />}
       <div className="board-view bg-sky-700">
         <Navbar name={name} />
         <div className="board flex flex-1 flex-col">

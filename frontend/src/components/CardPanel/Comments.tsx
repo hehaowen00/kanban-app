@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import ReactMarkdown from 'react-markdown';
@@ -40,6 +40,12 @@ function Comments({ cardId, comments }: Props) {
 
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
+  };
+
+  const onKeyUp = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Escape") {
+      cancel();
+    }
   };
 
   const addClick = () => {
@@ -98,6 +104,8 @@ function Comments({ cardId, comments }: Props) {
           onBlur={onBlur}
           onFocus={onFocus}
           onChange={onChange}
+          onKeyUp={onKeyUp}
+          onKeyPress={undefined}
         />
       </div>
       {visible && (

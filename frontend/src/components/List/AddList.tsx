@@ -25,7 +25,7 @@ function AddListView(): ReactElement {
 
   useEffect(() => {
     if (toggle) {
-      containerRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+      containerRef.current?.scrollIntoView({ behavior: "auto", block: "end" });
       setTimeout(() => {
         inputRef.current?.focus();
       }, 500);
@@ -102,7 +102,7 @@ function AddListView(): ReactElement {
 
                 onChange={onUpdate}
                 onKeyDown={onKeyDown}
-                onKeyUp={onKeyPress}
+                onKeyPress={onKeyPress}
                 onPaste={onPaste}
               />
               <div className="menu mb-0 mt-5 no-select spaced-right text-right">

@@ -69,6 +69,9 @@ function ChecklistView({ cardId, id, index }: Props) {
       saveTitle();
       setEditing(false);
     }
+  };
+
+  const titleKeyUp = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Escape") {
       // TODO: implement
     }
@@ -111,12 +114,15 @@ function ChecklistView({ cardId, id, index }: Props) {
   };
 
   const onKeyUp = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Escape") {
+      cancelAddItem();
+    }
+  };
+
+  const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
       addListItem();
-    }
-    if (event.key === "Escape") {
-      cancelAddItem();
     }
   };
 
@@ -166,7 +172,8 @@ function ChecklistView({ cardId, id, index }: Props) {
                   onBlur={titleBlur}
                   onChange={updateState}
                   onFocus={titleClick}
-                  onKeyUp={titleKeyPress}
+                  onKeyPress={titleKeyPress}
+                  onKeyUp={titleKeyUp}
                 />
                 <div className="menu mt-5 spaced-right text-right">
                   <button
@@ -206,6 +213,7 @@ function ChecklistView({ cardId, id, index }: Props) {
                       onBlur={cancelAddItem}
                       onChange={updateState}
                       onKeyUp={onKeyUp}
+                      onKeyPress={onKeyPress}
                     />
                     <div className="menu mt-5 spaced-right text-right">
                       <button
