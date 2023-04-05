@@ -1,15 +1,19 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import TextareaAutosize from "react-autosize-textarea";
-
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { NewComment } from "../../redux/Creators";
 
-import "../styles/Comments.css";
+import ReactMarkdown from 'react-markdown';
+import TextareaAutosize from "react-autosize-textarea";
+import { HrRender, LinkRender, QuoteRender } from "../../utils/Markdown";
 
-function Comments({ cardId, comments }: any) {
+import { newComment } from "../../redux/Reducers/Board";
+import { Comment } from "../../types/Kanban";
+
+import "../../styles/Comments.css";
+
+function Comments({ cardId, comments }: Props) {
   const dispatch = useDispatch();
 
-  const ref = useRef<any>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const [visible, setVisible] = useState(false);
   const [comment, setComment] = useState("");
@@ -21,8 +25,7 @@ function Comments({ cardId, comments }: any) {
   });
 
   const addComment = () => {
-    let action = NewComment("testing", cardId, comment.trim());
-    dispatch(action);
+    dispatch(newComment({ userId: "Testing", cardId, comment }));
   };
 
   const onBlur = () => {
@@ -39,6 +42,12 @@ function Comments({ cardId, comments }: any) {
     setComment(event.target.value);
   };
 
+  const onKeyUp = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Escape") {
+      cancel();
+    }
+  };
+
   const addClick = () => {
     if (comment.trim().length > 0) {
       addComment();
@@ -52,7 +61,7 @@ function Comments({ cardId, comments }: any) {
     setVisible(false);
   };
 
-  const comments_ = comments.map((comment: any) => {
+  const comments_ = comments.map((comment: Comment) => {
     let date = new Date(comment.timestamp);
     let str = date.toLocaleTimeString("en-AU", { hour12: false }) + " " + date.toLocaleDateString();
     return {
@@ -63,56 +72,65 @@ function Comments({ cardId, comments }: any) {
 
   return (
     <div className="comments block text-left">
-      <div className="font-90 font-600 noselect text-left">
+      <div className="font-90 font-500 no-select text-left">
         Comments
       </div>
-      <div className="comment-view mt-5">
-        {comments_.map((comment: any, index: number) => 
-          <div key={index} className="comment br-3 shadow">
+      <div className="comment-view">
+        {comments_.map((comment: any, index: number) =>
+          <div key={index} className="">
             <div className="header font-85">
-              <span className="font-600">User: </span>
               {comment.userId}
-              <span className="f-right font-600">
+              <span className="f-right text-slate-400">
                 {comment.timestamp}
               </span>
             </div>
-            <div className="body flex font-85">
-              {comment.text}
+            <div className="body mt-1 font-85 bg-white px-2 py-1 markdown drop-shadow" style={{ whiteSpace: 'pre-line' }}>
+              <ReactMarkdown
+                children={comment.text.replaceAll('\n', '  \n')}
+                components={{ a: LinkRender, h1: 'p', h2: 'p', h3: 'p', hr: HrRender, blockquote: QuoteRender, }}
+              />
             </div>
           </div>
         )}
       </div>
-      <div className="">
+      <div className="block">
         <TextareaAutosize
-          className="default font-85 font-500 shadow"
-          placeholder="New Comment"
+          className="default font-85 font-500 drop-shadow"
+          placeholder="Post Comment"
           maxLength={512}
-          rows={visible ? 3 : undefined}
+          rows={visible ? 3 : 2}
           value={comment}
 
           onBlur={onBlur}
           onFocus={onFocus}
           onChange={onChange}
+          onKeyUp={onKeyUp}
+          onKeyPress={undefined}
         />
       </div>
       {visible && (
-        <div ref={ref} className="menu spaced-right text-right">
+        <div ref={ref} className="menu spaced-right text-right mb-0">
           <button
-            className="default shadow"
+            className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
             onClick={addClick}
           >
-            Save
+            Send
           </button>
           <button
-            className="default shadow"
+            className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
             onClick={cancel}
-           >
-             Cancel
-           </button>
+          >
+            Cancel
+          </button>
         </div>
       )}
     </div>
   );
+}
+
+interface Props {
+  cardId: string,
+  comments: Comment[],
 }
 
 export default Comments;

@@ -1,0 +1,23 @@
+.navbar {
+  max-height: 1.5rem;
+  margin-bottom: 15px;
+  padding: 5px;
+}
+
+.title-input {
+  font-size: 0.85rem;
+  width: 70%;
+}
+
+.navbar>div {
+  flex-direction: row;
+  margin: 0;
+}
+
+.navbar>div>*+* {
+  margin-left: 5px;
+}
+
+.center {
+  text-align: center;
+}

@@ -5,11 +5,41 @@ export type RenameBoard = {
   name: string,
 };
 
+export type NewLabel = {
+  type: "NewLabel",
+  name: string,
+  color: string,
+  card: string | null,
+};
+
+export type DeleteLabel = {
+  type: "DeleteLabel",
+  cardId: string,
+  labelId: string,
+};
+
+export type AddLabel = {
+  type: "AddLabel",
+  cardId: string,
+  labelId: string,
+};
+
+export type RemoveLabel = {
+  type: "RemoveLabel",
+  cardId: string,
+  labelId: string,
+};
+
 // List
 
 export type NewList = {
   type: "NewList",
   name: string,
+};
+
+export type DeleteList = {
+  type: "DeleteList",
+  id: string,
 };
 
 export type MoveList = {
@@ -85,6 +115,14 @@ export type NewChecklistItem = {
   item: string,
 };
 
+export type MoveChecklistItem = {
+  type: "MoveChecklistItem",
+  srcId: string,
+  srcIdx: number,
+  destId: string,
+  destIdx: number,
+};
+
 export type DeleteChecklistItem = {
   type: "DeleteChecklistItem",
   checklistId: string,
@@ -107,14 +145,45 @@ export type NewComment = {
   text: string,
 };
 
-type BoardAction = RenameBoard;
-type ListAction = NewList | MoveList | UpdateList;
-type CardAction = NewCard | MoveCard | UpdateCard | DeleteCard;
+// Labels
+
+export type NewLabelModal = {
+  type: "NewLabelModal"
+}
+
+type BoardAction = RenameBoard
+  | NewLabel
+  | AddLabel
+  | RemoveLabel;
+
+type ListAction = NewList
+  | MoveList
+  | UpdateList
+  | DeleteList;
+
+type CardAction = NewCard
+  | MoveCard
+  | UpdateCard
+  | DeleteCard;
+
 type CommentAction = NewComment;
 
-type ChecklistAction = NewChecklist | DeleteChecklist | MoveChecklist | UpdateChecklist;
-type ChecklistItemAction = NewChecklistItem | DeleteChecklistItem | UpdateChecklistItem;
+type ChecklistAction = NewChecklist
+  | DeleteChecklist
+  | MoveChecklist
+  | UpdateChecklist;
 
-type Action = BoardAction | ListAction | CardAction | ChecklistAction | ChecklistItemAction | CommentAction;
+type ChecklistItemAction = NewChecklistItem
+  | MoveChecklistItem
+  | DeleteChecklistItem
+  | UpdateChecklistItem;
+
+type Action = BoardAction
+  | ListAction
+  | CardAction
+  | ChecklistAction
+  | ChecklistItemAction
+  | CommentAction
+  | NewLabelModal;
 
 export default Action;

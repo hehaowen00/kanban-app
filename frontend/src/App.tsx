@@ -1,11 +1,16 @@
-import React from "react";
-import Dashboard from "./components/Dashboard";
-import KanbanBoard from "./components/Board";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Board from "./Components/Board";
 
 import "./App.css";
 
 function App() {
-  return <KanbanBoard />;
+  return (
+    <BrowserRouter basename="/kanban">
+      <Routes>
+        <Route path="/" element={<Board />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

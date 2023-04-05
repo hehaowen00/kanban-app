@@ -1,14 +1,24 @@
-export type CardViewState = {
-  cardId: string | null,
-  listId: string | null,
-  visible: "NewCard" | "ShowCard" | null,
+// object for storing the UI state
+// if cardId is not set, then labelModal has been opened outside of a card
+export type UIState = {
+  cardId: string,
+  listId: string,
+  showCard: boolean,
+  showSettings: boolean,
+
+  showAddLabel: boolean,
+  showSelectLabel: boolean,
+  showEditLabel: boolean,
+  editLabel: string,
+  history: Partial<UIState> | undefined,
 };
 
 export type Board = {
   id: string;
   name: string;
-  cards: Record<string, Card>,
   lists: List[];
+  cards: Record<string, Card>,
+  labels: Record<string, Label>,
   attachments: Record<string, Attachment>,
   checklists: Record<string, Checklist>,
 };
@@ -19,17 +29,27 @@ export type List = {
   cardIds: string[];
 };
 
-
 export type Card = {
-  title: string;
-  description: string;
-  dueDate: number | null,
-  comments: Comment[];
-  attachments: string[];
-  checklists: string[];
+  id: string,
+  title: string,
+  description: string,
+  startDate: string,
+  endDate: string,
+  labels: string[],
+  checklists: string[],
+  attachments: string[],
+  comments: Comment[],
+};
+
+export type Label = {
+  id: string,
+  name: string,
+  color: string,
+  index: string[],
 };
 
 export type Checklist = {
+  id: string,
   title: string,
   items: ChecklistItem[],
 };
@@ -51,3 +71,20 @@ export type Attachment = {
   link: string;
 };
 
+export enum Actions {
+  RenameBoard,
+  NewLabel,
+  AddLabel,
+  RemoveLabel,
+  NewCard,
+  UpdateCard,
+  DeleteCard,
+  NewList,
+  MoveCard,
+  MoveList,
+  DeleteList,
+  NewChecklist,
+  DeleteChecklist,
+  MoveChecklist,
+  UpdateChecklist,
+};

@@ -1,11 +1,11 @@
-import { Fragment, ReactElement } from "react";
+import { ReactElement } from "react";
 
-import "./styles/Dashboard.css";
+import "../styles/Dashboard.css";
 
 function Dashboard(): ReactElement {
   return (
-    <Fragment>
-    </Fragment>
+    <div className="bg-white">
+    </div>
   );
 }
 

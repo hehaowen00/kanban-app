@@ -1,25 +1,29 @@
-import { Fragment, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 
-import { List } from "../types/Kanban";
-import KanbanList from "./List";
-import AddList from "./AddList";
-import CardPanel from "./CardPanel";
-import AddCard from "./AddCard";
+import AddListView from "./List/AddList";
+import CardPanel from "./CardPanel/CardPanel";
+import ListView from "./List/List";
 import Navbar from "./Navbar";
+import SettingsView from "./Settings/Settings";
 
-import "./styles/Board.css";
-import { MoveCard, MoveList } from "../redux/Creators";
+import NewLabelModal from "./Labels/AddLabelModal";
+import EditLabelModal from "./Labels/EditLabelModal";
+import SelectLabelModal from "./Labels/SelectLabelModal";
 
-function Board(): ReactElement {
+import { moveCard, moveList } from "../redux/Reducers/Board";
+import { closeCardView } from "../redux/Reducers/UI";
+import { AppState } from "../redux/Store";
+import { List } from "../types/Kanban";
+
+import "../styles/Board.css"
+
+function BoardView() {
   const dispatch = useDispatch();
 
-  const board = useSelector((state: any)  => state.board);
-  const lists = board.lists;
-
-  const cardView = useSelector((state: any) => state.panel);
-  const { visible } = cardView;
+  const { lists, labels, name } = useSelector(({ board }: AppState) => board);
+  const { listId, showAddLabel, showEditLabel, showSelectLabel, showSettings } =
+    useSelector(({ ui }: AppState) => ui);
 
   const handleDragEnd = (event: DropResult) => {
     const { source, destination } = event;
@@ -37,47 +41,60 @@ function Board(): ReactElement {
       return;
     }
 
-    const lookup = {
-      "droppableCards": () => dispatch(MoveCard(srcId, destId, srcIdx, destIdx)),
-      "droppableLists": () => dispatch(MoveList(srcIdx, destIdx)),
-    } as any;
+    if (event.type === "cards") {
+      dispatch(moveCard({ srcId, destId, srcIdx, destIdx }));
+    } else if (event.type === "lists") {
+      dispatch(moveList({ srcIdx, destIdx }));
+    }
+  };
 
-    lookup[event.type]();
+  const dragStart = () => {
+    dispatch(closeCardView());
   };
 
   return (
-    <Fragment>
-      { visible === "NewCard" && <AddCard /> }
-      { visible === "ShowCard" && <CardPanel /> }
-      <Navbar name={board.name} />
-      <div className="board flex flex-1 flex-col">
-        <div className="content flex flex-row">
-          <DragDropContext
-            onDragEnd={handleDragEnd}
-          >
-            <Droppable
-              droppableId="lists"
-              type="droppableLists"
-              direction="horizontal"
+    <>
+      {showAddLabel && <NewLabelModal />}
+      {showSelectLabel && <SelectLabelModal />}
+      {showEditLabel && <EditLabelModal />}
+      <div className="board-view bg-sky-700">
+        <Navbar name={name} />
+        <div className="board flex flex-1 flex-col">
+          <div className="content flex flex-row">
+            <DragDropContext
+              onDragStart={dragStart}
+              onDragEnd={handleDragEnd}
             >
-              {(provided) => (
-                <div
-                  className="lists flex flex-1-1"
-                  ref={provided.innerRef}
-                >
-                  {lists.map((list: List, index: number) => (
-                    <KanbanList key={list.id} index={index} list={list} />
-                  ))}
-                  {provided.placeholder}
-                  <AddList />
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+              <Droppable
+                droppableId="lists"
+                type="lists"
+                direction="horizontal"
+              >
+                {(provided) => (
+                  <div
+                    className="lists flex flex-row flex-1-1"
+                    ref={provided.innerRef}
+                  >
+                    {lists.map((list: List, index: number) => (
+                      <div key={`${list.id}-container`} className="flex flex-row">
+                        <ListView key={list.id} index={index} list={list} />
+                        {listId === list.id && (
+                          <CardPanel />
+                        )}
+                      </div>
+                    ))}
+                    {provided.placeholder}
+                    <AddListView />
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+            {showSettings && <SettingsView labels={labels} />}
+          </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 }
 
-export default Board;
+export default BoardView;
