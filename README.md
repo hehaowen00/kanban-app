@@ -2,6 +2,8 @@
 
 Standalone react based kanban application.
 
+[Demo](https://hehaowen00.github.io/kanban/)
+
 ## frontend
 ![Frontend UI](frontend.png)
 ![Card Panel](card.png)
