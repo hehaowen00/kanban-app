@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { showLabelModal } from "../../redux/Reducers/UI";
+import { showEditLabelModal, showLabelModal } from "../../redux/Reducers/UI";
 import { Label } from "../../types/Kanban";
 
 function Labels({ labels }: Props) {
@@ -14,6 +14,12 @@ function Labels({ labels }: Props) {
 
   const addLabel = () => {
     dispatch(showLabelModal());
+  };
+
+  const editLabel = (id: string) => {
+    return function () {
+      dispatch(showEditLabelModal({ labelId: id }));
+    }
   };
 
   return (
@@ -31,13 +37,20 @@ function Labels({ labels }: Props) {
       </div>
       <div className="br-3">
         <div className="block mt-5 relative">
-          {xs.map(({ id, name }: any) => (
+          {xs.map((label: Label) => (
             <div
-              key={id}
-              className="label-item mt-5 pad-5 br-default bg-white no-select
-               br-3 flex flex-col font-85 shadow-5"
+              key={label.id}
+              className="flex flex-row flex-1 label-item"
             >
-              <span className="font-600">{name}</span>
+              <div
+                className="flex-1 text-white font-80 px-2 py-1 rounded select-none hover:cursor-pointer drop-shadow"
+                onClick={editLabel(label.id)}
+                style={{
+                  backgroundColor: label.color,
+                }}
+              >
+                {label.name}
+              </div>
             </div>
           ))}
         </div>

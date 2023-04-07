@@ -51,10 +51,12 @@ function EditLabelModal() {
       setState({ ...state, error: "Color is not set" });
       return;
     }
-    dispatch(updateLabel({ id: label.id, label: {
-      name: state.label,
-      color: state.color,
-    } }));
+    dispatch(updateLabel({
+      id: label.id, label: {
+        name: state.label,
+        color: state.color,
+      }
+    }));
     dispatch(hideLabelModal());
   };
 
@@ -108,7 +110,7 @@ function EditLabelModal() {
                   hover:bg-blue-700 text-white px-2 py-1 mr-1 rounded"
                   onClick={saveChanges}
                 >
-                  Save Changes
+                  Save
                 </button>
               </div>
             </div>

@@ -63,7 +63,7 @@ function AddChecklist({ cardId, active, close }: Props) {
         <TextareaAutosize
           ref={inputRef}
           name="titleInput"
-          className="checklist-title rounded default flex flex-col font-85 font-500 m-0 focus:drop-shadow"
+          className="checklist-title rounded default flex flex-col font-85 m-0 focus:drop-shadow"
           maxLength={MAX_CHECKLIST_TITLE_LENGTH}
           placeholder="Checklist"
           value={name}
@@ -80,7 +80,8 @@ function AddChecklist({ cardId, active, close }: Props) {
             Add Checklist
           </button>
           <button
-            className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
+            className="text-slate-700 px-3 py-1 bg-slate-300 rounded
+             hover:bg-slate-700 hover:text-white"
             onClick={cancelClick}
           >
             Cancel

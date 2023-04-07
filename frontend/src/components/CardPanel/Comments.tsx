@@ -95,7 +95,7 @@ function Comments({ cardId, comments }: Props) {
       </div>
       <div className="block">
         <TextareaAutosize
-          className="default font-85 font-500 drop-shadow"
+          className="default font-85 drop-shadow"
           placeholder="Post Comment"
           maxLength={512}
           rows={visible ? 3 : 2}
