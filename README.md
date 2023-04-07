@@ -4,6 +4,8 @@ Standalone react based kanban application.
 
 ## frontend
 ![Frontend UI](frontend.png)
+![Card Panel](card.png)
+![Add Label](label.png)
 
 ## Notes
 
