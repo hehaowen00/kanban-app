@@ -275,14 +275,21 @@ const boardSlice = createSlice({
     },
     deleteLabel: (state, action: PayloadAction<DeleteLabel>) => {
       const { id } = action.payload;
-      const label = state.labels[id];
+      const label = { ...state.labels[id] };
 
-      for (let cardId in label.index) {
+      label.index.forEach((cardId) => {
         const idx = state.cards[cardId].labels.indexOf(id);
         if (idx !== -1) {
           state.cards[cardId].labels.splice(idx, 1);
         }
-      }
+      })
+
+      // let labels = { ...state.labels };
+      // delete labels[id];
+
+      // state.labels = labels;
+
+      delete state.labels[id];
     },
     addLabel: (state, action: PayloadAction<AddLabel>) => {
       const { cardId, labelId } = action.payload;

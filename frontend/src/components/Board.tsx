@@ -52,6 +52,12 @@ function BoardView() {
     dispatch(closeCardView());
   };
 
+
+  const label = useSelector(({ board, ui }: AppState) => {
+    return board.labels[ui.editLabel];
+  });
+
+
   return (
     <>
       {showAddLabel && <NewLabelModal />}

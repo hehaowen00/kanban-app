@@ -6,28 +6,24 @@ import ColorPicker from "../util/ColorPicker";
 
 import { closeEditLabelModal, hideLabelModal } from "../../redux/Reducers/UI";
 import { AppState } from "../../redux/Store";
-import { updateLabel } from "../../redux/Reducers/Board";
+import { deleteLabel, updateLabel } from "../../redux/Reducers/Board";
 
 function EditLabelModal() {
   const dispatch = useDispatch();
   const inputRef = useRef<any>(null);
 
-  const label = useSelector(({ board, ui }: AppState) => {
+  let label = useSelector(({ board, ui }: AppState) => {
     return board.labels[ui.editLabel];
   });
 
-  useEffect(() => {
-    if (inputRef) {
-      inputRef.current?.focus();
-    }
-  }, [inputRef]);
-
   const [state, setState] = useState({
+    id: label.id,
     label: label.name,
     color: label.color,
     exists: false,
     error: "",
   });
+  const [showDelete, setShowDelete] = useState(false);
 
   const close = () => {
     dispatch(closeEditLabelModal());
@@ -39,6 +35,12 @@ function EditLabelModal() {
 
   const onColorChange = (color: string) => {
     setState({ ...state, color });
+  };
+
+  const onClick = () => {
+    const id = label.id;
+    dispatch(closeEditLabelModal());
+    dispatch(deleteLabel({ id }));
   };
 
   const saveChanges = () => {
@@ -65,25 +67,39 @@ function EditLabelModal() {
       <div className="card-view-cover label-cover" onClick={close}></div>
       <div className="modal-container">
         <div className="w-[25em] rounded drop-shadow modal">
-          <div className="flex flex-col px-2 py-1 rounded">
+          <div className="flex flex-row -100 px-2 py-1 rounded">
             <div className="card-label-item rounded flex flex-col py-1 bg-gray-100">
               <div className="flex flex-row px-2 py-1 text-sm ml-auto mr-auto select-none">
-                <p>Edit Existing Label</p>
+                <p>Edit Label</p>
               </div>
               <div className="flex flex-row px-2 py-1">
-                <input type="text"
-                  ref={inputRef}
-                  className="flex-1 text-sm bg-white px-2 py-1 rounded w-full drop-shadow"
-                  style={{
-                    border: 'none',
-                  }}
-                  maxLength={MAX_LABEL_TITLE_LENGTH}
-                  placeholder="Edit Label"
-                  name="label"
-                  onChange={onChange}
-                  value={state.label}
-                  required
-                />
+                <div className="flex flex-1 flex-col">
+                  <input type="text"
+                    ref={inputRef}
+                    className={`flex-1 text-sm bg-white px-2 py-1 rounded ${showDelete ? "drop-shadow" : ""}`}
+                    style={{
+                      border: 'none',
+                    }}
+                    maxLength={MAX_LABEL_TITLE_LENGTH}
+                    placeholder="Edit Label"
+                    name="label"
+                    onChange={onChange}
+                    onFocus={() => setShowDelete(true)}
+                    onBlur={() => setShowDelete(false)}
+                    value={state.label}
+                    required
+                  />
+                  {showDelete &&
+                    <div className="mt-2 spaced-right text-right">
+                      <button
+                        className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
+                        onMouseDown={onClick}
+                      >
+                        Delete Label
+                      </button>
+                    </div>
+                  }
+                </div>
               </div>
               <div className="flex flex-1 px-2 py-1">
                 <ColorPicker value={state.color} onChange={onColorChange} />

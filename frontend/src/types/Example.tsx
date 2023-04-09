@@ -44,7 +44,7 @@ function newExampleBoard() {
       id: labelId,
       name: "Hello World!",
       color: "#a855f7",
-      index: [],
+      index: [cardId],
     }
   };
 

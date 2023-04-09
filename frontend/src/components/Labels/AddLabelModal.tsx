@@ -65,7 +65,7 @@ function NewLabelModal() {
           <div className="flex flex-col px-2 py-1 rounded">
             <div className="card-label-item rounded flex flex-col py-1 bg-gray-100">
               <div className="flex flex-row px-2 py-1 text-sm ml-auto mr-auto select-none">
-                <p>Add New Label</p>
+                <p>Add Label</p>
               </div>
               <div className="flex flex-row px-2 py-1">
                 <input type="text"
