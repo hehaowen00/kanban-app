@@ -72,7 +72,7 @@ function EditLabelModal() {
               <div className="flex flex-row px-2 py-1 text-sm ml-auto mr-auto select-none">
                 <p>Edit Label</p>
               </div>
-              <div className="flex flex-row px-2 py-1">
+              <div className="flex flex-row px-2">
                 <div className="flex flex-1 flex-col">
                   <input type="text"
                     ref={inputRef}

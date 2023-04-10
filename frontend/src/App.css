@@ -63,11 +63,6 @@ h5 {
   white-space: pre-line;
 }
 
-*:focus {
-  /* outline: 2px solid #0079bf; */
-  /* border: 1px solid transparent; */
-}
-
 a {
   color: blue;
 }
@@ -81,7 +76,6 @@ textarea {
 }
 
 textarea:focus {
-  /* outline: 1px solid #0079bf; */
   outline: none;
 }
 
@@ -313,7 +307,6 @@ textarea.default {
 }
 
 .dropdown {
-  /* position: relative; */
   display: inline-block;
   border: 1px solid black;
   font-size: 0.85rem;

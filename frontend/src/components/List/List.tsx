@@ -58,9 +58,6 @@ function ListView({ index, list }: Props): ReactElement {
     setListInput(value);
   };
 
-    /* const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-  * }; */
-
   const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -102,7 +99,7 @@ function ListView({ index, list }: Props): ReactElement {
               <div className={headerClasses}>
                 {!visible && (
                   <div
-                    className="title font-85 no-select"
+                    className="title px-1 py-1 font-85 font-500 no-select"
                     onClick={onClick}
                   >
                     {name}
@@ -112,7 +109,7 @@ function ListView({ index, list }: Props): ReactElement {
                   <>
                     <TextareaAutosize
                       ref={inputRef}
-                      className="default font-85 px-[10px] py-[5px] focus:drop-shadow"
+                      className="default font-85 px-1 py-1 focus:drop-shadow"
                       maxLength={MAX_LIST_TITLE_LENGTH}
                       onChange={onChange}
                       onBlur={() => setVisible(false)}
@@ -121,11 +118,11 @@ function ListView({ index, list }: Props): ReactElement {
                       value={listInput}
                     />
                     <div
-                      className="menu mb-[5px] mt-[5px] inline spaced-right
+                      className="menu my-1 inline spaced-right
                        text-right float-right"
                     >
                       <button
-                        className="text-slate-700 px-3 py-1 rounded
+                        className="text-slate-700 bg-gray-100 px-3 py-1 rounded
                          hover:bg-slate-700 hover:text-white"
                         onMouseDown={removeList}
                       >
@@ -166,7 +163,7 @@ function ListView({ index, list }: Props): ReactElement {
                 >
                   <button
                     className="add-card-btn bg-none hover:bg-gray-300 mx-[5px]
-                     default mb-[5px] px-[3px] py-[0px] hover:cursor-pointer"
+                     default mb-[5px] px-[3px] py-0 hover:cursor-pointer font-500"
                     onClick={showAddCard}
                   >
                     Add Card

@@ -7,7 +7,6 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  /* display: block; */
   margin-bottom: 4px;
   padding: 4px 8px 0px 0px;
   white-space: pre-wrap;
@@ -64,7 +63,6 @@ textarea.checklist-title {
   display: inline-block;
   min-width: 10px;
   max-width: 10px;
-  /* margin-left: -2px; */
   padding-bottom: 4px;
   margin-right: 4px;
 }

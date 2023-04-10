@@ -67,7 +67,7 @@ function NewLabelModal() {
               <div className="flex flex-row px-2 py-1 text-sm ml-auto mr-auto select-none">
                 <p>Add Label</p>
               </div>
-              <div className="flex flex-row px-2 py-1">
+              <div className="flex flex-row px-2">
                 <input type="text"
                   ref={inputRef}
                   className="flex-1 text-sm bg-white px-2 py-1 rounded w-full drop-shadow"

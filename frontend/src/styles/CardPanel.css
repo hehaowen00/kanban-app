@@ -15,15 +15,12 @@
 }
 
 .card-view {
-  /* height: calc(90vh - 25px); */
   margin: 0 auto;
   margin-right: 10px;
   max-width: 30rem;
   min-width: 30rem;
   overflow-y: auto;
   padding-bottom: 0.5rem;
-  /* padding: 10px; */
-  /* padding-bottom: 20px; */
   width: 25%;
   overflow-x: hidden;
   pointer-events: auto;
@@ -32,16 +29,4 @@
 .slide-in {
   animation: slide-in 0.5s forwards;
   -webkit-animation: slide-in 0.5s forwards;
-}
-
-/* .card-view>* {
-  margin-bottom: 0.75rem;
-} */
-
-.menu-bar {
-  /* margin: 10px 0px 10px 0px; */
-}
-
-.date {
-  /* min-width: 70px; */
 }

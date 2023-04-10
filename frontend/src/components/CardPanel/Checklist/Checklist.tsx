@@ -136,7 +136,7 @@ function ChecklistView({ cardId, id, index }: Props) {
       {(provided: any, snapshot: any) => (
         <div
           key={id}
-          className={`checklist px-1.5 pb-1 bg-grey br-3 ${snapshot.isDragging && 'opacity-90'}`}
+          className={`checklist px-1.5 pb-1.5 bg-grey br-3 ${snapshot.isDragging && 'opacity-90'}`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -204,7 +204,7 @@ function ChecklistView({ cardId, id, index }: Props) {
                     <TextareaAutosize
                       ref={itemRef}
                       name="itemInput"
-                      className="default font-85 font-500 focus:drop-shadow"
+                      className="default font-85 focus:drop-shadow"
                       maxLength={MAX_CHECKLIST_ITEM_LENGTH}
                       placeholder="New Item"
                       value={state.itemInput}

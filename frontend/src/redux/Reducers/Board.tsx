@@ -229,7 +229,6 @@ const boardSlice = createSlice({
       const { listId, cardId } = action.payload;
 
       for (let labelId in state.cards[cardId].labels) {
-        /* state.labels[labelId].index.(cardId); */
         const idx = state.labels[labelId].index.indexOf(cardId);
         if (idx !== -1) {
           state.labels[labelId].index.splice(idx, 1);
