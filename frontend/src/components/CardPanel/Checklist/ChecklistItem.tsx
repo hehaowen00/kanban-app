@@ -138,7 +138,7 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
             )}
           </div>
           {state.visible && (
-            <div className="menu text-right">
+            <div className="text-right">
               <button
                 className="text-slate-700 px-3 py-1 bg-slate-300 rounded
                  hover:bg-slate-700 hover:text-white text-sm"

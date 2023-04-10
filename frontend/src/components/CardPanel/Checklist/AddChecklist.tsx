@@ -58,7 +58,7 @@ function AddChecklist({ cardId, active, close }: Props) {
     <Outside update={cancelClick}>
       <div
         ref={containerRef}
-        className="mt-2"
+        className="mt-2 px-1.5"
       >
         <TextareaAutosize
           ref={inputRef}
@@ -72,7 +72,7 @@ function AddChecklist({ cardId, active, close }: Props) {
           onKeyUp={titleKeyUp}
           onKeyPress={titleKeyPress}
         />
-        <div className="menu mb-0 mt-5 spaced-right text-right">
+        <div className="menu mb-0 mt-1 spaced-right text-right">
           <button
             className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
             onClick={addList}

@@ -1,5 +1,5 @@
 .comments {
-  margin-bottom: 0 !important;
+  /* margin-bottom: 0 !important; */
 }
 
 .comments>.menu {
@@ -7,7 +7,7 @@
 }
 
 .comment-view:empty {
-  margin-bottom: 10px;
+  margin-bottom: 0.25rem;
 }
 
 .comment-view>* {

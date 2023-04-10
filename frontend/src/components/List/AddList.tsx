@@ -105,7 +105,7 @@ function AddListView(): ReactElement {
                 onKeyPress={onKeyPress}
                 onPaste={onPaste}
               />
-              <div className="menu mb-0 mt-5 no-select spaced-right text-right">
+              <div className="menu mb-0 mt-1 no-select spaced-right text-right">
                 <button
                   className="text-white bg-sky-600 hover:bg-sky-700 rounded px-3 py-1"
                   onClick={addList}

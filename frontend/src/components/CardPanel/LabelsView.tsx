@@ -14,7 +14,7 @@ function LabelsView({ assigned }: Props) {
   };
 
   return (
-    <div className="labels br-3 spaced">
+    <div className="labels br-3 spaced mt-1 mb-1.5 px-1.5">
       <div className="w-full flex flex-row">
         <div className="flex-1 py-1 select-none">Labels</div>
         <button

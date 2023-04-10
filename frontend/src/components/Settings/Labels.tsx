@@ -36,7 +36,7 @@ function Labels({ labels }: Props) {
         </button>
       </div>
       <div className="br-3">
-        <div className="block mt-5 relative">
+        <div className="block mt-1 relative">
           {xs.map((label: Label) => (
             <div
               key={label.id}

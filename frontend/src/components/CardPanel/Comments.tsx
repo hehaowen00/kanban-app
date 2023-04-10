@@ -71,7 +71,7 @@ function Comments({ cardId, comments }: Props) {
   });
 
   return (
-    <div className="comments block text-left">
+    <div className="comments px-1.5 block text-left">
       <div className="font-90 font-500 no-select text-left">
         Comments
       </div>

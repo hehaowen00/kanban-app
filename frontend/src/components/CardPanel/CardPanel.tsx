@@ -74,7 +74,7 @@ function CardPanel() {
             description={card.description}
             updateCard={putCard}
           />
-          <div className="menu-bar spaced-right text-left text-center flex flex-row">
+          <div className="menu-bar px-1.5 spaced-right text-left text-center flex flex-row">
             <button
               className="flex-1 bg-slate-200 text-slate-700 px-3 py-1 rounded
               hover:bg-slate-700 hover:text-white"
@@ -92,15 +92,15 @@ function CardPanel() {
           </div>
           <LabelsView cardId={cardId} assigned={labels} />
           <div
-            className="bg-grey-100 br-3 border-none flex flex-row items-center"
+            className="bg-grey-100 px-1.5 mt-1 mb-1 br-3 border-none flex flex-row items-center"
           >
             <div className="w-1/2 flex mr-0.5">
-              <div className="date items-center font-85 font-500 flex no-select">
+              <div className="date items-center font-85 flex no-select">
                 Start Date
               </div>
               <input
                 name="startDate"
-                className="default ml-auto px-2 py-1 border-none focus:drop-shadow"
+                className="default ml-auto px-2 py-1 border-none rounded focus:drop-shadow"
                 type="date"
                 value={dates.startDate}
                 onChange={updateDate}
@@ -114,7 +114,7 @@ function CardPanel() {
               </div>
               <input
                 name="endDate"
-                className="default ml-auto px-2 py-1 border-none focus:drop-shadow"
+                className="default ml-auto px-2 py-1 border-none rounded focus:drop-shadow"
                 type="date"
                 value={dates.endDate}
                 onChange={updateDate}

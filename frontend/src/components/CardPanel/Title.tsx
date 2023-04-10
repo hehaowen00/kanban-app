@@ -59,7 +59,7 @@ function TitleView({ title, updateCard, deleteCard }: Props) {
   };
 
   return (
-    <div className="block">
+    <div className="block px-1.5 mt-1 mb-1">
       <TextareaAutosize
         ref={ref}
         className="default font-90 font-500 focus:drop-shadow"
@@ -75,7 +75,7 @@ function TitleView({ title, updateCard, deleteCard }: Props) {
         onKeyPress={onKeyPress}
       />
       {focused && (
-        <div className="menu mt-5 text-right">
+        <div className="menu mt-1 text-right">
           <button
             className="text-slate-700 px-3 py-1 bg-slate-300 rounded
              hover:bg-slate-700 hover:text-white"

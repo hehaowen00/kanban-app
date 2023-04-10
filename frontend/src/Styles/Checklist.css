@@ -3,16 +3,6 @@
   padding: 8px;
 }
 
-.checklists {}
-
-.checklists>* {}
-
-.checklist {
-  /* padding: 5px 5px 2px 5px; */
-  padding-left: 2px;
-  margin-bottom: 0.75rem;
-}
-
 .checklist-title {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -32,9 +22,6 @@ textarea.checklist-title {
 
 .checked {
   opacity: 0.6;
-  /* text-decoration: line-through;
-  text-decoration-thickness: 0.1rem !important;
-  text-decoration-color: black !important; */
 }
 
 .item {

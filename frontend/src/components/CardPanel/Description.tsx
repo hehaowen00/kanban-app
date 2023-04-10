@@ -51,7 +51,7 @@ function DescriptionView({ description, updateCard }: Props) {
   };
 
   return (
-    <div className="block">
+    <div className="block px-1.5 mt-1.5 mb-1.5">
       {!focused && value !== "" &&
         <div
           className="bg-white mb-1 px-2 py-1 whitespace-pre-wrap markdown rounded
@@ -84,7 +84,7 @@ function DescriptionView({ description, updateCard }: Props) {
         />
       }
       {focused &&
-        <div className="menu mt-5 spaced-right text-right">
+        <div className="mt-1.5 spaced-right text-right">
           <button
             className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
             onMouseDown={saveDesc}
