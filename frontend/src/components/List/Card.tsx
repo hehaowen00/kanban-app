@@ -63,7 +63,7 @@ function CardView({ index, id, listId }: Props): ReactElement {
               <div className="px-2 text-cyan-900">
                 {startDate != "" && formatDate(startDate) + " "}- {formatDate(endDate)}
               </div>
-              <div className="pb-[4px]"></div>
+              <div className="pb-1"></div>
             </>
           }
           {labels.length > 0 && (

@@ -115,8 +115,7 @@ function EditLabelModal() {
               }
               <div className="flex flex-row-reverse px-2 py-1">
                 <button
-                  className="bg-slate-300 text-slate-700
-                  hover:bg-slate-700 hover:text-white px-2 py-1 rounded"
+                  className="btn-gray"
                   onClick={close}
                 >
                   Cancel

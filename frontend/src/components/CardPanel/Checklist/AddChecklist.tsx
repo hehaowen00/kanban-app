@@ -9,10 +9,10 @@ import { newChecklist } from "../../../redux/Reducers/Board";
 
 function AddChecklist({ cardId, active, close }: Props) {
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     if (active) {
@@ -22,8 +22,8 @@ function AddChecklist({ cardId, active, close }: Props) {
   }, [active]);
 
   const titleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    let { value } = event.target;
-    if (value === "" || value.trim() !== "") {
+    const value = event.target.value.trim();
+    if (value === "") {
       setName(value);
     }
   };
@@ -58,14 +58,14 @@ function AddChecklist({ cardId, active, close }: Props) {
     <Outside update={cancelClick}>
       <div
         ref={containerRef}
-        className="mt-2 px-1.5"
+        className="mt-1 px-1.5"
       >
         <TextareaAutosize
           ref={inputRef}
           name="titleInput"
           className="checklist-title rounded default flex flex-col font-85 m-0 focus:drop-shadow"
           maxLength={MAX_CHECKLIST_TITLE_LENGTH}
-          placeholder="Checklist"
+          placeholder="New Checklist"
           value={name}
           spellCheck={false}
           onChange={titleChange}
@@ -74,14 +74,13 @@ function AddChecklist({ cardId, active, close }: Props) {
         />
         <div className="menu mb-0 mt-1 spaced-right text-right">
           <button
-            className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
+            className="btn-blue"
             onClick={addList}
           >
             Add Checklist
           </button>
           <button
-            className="text-slate-700 px-3 py-1 bg-slate-300 rounded
-             hover:bg-slate-700 hover:text-white"
+            className="btn-gray"
             onClick={cancelClick}
           >
             Cancel

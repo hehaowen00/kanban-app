@@ -16,7 +16,7 @@ import {
 import { lockYAxis } from "../../../utils/Dnd";
 import "../../../styles/Checklist.css";
 
-function ChecklistView({ cardId, id, index }: Props) {
+function Checklist({ cardId, dragging, id, index }: Props) {
   const dispatch = useDispatch();
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
@@ -50,7 +50,10 @@ function ChecklistView({ cardId, id, index }: Props) {
         titleRef.current.selectionEnd = length;
       }
     }
-  }, [isEditing]);
+    if (dragging) {
+      setEditing(false);
+    }
+  }, [isEditing, dragging]);
 
   const titleBlur = () => {
     setEditing(false);
@@ -143,9 +146,9 @@ function ChecklistView({ cardId, id, index }: Props) {
           style={{ ...lockYAxis(provided.draggableProps.style) }}
         >
           <div className="header">
-            {!isEditing && (
+            {(dragging || !isEditing) && (
               <div className="flex flex-row">
-                <div className="mt-[4px] w-[10px] spacer font-500">
+                <div className="mt-1 w-[10px] spacer font-500">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                     <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
                   </svg>
@@ -196,10 +199,11 @@ function ChecklistView({ cardId, id, index }: Props) {
                     index={index}
                     checklistId={id}
                     item={item}
+                    dragging={dragging}
                   />
                 ))}
                 {provided.placeholder}
-                {state.active && (
+                {!dragging && state.active && (
                   <div className="mb-0 mt-1">
                     <TextareaAutosize
                       ref={itemRef}
@@ -217,13 +221,13 @@ function ChecklistView({ cardId, id, index }: Props) {
                     />
                     <div className="menu mt-1 spaced-right text-right">
                       <button
-                        className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
+                        className="btn-blue"
                         onMouseDown={addListItem}
                       >
                         Save
                       </button>
                       <button
-                        className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
+                        className="btn-gray"
                         onMouseDown={cancelAddItem}
                       >
                         Cancel
@@ -231,7 +235,7 @@ function ChecklistView({ cardId, id, index }: Props) {
                     </div>
                   </div>
                 )}
-                {!state.active && (
+                {(!dragging || !state.active) && (
                   <div className="mt-1">
                     <button
                       className="w-full text-slate-700 px-3 py-1 bg-slate-200 rounded hover:bg-slate-700 hover:text-white"
@@ -255,6 +259,7 @@ interface Props {
   cardId: string,
   id: string,
   index: number,
+  dragging: boolean,
 }
 
-export default ChecklistView;
+export default Checklist;

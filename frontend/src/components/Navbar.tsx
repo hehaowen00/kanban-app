@@ -2,6 +2,7 @@ import { ChangeEvent, ReactElement, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleSettings } from "../redux/Reducers/UI";
 import "../styles/Navbar.css"
+import { MAX_BOARD_TITLE_LENGTH } from "../types/Limits";
 
 function Navbar({ name }: Props): ReactElement {
   const dispatch = useDispatch();
@@ -28,17 +29,17 @@ function Navbar({ name }: Props): ReactElement {
           onChange={onChange}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
+          maxLength={MAX_BOARD_TITLE_LENGTH}
         />
         {focus &&
           <>
             <button
-              className="bg-sky-600 hover:bg-sky-700 text-white rounded px-2 py-1"
+              className="btn-blue"
             >
               Save
             </button>
             <button
-              className="text-slate-700 px-3 py-1 rounded bg-slate-300
-              hover:bg-slate-700 hover:text-white"
+              className="btn-gray"
             >
               Cancel
             </button>
@@ -46,8 +47,7 @@ function Navbar({ name }: Props): ReactElement {
       </div>
       <div className="text-right flex-1">
         <button
-          className="ml-auto px-3 py-1 bg-slate-300 rounded hover:bg-slate-700
-          hover:text-white"
+          className="ml-auto btn-gray"
           onClick={toggleMenu}
         >
           Settings

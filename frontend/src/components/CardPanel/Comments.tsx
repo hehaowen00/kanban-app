@@ -117,7 +117,7 @@ function Comments({ cardId, comments }: Props) {
             Send
           </button>
           <button
-            className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
+            className="btn-gray"
             onClick={cancel}
           >
             Cancel

@@ -7,8 +7,8 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  margin-bottom: 4px;
-  padding: 4px 8px 0px 0px;
+  margin-bottom: 0.25rem;
+  padding: 0.25rem 0.5rem 0 0;
   white-space: pre-wrap;
   word-wrap: break-word;
   word-break: break-all;
@@ -16,7 +16,7 @@
 
 textarea.checklist-title {
   padding-left: 8px;
-  padding-bottom: 4px;
+  padding-bottom: 0.25rem;
 }
 
 .checked {
@@ -34,7 +34,7 @@ textarea.checklist-title {
 }
 
 .item-row>.check {
-  margin-top: 4px;
+  margin-top: 0.25rem;
   margin-bottom: 2px;
   min-width: 20px;
   translate: -2px;
@@ -54,7 +54,7 @@ textarea.checklist-title {
 
   white-space: pre-wrap;
   word-wrap: break-word;
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
   max-width: inherit;
 }
 
@@ -63,6 +63,6 @@ textarea.checklist-title {
   display: inline-block;
   min-width: 10px;
   max-width: 10px;
-  padding-bottom: 4px;
-  margin-right: 4px;
+  padding-bottom: 0.25rem;
+  margin-right: 0.25rem;
 }

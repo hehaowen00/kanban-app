@@ -1,3 +1,4 @@
+export const MAX_BOARD_TITLE_LENGTH = 64;
 export const MAX_LIST_TITLE_LENGTH = 128;
 export const MAX_CARD_TITLE_LENGTH = 512;
 export const MAX_DESCRIPTION_LENGTH = 1024;

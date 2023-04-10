@@ -86,14 +86,13 @@ function DescriptionView({ description, updateCard }: Props) {
       {focused &&
         <div className="mt-1.5 spaced-right text-right">
           <button
-            className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
+            className="btn-blue"
             onMouseDown={saveDesc}
           >
             Save
           </button>
           <button
-            className="text-slate-700 px-3 py-1 bg-slate-300 rounded
-             hover:bg-slate-700 hover:text-white"
+            className="btn-gray"
             onMouseDown={() => setFocused(false)}
           >
             Cancel

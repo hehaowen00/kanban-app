@@ -72,7 +72,7 @@ input:focus {
 }
 
 textarea {
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
 }
 
 textarea:focus {
@@ -103,7 +103,7 @@ input[type=text].default {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 1px 4px;
+  padding: 1px 0.25rem;
 }
 
 select.default {
@@ -342,7 +342,7 @@ textarea.default {
 }
 
 .dropdown-item {
-  padding: 2px 4px;
+  padding: 2px 0.25rem;
 }
 
 .dropdown-item:hover {

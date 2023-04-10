@@ -17,6 +17,7 @@ import { AppState } from "../redux/Store";
 import { List } from "../types/Kanban";
 
 import "../styles/Board.css"
+import "../styles/Common.css"
 
 function BoardView() {
   const dispatch = useDispatch();

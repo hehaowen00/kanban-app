@@ -1,14 +1,21 @@
-import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import ChecklistView from "./Checklist";
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
+import Checklist from "./Checklist";
 
 import { moveChecklist, moveChecklistItem } from "../../../redux/Reducers/Board";
 
-function ChecklistsView({ cardId, checklists }: Props) {
+function Checklists({ cardId, checklists }: Props) {
   const dispatch = useDispatch();
+  const [dragging, setDragging] = useState(false);
 
-  const handleDragEnd = (event: DropResult) => {
+  const dragStart = () => {
+    setDragging(true);
+  };
+
+  const dragEnd = (event: DropResult) => {
+    setDragging(false);
     const { source, destination } = event;
 
     if (!destination) {
@@ -39,7 +46,7 @@ function ChecklistsView({ cardId, checklists }: Props) {
   };
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
+    <DragDropContext onDragStart={dragStart} onDragEnd={dragEnd}>
       <Droppable
         droppableId="checklists"
         type="droppableChecklists"
@@ -51,7 +58,13 @@ function ChecklistsView({ cardId, checklists }: Props) {
             ref={provided.innerRef}
           >
             {checklists.map((id: string, index: number) => (
-              <ChecklistView key={id} index={index} cardId={cardId} id={id} />
+              <Checklist
+                key={id}
+                cardId={cardId}
+                id={id}
+                index={index}
+                dragging={dragging}
+              />
             ))}
             {provided.placeholder}
           </div>
@@ -66,4 +79,4 @@ interface Props {
   checklists: string[],
 }
 
-export default ChecklistsView;
+export default Checklists;

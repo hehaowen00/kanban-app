@@ -11,7 +11,7 @@ import { lockYAxis } from "../../../utils/Dnd";
 import "../../../styles/Checklist.css";
 import { deleteChecklistItem, updateChecklistItem } from "../../../redux/Reducers/Board";
 
-function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
+function ChecklistItemView({ allowed, checklistId, index, item, dragging }: Props) {
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -26,7 +26,10 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
       inputRef.current?.focus();
       inputRef.current?.setSelectionRange(state.desc.length, state.desc.length);
     }
-  }, [state.visible]);
+    if (dragging) {
+      setState({ ...state, visible: false });
+    }
+  }, [state.visible, dragging]);
 
   const deleteItem = () => {
     dispatch(deleteChecklistItem({ checklistId, index }));
@@ -159,6 +162,7 @@ interface Props {
   index: number,
   item: ChecklistItem,
   allowed: boolean,
+  dragging: boolean,
 }
 
 export default ChecklistItemView;
