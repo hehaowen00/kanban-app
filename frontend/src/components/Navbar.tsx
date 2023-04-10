@@ -22,7 +22,7 @@ function Navbar({ name }: Props): ReactElement {
       <div className="flex-1 text-left">
         <input
           className="rounded border-none py-1 title-input bg-gray-100
-          focus:bg-white px-2 focus:outline focus:outline-sky-600"
+          focus:bg-white px-2 focus:ring-inset focus:ring-blue-600 focus:ring-2"
           type="text"
           value={title}
           onChange={onChange}

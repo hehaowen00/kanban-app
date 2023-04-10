@@ -136,7 +136,7 @@ function ChecklistView({ cardId, id, index }: Props) {
       {(provided: any, snapshot: any) => (
         <div
           key={id}
-          className={`checklist mt-1 bg-grey br-3 ${snapshot.isDragging && 'opacity-90'}`}
+          className={`checklist mt-1 pb-1 bg-grey br-3 ${snapshot.isDragging && 'opacity-90'}`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -175,7 +175,7 @@ function ChecklistView({ cardId, id, index }: Props) {
                   onKeyPress={titleKeyPress}
                   onKeyUp={titleKeyUp}
                 />
-                <div className="menu mt-5 spaced-right text-right">
+                <div className="menu mt-2 spaced-right text-right">
                   <button
                     className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
                     onMouseDown={removeChecklist}
@@ -232,7 +232,7 @@ function ChecklistView({ cardId, id, index }: Props) {
                   </div>
                 )}
                 {!state.active && (
-                  <div className="menu mt-5">
+                  <div className="menu mt-1">
                     <button
                       className="w-full text-slate-700 px-3 py-1 bg-slate-200 rounded hover:bg-slate-700 hover:text-white"
                       onClick={() => setActive(true)}
