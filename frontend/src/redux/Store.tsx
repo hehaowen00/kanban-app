@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
+
 import BoardReducer from "./Reducers/Board";
 import UIReducer from "./Reducers/UI";
 

@@ -65,9 +65,9 @@ function NewLabelModal() {
           <div className="flex flex-col px-2 py-1 rounded">
             <div className="card-label-item rounded flex flex-col py-1 bg-gray-100">
               <div className="flex flex-row px-2 py-1 text-sm ml-auto mr-auto select-none">
-                <p>Add New Label</p>
+                <p>Add Label</p>
               </div>
-              <div className="flex flex-row px-2 py-1">
+              <div className="flex flex-row px-2">
                 <input type="text"
                   ref={inputRef}
                   className="flex-1 text-sm bg-white px-2 py-1 rounded w-full drop-shadow"
@@ -96,15 +96,14 @@ function NewLabelModal() {
               }
               <div className="flex flex-row-reverse px-2 py-1">
                 <button
-                  className="bg-slate-300 text-slate-700
-                  hover:bg-slate-700 hover:text-white px-2 py-1 rounded"
+                  className="btn-gray"
                   onClick={close}
                 >
                   Cancel
                 </button>
                 <button
                   className="bg-blue-600
-                  hover:bg-blue-700 text-white px-2 py-1 mr-1 rounded"
+                  hover:bg-blue-700 text-white px-3 py-1 mr-1 rounded"
                   onClick={addLabel}
                 >
                   Add Label

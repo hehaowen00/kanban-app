@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
+
 import { addLabel, removeLabel } from "../../redux/Reducers/Board";
-import { hideSelectLabelModal, showEditLabelModal } from "../../Redux/Reducers/UI";
+import { hideSelectLabelModal, showEditLabelModal } from "../../redux/Reducers/UI";
 import { AppState } from "../../redux/Store";
+
 import { Label } from "../../types/Kanban";
 
 function SelectLabelModal() {
@@ -55,7 +57,7 @@ function SelectLabelModal() {
         <div className="w-[22em] rounded drop-shadow modal bg-gray-100">
           <div className="flex flex-col px-1 py-2 rounded">
             <div className="rounded w-100 flex flex-col bg-gray-100">
-              <div className="px-2 text-slate-700 mb-2 flex flex-row select-none">
+              <div className="px-2 text-slate-700 flex flex-row select-none">
                 <p className="text-sm">Manage Labels</p>
                 <button
                   className="ml-auto rounded bg-slate-300 text-slate-700 text-sm
@@ -65,7 +67,7 @@ function SelectLabelModal() {
                   Close
                 </button>
               </div>
-              <div className="pl-1 pr-2 text-sm">
+              <div className="empty:hidden mt-2 pl-1 pr-2 text-sm">
                 {labels.map((label: Label) => {
                   return (
                     <div

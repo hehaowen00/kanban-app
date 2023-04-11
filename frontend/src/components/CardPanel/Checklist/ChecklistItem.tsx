@@ -4,14 +4,14 @@ import TextareaAutosize from "react-autosize-textarea";
 
 import { useDispatch } from "react-redux";
 
-import { ChecklistItem } from "../../../types/Kanban";
+import * as Types from "../../../types/Kanban";
 import { MAX_CHECKLIST_ITEM_LENGTH } from "../../../types/Limits";
 
 import { lockYAxis } from "../../../utils/Dnd";
 import "../../../styles/Checklist.css";
 import { deleteChecklistItem, updateChecklistItem } from "../../../redux/Reducers/Board";
 
-function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
+function ChecklistItemView({ allowed, checklistId, index, item, dragging }: Props) {
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -26,7 +26,10 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
       inputRef.current?.focus();
       inputRef.current?.setSelectionRange(state.desc.length, state.desc.length);
     }
-  }, [state.visible]);
+    if (dragging) {
+      setState({ ...state, visible: false });
+    }
+  }, [state.visible, dragging]);
 
   const deleteItem = () => {
     dispatch(deleteChecklistItem({ checklistId, index }));
@@ -138,7 +141,7 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
             )}
           </div>
           {state.visible && (
-            <div className="menu text-right">
+            <div className="text-right">
               <button
                 className="text-slate-700 px-3 py-1 bg-slate-300 rounded
                  hover:bg-slate-700 hover:text-white text-sm"
@@ -157,8 +160,9 @@ function ChecklistItemView({ allowed, checklistId, index, item }: Props) {
 interface Props {
   checklistId: string,
   index: number,
-  item: ChecklistItem,
+  item: Types.ChecklistItem,
   allowed: boolean,
+  dragging: boolean,
 }
 
 export default ChecklistItemView;

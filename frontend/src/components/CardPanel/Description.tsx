@@ -4,10 +4,10 @@ import TextareaAutosize from "react-autosize-textarea";
 import ReactMarkdown from 'react-markdown';
 import { HrRender, LinkRender, QuoteRender } from "../../utils/Markdown";
 
-import { Card } from "../../types/Kanban";
+import * as Types from "../../types/Kanban";
 import { MAX_DESCRIPTION_LENGTH } from "../../types/Limits";
 
-function DescriptionView({ description, updateCard }: Props) {
+function Description({ description, updateCard }: Props) {
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState(description);
   const ref = useRef<HTMLTextAreaElement>(null);
@@ -51,7 +51,7 @@ function DescriptionView({ description, updateCard }: Props) {
   };
 
   return (
-    <div className="block">
+    <div className="block px-1.5 mt-1.5 mb-1.5">
       {!focused && value !== "" &&
         <div
           className="bg-white mb-1 px-2 py-1 whitespace-pre-wrap markdown rounded
@@ -84,16 +84,15 @@ function DescriptionView({ description, updateCard }: Props) {
         />
       }
       {focused &&
-        <div className="menu mt-5 spaced-right text-right">
+        <div className="mt-1.5 spaced-right text-right">
           <button
-            className="bg-sky-600 text-white px-3 py-1 rounded hover:bg-sky-700"
+            className="btn-blue"
             onMouseDown={saveDesc}
           >
             Save
           </button>
           <button
-            className="text-slate-700 px-3 py-1 bg-slate-300 rounded
-             hover:bg-slate-700 hover:text-white"
+            className="btn-gray"
             onMouseDown={() => setFocused(false)}
           >
             Cancel
@@ -106,7 +105,7 @@ function DescriptionView({ description, updateCard }: Props) {
 
 interface Props {
   description: string,
-  updateCard: (payload: Partial<Card>) => void,
+  updateCard: (payload: Partial<Types.Card>) => void,
 }
 
-export default DescriptionView;
+export default Description;

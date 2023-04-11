@@ -1,6 +1,5 @@
 .card {
   font-size: 0.85rem;
-  /* margin-bottom: 5px; */
   white-space: break-spaces;
   word-break: break-word;
 }
@@ -36,6 +35,6 @@
   margin-right: 5px;
   margin-top: 2px;
   max-width: 100%;
-  padding: 2px 4px;
+  padding: 2px 0.25rem;
   text-overflow: ellipsis;
 }

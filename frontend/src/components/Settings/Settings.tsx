@@ -1,15 +1,10 @@
-import { useDispatch } from "react-redux";
 import Labels from "./Labels";
 
-import { Label } from "../../types/Kanban";
+import * as Types from "../../types/Kanban";
+
 import "../../styles/Settings.css";
-import { useSelector } from "react-redux";
 
 function Settings({ labels }: Props) {
-  const dispatch = useDispatch();
-
-  const { board } = useSelector((e: any) => e);
-
   return (
     <div className="settings bg-grey flex flex-col drop-shadow rounded mr-3 text-sm">
       <div className="">
@@ -33,7 +28,7 @@ function Settings({ labels }: Props) {
 }
 
 interface Props {
-  labels: Record<string, Label>,
+  labels: Record<string, Types.Label>,
 }
 
 export default Settings;

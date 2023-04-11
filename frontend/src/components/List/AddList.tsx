@@ -9,12 +9,13 @@ import {
 } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 import { useDispatch } from "react-redux";
+
+import { newList } from "../../redux/Reducers/Board";
 import { MAX_LIST_TITLE_LENGTH } from "../../types/Limits";
 
 import "../../styles/AddList.css";
-import { newList } from "../../redux/Reducers/Board";
 
-function AddListView(): ReactElement {
+function AddList(): ReactElement {
   const dispatch = useDispatch();
 
   const [toggle, setToggle] = useState(false);
@@ -105,16 +106,15 @@ function AddListView(): ReactElement {
                 onKeyPress={onKeyPress}
                 onPaste={onPaste}
               />
-              <div className="menu mb-0 mt-5 no-select spaced-right text-right">
+              <div className="menu mb-0 mt-1 no-select spaced-right text-right">
                 <button
-                  className="text-white bg-sky-600 hover:bg-sky-700 rounded px-3 py-1"
+                  className="btn-blue"
                   onClick={addList}
                 >
                   Add List
                 </button>
                 <button
-                  className="text-slate-700 px-3 py-1 bg-slate-300 rounded
-                  hover:bg-slate-700 hover:text-white"
+                  className="btn-gray"
                   onClick={cancelNewList}
                 >
                   Cancel
@@ -128,4 +128,4 @@ function AddListView(): ReactElement {
   );
 }
 
-export default AddListView;
+export default AddList;

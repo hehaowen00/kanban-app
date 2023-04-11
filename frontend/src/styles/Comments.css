@@ -1,13 +1,9 @@
-.comments {
-  margin-bottom: 0 !important;
-}
-
 .comments>.menu {
   margin-top: 8px;
 }
 
 .comment-view:empty {
-  margin-bottom: 10px;
+  margin-bottom: 0.25rem;
 }
 
 .comment-view>* {
@@ -15,7 +11,7 @@
 }
 
 .comment-view>*+* {
-  margin-top: 8px;
+  margin-top: 0.5rem;
 }
 
 .comment {
@@ -28,7 +24,7 @@
 
 .comment>.body {
   max-width: 100%;
-  padding: 4px;
+  padding: 0.25rem;
   white-space: pre-wrap;
   word-break: break-word;
   word-wrap: break-word;

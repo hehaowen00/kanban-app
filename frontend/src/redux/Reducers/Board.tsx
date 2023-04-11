@@ -229,7 +229,6 @@ const boardSlice = createSlice({
       const { listId, cardId } = action.payload;
 
       for (let labelId in state.cards[cardId].labels) {
-          /* state.labels[labelId].index.(cardId); */
         const idx = state.labels[labelId].index.indexOf(cardId);
         if (idx !== -1) {
           state.labels[labelId].index.splice(idx, 1);
@@ -275,14 +274,21 @@ const boardSlice = createSlice({
     },
     deleteLabel: (state, action: PayloadAction<DeleteLabel>) => {
       const { id } = action.payload;
-      const label = state.labels[id];
+      const label = { ...state.labels[id] };
 
-      for (let cardId in label.index) {
+      label.index.forEach((cardId) => {
         const idx = state.cards[cardId].labels.indexOf(id);
         if (idx !== -1) {
           state.cards[cardId].labels.splice(idx, 1);
         }
-      }
+      })
+
+      // let labels = { ...state.labels };
+      // delete labels[id];
+
+      // state.labels = labels;
+
+      delete state.labels[id];
     },
     addLabel: (state, action: PayloadAction<AddLabel>) => {
       const { cardId, labelId } = action.payload;
@@ -295,7 +301,6 @@ const boardSlice = createSlice({
     },
     removeLabel: (state, action: PayloadAction<RemoveLabel>) => {
       const { cardId, labelId } = action.payload;
-        /* const exists = state.cards[cardId].labels.has(labelId); */
       const idx = state.cards[cardId].labels.indexOf(labelId);
 
       if (idx !== -1) {
@@ -348,7 +353,7 @@ const boardSlice = createSlice({
     },
     updateChecklistItem: (state, action: PayloadAction<UpdateChecklistItem>) => {
       const { checklistId, index, item } = action.payload;
-        state.checklists[checklistId].items[index] = Object.assign(
+      state.checklists[checklistId].items[index] = Object.assign(
         state.checklists[checklistId].items[index],
         item
       );

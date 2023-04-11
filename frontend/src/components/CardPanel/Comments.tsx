@@ -6,7 +6,7 @@ import TextareaAutosize from "react-autosize-textarea";
 import { HrRender, LinkRender, QuoteRender } from "../../utils/Markdown";
 
 import { newComment } from "../../redux/Reducers/Board";
-import { Comment } from "../../types/Kanban";
+import * as Types from "../../types/Kanban";
 
 import "../../styles/Comments.css";
 
@@ -61,7 +61,7 @@ function Comments({ cardId, comments }: Props) {
     setVisible(false);
   };
 
-  const comments_ = comments.map((comment: Comment) => {
+  const comments_ = comments.map((comment: Types.Comment) => {
     let date = new Date(comment.timestamp);
     let str = date.toLocaleTimeString("en-AU", { hour12: false }) + " " + date.toLocaleDateString();
     return {
@@ -71,7 +71,7 @@ function Comments({ cardId, comments }: Props) {
   });
 
   return (
-    <div className="comments block text-left">
+    <div className="comments px-1.5 block text-left">
       <div className="font-90 font-500 no-select text-left">
         Comments
       </div>
@@ -95,7 +95,7 @@ function Comments({ cardId, comments }: Props) {
       </div>
       <div className="block">
         <TextareaAutosize
-          className="default font-85 font-500 drop-shadow"
+          className="default font-85 drop-shadow"
           placeholder="Post Comment"
           maxLength={512}
           rows={visible ? 3 : 2}
@@ -117,7 +117,7 @@ function Comments({ cardId, comments }: Props) {
             Send
           </button>
           <button
-            className="text-slate-700 px-3 py-1 bg-slate-300 rounded hover:bg-slate-700 hover:text-white"
+            className="btn-gray"
             onClick={cancel}
           >
             Cancel
@@ -130,7 +130,7 @@ function Comments({ cardId, comments }: Props) {
 
 interface Props {
   cardId: string,
-  comments: Comment[],
+  comments: Types.Comment[],
 }
 
 export default Comments;

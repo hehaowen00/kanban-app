@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
 
+import { newCard } from "../../redux/Reducers/Board";
 import { MAX_CARD_TITLE_LENGTH } from "../../types/Limits";
 
 import "../../styles/AddCard.css";
-import { newCard } from "../../redux/Reducers/Board";
 
 function AddCard({ listId, close, listRef }: Props) {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ function AddCard({ listId, close, listRef }: Props) {
   const addCard = () => {
     if (title.trim() !== "") {
       let value = title.trim().replaceAll('\n', ' ')
-                       .substring(0, MAX_CARD_TITLE_LENGTH);
+        .substring(0, MAX_CARD_TITLE_LENGTH);
       dispatch(newCard({ listId, title: value }));
       setTitle_("");
     }
@@ -88,13 +88,13 @@ function AddCard({ listId, close, listRef }: Props) {
       </div>
       <div className="inline mt-1 ml-2 spaced-right text-right z-2">
         <button
-          className="text-white bg-sky-600 hover:bg-sky-700 rounded px-3 py-1"
+          className="btn-blue"
           onClick={addCard}
         >
           Save
         </button>
         <button
-          className="text-slate-700 px-3 py-1 rounded bg-slate-300 hover:bg-slate-700 hover:text-white"
+          className="btn-gray"
           onClick={onClose}
         >
           Cancel

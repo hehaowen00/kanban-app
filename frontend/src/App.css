@@ -37,7 +37,7 @@ button:hover {
 }
 
 p {
-margin: 0;
+  margin: 0;
 }
 
 .markdown>ul,
@@ -63,11 +63,6 @@ h5 {
   white-space: pre-line;
 }
 
-*:focus {
-  /* outline: 2px solid #0079bf; */
-  /* border: 1px solid transparent; */
-}
-
 a {
   color: blue;
 }
@@ -77,11 +72,10 @@ input:focus {
 }
 
 textarea {
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
 }
 
 textarea:focus {
-  /* outline: 1px solid #0079bf; */
   outline: none;
 }
 
@@ -109,7 +103,7 @@ input[type=text].default {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 1px 4px;
+  padding: 1px 0.25rem;
 }
 
 select.default {
@@ -234,10 +228,6 @@ textarea.default {
   margin-bottom: 0 !important;
 }
 
-.mt-5 {
-  margin-top: 5px;
-}
-
 .ml-auto {
   margin-left: auto;
 }
@@ -317,7 +307,6 @@ textarea.default {
 }
 
 .dropdown {
-  /* position: relative; */
   display: inline-block;
   border: 1px solid black;
   font-size: 0.85rem;
@@ -353,7 +342,7 @@ textarea.default {
 }
 
 .dropdown-item {
-  padding: 2px 4px;
+  padding: 2px 0.25rem;
 }
 
 .dropdown-item:hover {

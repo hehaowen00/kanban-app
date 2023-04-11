@@ -1,10 +1,10 @@
 import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 
-import { Card } from "../../types/Kanban";
+import * as types from "../../types/Kanban";
 import { MAX_CARD_TITLE_LENGTH } from "../../types/Limits";
 
-function TitleView({ title, updateCard, deleteCard }: Props) {
+function Title({ title, updateCard, deleteCard }: Props) {
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const [focused, setFocused] = useState(false);
@@ -59,7 +59,7 @@ function TitleView({ title, updateCard, deleteCard }: Props) {
   };
 
   return (
-    <div className="block">
+    <div className="block px-1.5 mt-1 mb-1">
       <TextareaAutosize
         ref={ref}
         className="default font-90 font-500 focus:drop-shadow"
@@ -75,7 +75,7 @@ function TitleView({ title, updateCard, deleteCard }: Props) {
         onKeyPress={onKeyPress}
       />
       {focused && (
-        <div className="menu mt-5 text-right">
+        <div className="menu mt-1 text-right">
           <button
             className="text-slate-700 px-3 py-1 bg-slate-300 rounded
              hover:bg-slate-700 hover:text-white"
@@ -91,8 +91,8 @@ function TitleView({ title, updateCard, deleteCard }: Props) {
 
 interface Props {
   title: string,
-  updateCard: (partial: Partial<Card>) => void,
+  updateCard: (partial: Partial<types.Card>) => void,
   deleteCard: () => void,
 }
 
-export default TitleView;
+export default Title;

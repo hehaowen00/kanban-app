@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { showSelectLabelModal } from "../../Redux/Reducers/UI";
+import { showSelectLabelModal } from "../../redux/Reducers/UI";
 import { AppState } from "../../redux/Store";
 
 import "../../styles/Labels.css";
 
-function LabelsView({ assigned }: Props) {
+function Labels({ assigned }: Props) {
   const dispatch = useDispatch();
   const labelsObj = useSelector(({ board }: AppState) => board.labels);
 
@@ -14,7 +14,7 @@ function LabelsView({ assigned }: Props) {
   };
 
   return (
-    <div className="labels br-3 spaced">
+    <div className="labels br-3 spaced mt-1 mb-1.5 px-1.5">
       <div className="w-full flex flex-row">
         <div className="flex-1 py-1 select-none">Labels</div>
         <button
@@ -50,4 +50,4 @@ interface Props {
   assigned: string[],
 }
 
-export default LabelsView;
+export default Labels;

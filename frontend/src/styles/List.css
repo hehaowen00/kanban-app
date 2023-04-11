@@ -8,7 +8,6 @@
 }
 
 .list-col {
-  /* figure out how to make this list not shrink when scroll bar is visible */
   max-height: 90vh !important;
   max-width: 18rem;
   min-width: 18rem;
@@ -48,12 +47,7 @@
 
 .list-footer {
   flex-shrink: 1;
-  /* margin-top: 5px; */
   padding: 0;
-}
-
-.title {
-  padding: 5px 10px;
 }
 
 .title:first-child {
