@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import AddChecklist from "./Checklist/AddChecklist";
 import Checklists from "./Checklist/Checklists";
 import Comments from "./Comments";
-import DescriptionView from "./Description";
-import LabelsView from "./LabelsView";
-import TitleView from "./Title";
+import Description from "./Description";
+import Labels from "./LabelsView";
+import Title from "./Title";
 
 import { deleteCard, updateCard } from "../../redux/Reducers/Board";
 import { closeCardView, showLabelModal } from "../../redux/Reducers/UI";
 import { AppState } from "../../redux/Store";
-import { Card } from "../../types/Kanban";
+import * as Types from "../../types/Kanban";
 
 import "../../styles/CardPanel.css";
 
@@ -44,7 +44,7 @@ function CardPanel() {
     dispatch(deleteCard({ listId, cardId, }));
   };
 
-  const putCard = (card: Partial<Card>) => {
+  const putCard = (card: Partial<Types.Card>) => {
     dispatch(updateCard({ id: cardId, card }));
   };
 
@@ -65,12 +65,12 @@ function CardPanel() {
         <div
           className="list card-view br-3 bg-grey block font-85 shadow text-left"
         >
-          <TitleView
+          <Title
             title={card.title}
             updateCard={putCard}
             deleteCard={removeCard}
           />
-          <DescriptionView
+          <Description
             description={card.description}
             updateCard={putCard}
           />
@@ -90,7 +90,7 @@ function CardPanel() {
               Add Label
             </button>
           </div>
-          <LabelsView cardId={cardId} assigned={labels} />
+          <Labels cardId={cardId} assigned={labels} />
           <div
             className="bg-grey-100 px-1.5 mt-1 mb-1 br-3 border-none flex flex-row items-center"
           >

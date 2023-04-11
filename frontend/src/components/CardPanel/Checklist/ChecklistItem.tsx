@@ -4,7 +4,7 @@ import TextareaAutosize from "react-autosize-textarea";
 
 import { useDispatch } from "react-redux";
 
-import { ChecklistItem } from "../../../types/Kanban";
+import * as Types from "../../../types/Kanban";
 import { MAX_CHECKLIST_ITEM_LENGTH } from "../../../types/Limits";
 
 import { lockYAxis } from "../../../utils/Dnd";
@@ -160,7 +160,7 @@ function ChecklistItemView({ allowed, checklistId, index, item, dragging }: Prop
 interface Props {
   checklistId: string,
   index: number,
-  item: ChecklistItem,
+  item: Types.ChecklistItem,
   allowed: boolean,
   dragging: boolean,
 }

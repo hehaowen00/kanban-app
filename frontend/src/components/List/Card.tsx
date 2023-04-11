@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
-import { Draggable } from "@hello-pangea/dnd";
 import { useDispatch, useSelector } from "react-redux";
+import { Draggable } from "@hello-pangea/dnd";
 
+import { showExistingCard } from "../../redux/Reducers/UI";
 import { AppState } from "../../redux/Store";
 
 import "../../styles/Card.css"
-import { showExistingCard } from "../../redux/Reducers/UI";
 
-function CardView({ index, id, listId }: Props): ReactElement {
+function Card({ index, id, listId }: Props): ReactElement {
   const dispatch = useDispatch();
 
   const { title, labels, startDate, endDate } = useSelector(({ board }: AppState) => {
@@ -95,4 +95,4 @@ interface Props {
   listId: string,
 }
 
-export default CardView;
+export default Card;

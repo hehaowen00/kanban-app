@@ -2,12 +2,12 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { useDispatch, useSelector } from "react-redux";
 
-import ChecklistItemView from "./ChecklistItem";
+import ChecklistItem from "./ChecklistItem";
 import TextareaAutosize from "react-autosize-textarea";
 
 import { deleteChecklist, newChecklistItem } from "../../../redux/Reducers/Board";
 import { AppState } from "../../../redux/Store";
-import { ChecklistItem } from "../../../types/Kanban";
+import * as Types from "../../../types/Kanban";
 import {
   MAX_CHECKLIST_ITEM_LENGTH,
   MAX_CHECKLIST_TITLE_LENGTH,
@@ -192,8 +192,8 @@ function Checklist({ cardId, dragging, id, index }: Props) {
           <Droppable droppableId={id} type="droppableItems">
             {(provided) => (
               <div className="block relative" ref={provided.innerRef}>
-                {items.map((item: ChecklistItem, index: number) => (
-                  <ChecklistItemView
+                {items.map((item: Types.ChecklistItem, index: number) => (
+                  <ChecklistItem
                     allowed={isEditing}
                     key={index}
                     index={index}

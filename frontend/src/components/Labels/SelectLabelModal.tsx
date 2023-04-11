@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
+
 import { addLabel, removeLabel } from "../../redux/Reducers/Board";
-import { hideSelectLabelModal, showEditLabelModal } from "../../Redux/Reducers/UI";
+import { hideSelectLabelModal, showEditLabelModal } from "../../redux/Reducers/UI";
 import { AppState } from "../../redux/Store";
+
 import { Label } from "../../types/Kanban";
 
 function SelectLabelModal() {

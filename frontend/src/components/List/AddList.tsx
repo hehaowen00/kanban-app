@@ -9,12 +9,13 @@ import {
 } from "react";
 import TextareaAutosize from "react-autosize-textarea";
 import { useDispatch } from "react-redux";
+
+import { newList } from "../../redux/Reducers/Board";
 import { MAX_LIST_TITLE_LENGTH } from "../../types/Limits";
 
 import "../../styles/AddList.css";
-import { newList } from "../../redux/Reducers/Board";
 
-function AddListView(): ReactElement {
+function AddList(): ReactElement {
   const dispatch = useDispatch();
 
   const [toggle, setToggle] = useState(false);
@@ -127,4 +128,4 @@ function AddListView(): ReactElement {
   );
 }
 
-export default AddListView;
+export default AddList;

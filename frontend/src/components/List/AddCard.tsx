@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 
 import TextareaAutosize from "react-autosize-textarea";
 
+import { newCard } from "../../redux/Reducers/Board";
 import { MAX_CARD_TITLE_LENGTH } from "../../types/Limits";
 
 import "../../styles/AddCard.css";
-import { newCard } from "../../redux/Reducers/Board";
 
 function AddCard({ listId, close, listRef }: Props) {
   const dispatch = useDispatch();

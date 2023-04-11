@@ -1,8 +1,10 @@
 import { ChangeEvent, ReactElement, useState } from "react";
 import { useDispatch } from "react-redux";
+
 import { toggleSettings } from "../redux/Reducers/UI";
-import "../styles/Navbar.css"
 import { MAX_BOARD_TITLE_LENGTH } from "../types/Limits";
+
+import "../styles/Navbar.css"
 
 function Navbar({ name }: Props): ReactElement {
   const dispatch = useDispatch();

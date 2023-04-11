@@ -6,7 +6,7 @@ import TextareaAutosize from "react-autosize-textarea";
 import { HrRender, LinkRender, QuoteRender } from "../../utils/Markdown";
 
 import { newComment } from "../../redux/Reducers/Board";
-import { Comment } from "../../types/Kanban";
+import * as Types from "../../types/Kanban";
 
 import "../../styles/Comments.css";
 
@@ -61,7 +61,7 @@ function Comments({ cardId, comments }: Props) {
     setVisible(false);
   };
 
-  const comments_ = comments.map((comment: Comment) => {
+  const comments_ = comments.map((comment: Types.Comment) => {
     let date = new Date(comment.timestamp);
     let str = date.toLocaleTimeString("en-AU", { hour12: false }) + " " + date.toLocaleDateString();
     return {
@@ -130,7 +130,7 @@ function Comments({ cardId, comments }: Props) {
 
 interface Props {
   cardId: string,
-  comments: Comment[],
+  comments: Types.Comment[],
 }
 
 export default Comments;

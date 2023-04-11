@@ -8,7 +8,8 @@ import AddCard from "./AddCard";
 import CardView from "./Card";
 
 import { deleteList, updateList } from "../../redux/Reducers/Board";
-import { List } from "../../types/Kanban";
+
+import * as Types from "../../types/Kanban";
 import { MAX_LIST_TITLE_LENGTH } from "../../types/Limits";
 
 import "../../styles/List.css";
@@ -181,7 +182,7 @@ function ListView({ index, list }: Props): ReactElement {
 interface Props {
   key: string;
   index: number;
-  list: List,
+  list: Types.List,
 }
 
 export default ListView;

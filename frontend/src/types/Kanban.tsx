@@ -70,21 +70,3 @@ export type Attachment = {
   filename: string;
   link: string;
 };
-
-export enum Actions {
-  RenameBoard,
-  NewLabel,
-  AddLabel,
-  RemoveLabel,
-  NewCard,
-  UpdateCard,
-  DeleteCard,
-  NewList,
-  MoveCard,
-  MoveList,
-  DeleteList,
-  NewChecklist,
-  DeleteChecklist,
-  MoveChecklist,
-  UpdateChecklist,
-};

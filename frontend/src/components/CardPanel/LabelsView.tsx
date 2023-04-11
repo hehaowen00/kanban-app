@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { showSelectLabelModal } from "../../Redux/Reducers/UI";
+import { showSelectLabelModal } from "../../redux/Reducers/UI";
 import { AppState } from "../../redux/Store";
 
 import "../../styles/Labels.css";
 
-function LabelsView({ assigned }: Props) {
+function Labels({ assigned }: Props) {
   const dispatch = useDispatch();
   const labelsObj = useSelector(({ board }: AppState) => board.labels);
 
@@ -50,4 +50,4 @@ interface Props {
   assigned: string[],
 }
 
-export default LabelsView;
+export default Labels;

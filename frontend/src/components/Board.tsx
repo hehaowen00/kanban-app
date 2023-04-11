@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 
-import AddListView from "./List/AddList";
+import AddList from "./List/AddList";
 import CardPanel from "./CardPanel/CardPanel";
-import ListView from "./List/List";
+import List from "./List/List";
 import Navbar from "./Navbar";
-import SettingsView from "./Settings/Settings";
+import Settings from "./Settings/Settings";
 
 import NewLabelModal from "./Labels/AddLabelModal";
 import EditLabelModal from "./Labels/EditLabelModal";
@@ -14,7 +14,7 @@ import SelectLabelModal from "./Labels/SelectLabelModal";
 import { moveCard, moveList } from "../redux/Reducers/Board";
 import { closeCardView } from "../redux/Reducers/UI";
 import { AppState } from "../redux/Store";
-import { List } from "../types/Kanban";
+import * as Types from "../types/Kanban";
 
 import "../styles/Board.css"
 import "../styles/Common.css"
@@ -82,21 +82,21 @@ function BoardView() {
                     className="lists flex flex-row flex-1-1"
                     ref={provided.innerRef}
                   >
-                    {lists.map((list: List, index: number) => (
+                    {lists.map((list: Types.List, index: number) => (
                       <div key={`${list.id}-container`} className="flex flex-row">
-                        <ListView key={list.id} index={index} list={list} />
+                        <List key={list.id} index={index} list={list} />
                         {listId === list.id && (
                           <CardPanel />
                         )}
                       </div>
                     ))}
                     {provided.placeholder}
-                    <AddListView />
+                    <AddList />
                   </div>
                 )}
               </Droppable>
             </DragDropContext>
-            {showSettings && <SettingsView labels={labels} />}
+            {showSettings && <Settings labels={labels} />}
           </div>
         </div>
       </div>

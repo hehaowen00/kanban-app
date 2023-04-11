@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
+
 import { showEditLabelModal, showLabelModal } from "../../redux/Reducers/UI";
-import { Label } from "../../types/Kanban";
+import * as Types from "../../types/Kanban";
 
 function Labels({ labels }: Props) {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ function Labels({ labels }: Props) {
       </div>
       <div className="br-3">
         <div className="block mt-1 relative">
-          {xs.map((label: Label) => (
+          {xs.map((label: Types.Label) => (
             <div
               key={label.id}
               className="flex flex-row flex-1 label-item"
@@ -60,7 +61,7 @@ function Labels({ labels }: Props) {
 }
 
 interface Props {
-  labels: Record<string, Label>,
+  labels: Record<string, Types.Label>,
 }
 
 export default Labels;
