@@ -1,17 +1,17 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+
 import { Draggable } from "@hello-pangea/dnd";
 import TextareaAutosize from "react-autosize-textarea";
 
-import { useDispatch } from "react-redux";
-
+import { deleteChecklistItem, updateChecklistItem } from "../../../redux/Reducers/Board";
 import * as Types from "../../../types/Kanban";
 import { MAX_CHECKLIST_ITEM_LENGTH } from "../../../types/Limits";
 
 import { lockYAxis } from "../../../utils/Dnd";
 import "../../../styles/Checklist.css";
-import { deleteChecklistItem, updateChecklistItem } from "../../../redux/Reducers/Board";
 
-function ChecklistItemView({ allowed, checklistId, index, item, dragging }: Props) {
+function ChecklistItem({ allowed, checklistId, index, item, dragging }: Props) {
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -165,4 +165,4 @@ interface Props {
   dragging: boolean,
 }
 
-export default ChecklistItemView;
+export default ChecklistItem;

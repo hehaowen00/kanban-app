@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MAX_LABEL_TITLE_LENGTH } from "../../types/Limits";
 
-import ColorPicker from "../util/ColorPicker";
+import ColorPicker from "../Util/ColorPicker";
 
 import { deleteLabel, updateLabel } from "../../redux/Reducers/Board";
 import { closeEditLabelModal, hideLabelModal } from "../../redux/Reducers/UI";

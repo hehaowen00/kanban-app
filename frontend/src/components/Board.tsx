@@ -19,7 +19,7 @@ import * as Types from "../types/Kanban";
 import "../styles/Board.css"
 import "../styles/Common.css"
 
-function BoardView() {
+function Board() {
   const dispatch = useDispatch();
 
   const { lists, labels, name } = useSelector(({ board }: AppState) => board);
@@ -52,12 +52,6 @@ function BoardView() {
   const dragStart = () => {
     dispatch(closeCardView());
   };
-
-
-  const label = useSelector(({ board, ui }: AppState) => {
-    return board.labels[ui.editLabel];
-  });
-
 
   return (
     <>
@@ -104,4 +98,4 @@ function BoardView() {
   );
 }
 
-export default BoardView;
+export default Board;

@@ -5,7 +5,7 @@ import AddChecklist from "./Checklist/AddChecklist";
 import Checklists from "./Checklist/Checklists";
 import Comments from "./Comments";
 import Description from "./Description";
-import Labels from "./LabelsView";
+import Labels from "./Labels";
 import Title from "./Title";
 
 import { deleteCard, updateCard } from "../../redux/Reducers/Board";

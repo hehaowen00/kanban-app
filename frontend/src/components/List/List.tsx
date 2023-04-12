@@ -5,7 +5,7 @@ import { Droppable, Draggable } from "@hello-pangea/dnd";
 import TextareaAutosize from "react-autosize-textarea/lib";
 
 import AddCard from "./AddCard";
-import CardView from "./Card";
+import Card from "./Card";
 
 import { deleteList, updateList } from "../../redux/Reducers/Board";
 
@@ -14,7 +14,7 @@ import { MAX_LIST_TITLE_LENGTH } from "../../types/Limits";
 
 import "../../styles/List.css";
 
-function ListView({ index, list }: Props): ReactElement {
+function List({ index, list }: Props): ReactElement {
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const listRef = useRef<any>(null);
@@ -140,7 +140,7 @@ function ListView({ index, list }: Props): ReactElement {
                     ref={provided.innerRef}
                   >
                     {cardIds.map((cardId: string, index: number) => (
-                      <CardView
+                      <Card
                         key={cardId}
                         index={index}
                         id={cardId}
@@ -185,4 +185,4 @@ interface Props {
   list: Types.List,
 }
 
-export default ListView;
+export default List;
